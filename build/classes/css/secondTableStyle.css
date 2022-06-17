@@ -1,0 +1,216 @@
+
+/* 
+    Created on : 2021. szept. 21., 8:57:24
+    Author     : takacs.gergely
+*/
+
+
+
+
+/*<editor-fold defaultstate="collapsed" desc="MODULE Table">*/
+.table-view {
+    -fx-background-color: transparent;
+    /*    -fx-border-color: red;
+        -fx-border-width: 1;*/
+}
+
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    /*    -fx-border-width: 1;
+        -fx-border-color: red;*/
+
+}
+
+.table-view .table-cell{
+    -fx-text-fill: #A6A6A6;
+    -fx-font-family: "Century Gothic";    
+    -fx-font-size: 15px;;
+    -fx-padding: 0 0 0 10;
+    /*    -fx-border-width: 1;
+        -fx-border-color: red;*/
+}
+
+.table-view .column-header-background{
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background .label{
+
+    -fx-border-color: #181F26;
+    -fx-text-fill: #395D74;
+    -fx-font-family: "Century Gothic";    
+    -fx-font-size: 16px;
+    -fx-alignment: center-left;
+
+}
+
+
+.table-view .table-column{
+    -fx-alignment: CENTER;    
+}
+
+.table-row-cell{    
+    -fx-background-color: transparent;
+    -fx-cell-size: 26px;
+
+    -fx-border-color: #181F26;
+    -fx-border-width: 1;
+    /*    -fx-alignment:CENTER;*/
+    /*    -fx-text-alignment:center;*/
+}
+
+.table-row-cell:odd{
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: transparent;
+}
+
+
+.table-row-cell:selected:hover {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:odd:selected:hover {
+    -fx-background-color: transparent;
+}
+
+
+.table-row-cell:hover {
+    -fx-background-color: transparent;
+
+}
+
+.table-row-cell:odd:hover{
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:empty {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:empty:hover {
+    -fx-background-color: transparent;
+}
+
+.table-view .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-padding:-7;
+    -fx-background-color: #181F26;
+}
+
+.table-view .scroll-bar:vertical {
+    -fx-opacity: 0;
+    -fx-padding:-7;
+    -fx-background-color: #181F26;
+}
+/*</editor-fold>*/
+
+.bluetexlabel{
+    -fx-text-fill: #36596F;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.greentextlabel{
+    -fx-text-fill: #078845;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.whitetexlabel{
+    -fx-text-fill: #A6A6A6;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.stat-number-grey{
+    -fx-font-family: "Calibri";
+    -fx-font-size: 48px;
+    -fx-text-fill: #808080;
+}
+
+.stat-number-green{
+    -fx-font-family: "Calibri";
+    -fx-font-size: 48px;
+    -fx-text-fill: #078845;
+}
+
+.stat-number-red{
+    -fx-font-family: "Calibri";
+    -fx-font-size: 48px;
+    -fx-text-fill: #702E49;
+}
+
+.stat-number-darkgrey{
+    -fx-font-family: "Calibri";
+    -fx-font-size: 48px;
+    -fx-text-fill: #3F4851;
+}
+
+.stat-text-grey{
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #808080;
+}
+
+.stat-text-darkgrey{
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #3F4851;
+}
+
+.stat-text-green{
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #078845;
+}
+
+.stat-text-red{
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #702E49;
+}
+
+.stat-number-lighter{
+    -fx-font-family: "Calibri";
+    -fx-font-size: 48px;
+    -fx-text-fill: #BFBFBF;
+}
+
+.stat-text-lighter{
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #BFBFBF;
+}
+
+/*<editor-fold defaultstate="collapsed" desc="CHECK BOX">*/
+.check-box .box {
+
+-fx-background-color: #222B35;
+-fx-border-color:#222B35;
+-fx-border-radius:1px; 
+
+}
+
+.check-box:selected .mark {
+
+-fx-background-color: #586985;
+
+}
+
+.check-box:selected .box {
+
+-fx-background-color: #222B35;
+}
+/*</editor-fold>*/
