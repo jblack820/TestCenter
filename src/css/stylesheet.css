@@ -258,6 +258,14 @@
     -fx-font-size: 15px;
 }
 
+.mypopup-text-label-highlighted {
+    -fx-background-color: transparent;
+    -fx-text-fill: #CDCCCC;
+    -fx-font-weight: bold;
+    resize:none;
+    -fx-font-size: 15px;
+}
+
 .mypopup-text-label-2 {
     -fx-background-color: #222B35;
     -fx-text-fill: #ABAAAA;

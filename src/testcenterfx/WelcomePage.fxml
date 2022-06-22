@@ -55,12 +55,7 @@
                <children>
                       <AnchorPane layoutY="100.0" prefHeight="820.0" prefWidth="383.0" style="-fx-background-color: #222B35;">
                           <children>
-                              <Button contentDisplay="RIGHT" layoutX="43.0" layoutY="234.0" onAction="#handleCreateNewProjectButton" prefHeight="20.0" prefWidth="350.0" styleClass="mymenubutton" stylesheets="@../css/stylesheet.css" text="ÚJ TESZT PROJEKT">
-                                  <font>
-                                      <Font size="20.0" />
-                                  </font>
-                              </Button>
-                              <Button fx:id="buttonToBulkDoc121" contentDisplay="RIGHT" layoutX="43.0" layoutY="314.0" onAction="#handleGoToClonePage" prefHeight="20.0" prefWidth="350.0" styleClass="mymenubutton" stylesheets="@../css/stylesheet.css" text="PROJEKT KLÓNOZÁSA">
+                              <Button fx:id="buttonToBulkDoc121" contentDisplay="RIGHT" layoutX="43.0" layoutY="234.0" onAction="#handleGoToClonePage" prefHeight="20.0" prefWidth="350.0" styleClass="mymenubutton" stylesheets="@../css/stylesheet.css" text="PROJEKT KLÓNOZÁSA">
                                   <font>
                                       <Font size="20.0" />
                                   </font>
@@ -75,12 +70,12 @@
                                       <Font size="20.0" />
                                   </font>
                               </Button>
-                        <Button contentDisplay="RIGHT" layoutX="43.0" layoutY="394.0" onAction="#handleGoTouserPageButton" prefHeight="20.0" prefWidth="350.0" styleClass="mymenubutton" stylesheets="@../css/stylesheet.css" text="FELHASZNÁLÓK">
+                        <Button contentDisplay="RIGHT" layoutX="43.0" layoutY="314.0" onAction="#handleGoTouserPageButton" prefHeight="20.0" prefWidth="350.0" styleClass="mymenubutton" stylesheets="@../css/stylesheet.css" text="FELHASZNÁLÓK">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Button>
-                        <Button contentDisplay="RIGHT" layoutX="42.0" layoutY="474.0" onAction="#handleGoToDevicesPageButton" prefHeight="20.0" prefWidth="350.0" styleClass="mymenubutton" stylesheets="@../css/stylesheet.css" text="TESZT ESZKÖZÖK">
+                        <Button contentDisplay="RIGHT" layoutX="42.0" layoutY="394.0" onAction="#handleGoToDevicesPageButton" prefHeight="20.0" prefWidth="350.0" styleClass="mymenubutton" stylesheets="@../css/stylesheet.css" text="TESZT ESZKÖZÖK">
                            <font>
                               <Font size="20.0" />
                            </font>

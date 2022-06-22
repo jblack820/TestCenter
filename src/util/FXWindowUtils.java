@@ -11,9 +11,11 @@ import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
@@ -35,6 +37,8 @@ public class FXWindowUtils {
     private static double xOffset;
     private static double yOffset;
     private static Stage currentStage;
+    private static Pane staticDisablePane;
+    private static Pane staticalertPane;
 
     //<editor-fold defaultstate="collapsed" desc="Handle stage">
     public static void initStage(Stage stage, Scene scene) {
@@ -230,16 +234,15 @@ public class FXWindowUtils {
         disableStage(basePane, closeIcon, minimizeIcon, logoPane);
     }
 
-    public static void showPopup(Pane popup, Pane basePane, ImageView closeIcon, Line minimizeIcon, Pane logoPane, ImageView bigLogo) {        
+    public static void showPopup(Pane popup, Pane basePane, ImageView closeIcon, Line minimizeIcon, Pane logoPane, ImageView bigLogo) {
         initShowPopup(popup);
         disableStage(basePane, closeIcon, minimizeIcon, logoPane, bigLogo);
     }
-    
-    public static void showPopup(Pane popup, Pane hideStagePane) {        
+
+    public static void showPopup(Pane popup, Pane hideStagePane) {
         initShowPopup(popup);
         hideStagePane.setVisible(true);
     }
-    
 
     public static void hidePopup(Pane mypopup, Pane basePane, ImageView closeIcon, Line minimizeIcon, Pane logoPane) {
         initHidePopup(mypopup);
@@ -250,7 +253,7 @@ public class FXWindowUtils {
         initHidePopup(mypopup);
         enableStage(basePane, closeIcon, minimizeIcon, logoPane, bigLogo);
     }
-    
+
     public static void hidePopup(Pane mypopup, Pane hideStagePane) {
         initHidePopup(mypopup);
         hideStagePane.setVisible(false);
@@ -305,45 +308,131 @@ public class FXWindowUtils {
         mypopup.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.BLACK, 30, 0.05, 0.0, 0.0));
     }
 
- 
-
     public static void setPageTitle(Pane logoPane, String text1, String text2) {
         Font font1 = Font.loadFont(Main.class.getResourceAsStream("/font/NunitoSans-Regular.ttf"), 25);
         Font font2 = Font.loadFont(Main.class.getResourceAsStream("/font/NunitoSans-Black.ttf"), 50);
-        Label firstLabel = new Label(text1.toUpperCase());        
+        Label firstLabel = new Label(text1.toUpperCase());
         Label secondLabel = new Label(text2.toUpperCase());
         firstLabel.setFont(font1);
         secondLabel.setFont(font2);
         setPageTitleColorAndPosition(logoPane, firstLabel);
-        setPageTitleColorAndPosition(logoPane, secondLabel);    
+        setPageTitleColorAndPosition(logoPane, secondLabel);
         firstLabel.setLayoutY(15);
         secondLabel.setLayoutY(30);
-        logoPane.getChildren().add(firstLabel);        
+        logoPane.getChildren().add(firstLabel);
         logoPane.getChildren().add(secondLabel);
     }
-    
-        public static void setPageTitle(Pane logoPane, String text1, String text2, double extraGap) {
+
+    public static void setPageTitle(Pane logoPane, String text1, String text2, double extraGap) {
         Font font1 = Font.loadFont(Main.class.getResourceAsStream("/font/NunitoSans-Regular.ttf"), 25);
         Font font2 = Font.loadFont(Main.class.getResourceAsStream("/font/NunitoSans-Black.ttf"), 50);
-        Label firstLabel = new Label(text1.toUpperCase());        
+        Label firstLabel = new Label(text1.toUpperCase());
         Label secondLabel = new Label(text2.toUpperCase());
         firstLabel.setFont(font1);
         secondLabel.setFont(font2);
         setPageTitleColorAndPosition(logoPane, firstLabel);
-        setPageTitleColorAndPosition(logoPane, secondLabel);    
+        setPageTitleColorAndPosition(logoPane, secondLabel);
         firstLabel.setLayoutY(15);
-        secondLabel.setLayoutY(30+extraGap);
-        logoPane.getChildren().add(firstLabel);        
+        secondLabel.setLayoutY(30 + extraGap);
+        logoPane.getChildren().add(firstLabel);
         logoPane.getChildren().add(secondLabel);
     }
-    
-    
-    private static void setPageTitleColorAndPosition(Pane logoPane, Label label){
+
+    private static void setPageTitleColorAndPosition(Pane logoPane, Label label) {
         label.setStyle("-fx-text-fill: #D2D2D2;");
-        label.setLayoutX(700    );
+        label.setLayoutX(700);
+    }
+
+    public static void showAlert(Stage stage, String title, String line1, String line2) {
+        String css = Main.class.getResourceAsStream("/css/stylesheet.css").toString();
+        stage.getScene().getStylesheets().add(css);
+        Pane disablePane = getDisablePane(stage.getScene());
+        Pane pane = getNewShowAlertPane(stage.getScene());
+        pane.getChildren().add(getTitleLabel(title));
+        pane.getChildren().add(getInfoLabel1(line1));
+        pane.getChildren().add(getInfoLabel2(line2));
+        pane.getChildren().add(getOkayButton(disablePane, pane));
+        
     }
     
+    private static Button getOkayButton(Pane disablepane, Pane alertPane) {
+        Button button = new Button("OK");
+        button.getStyleClass().add("myokaybutton");
+        button.setPrefWidth(95);
+        button.setPrefHeight(31);
+        button.setLayoutX(203);
+        button.setLayoutY(280);
+        staticDisablePane = disablepane;
+        staticalertPane = alertPane;
+        
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                staticDisablePane.setVisible(false);
+                staticalertPane.setVisible(false);
+            }
+        });
+        return button;
+    }
     
+    private static Pane getDisablePane(Scene scene) {
+        Pane pane = new Pane();
+        ((AnchorPane) scene.getRoot()).getChildren().add(pane);
+        pane.setPrefWidth(1760);
+        pane.setPrefHeight(950);
+        pane.setStyle("-fx-background-color: black;");
+        pane.setOpacity(0.3);
+        pane.setLayoutX(25);
+        pane.setLayoutY(25);
+        pane.toFront();
+        return pane;
+    }
+
+    private static Label getTitleLabel(String title) {
+        Label label = new Label(title);
+        label.getStyleClass().add("mypopup-text-label-highlighted");
+        label.setAlignment(Pos.CENTER);
+        label.setPrefWidth(450);
+        label.setPrefHeight(23);
+        label.setLayoutX(26);
+        label.setLayoutY(40);
+        return label;
+    }
+    
+    private static Label getInfoLabel1(String line1) {
+        Label label = new Label(line1);
+        label.getStyleClass().add("mypopup-text-label");
+        label.setAlignment(Pos.CENTER);
+        label.setPrefWidth(450);
+        label.setPrefHeight(23);
+        label.setLayoutX(26);
+        label.setLayoutY(90);
+        return label;
+    }
+    
+    private static Label getInfoLabel2(String line2) {
+        Label label = new Label(line2);
+        label.getStyleClass().add("mypopup-text-label");
+        label.setAlignment(Pos.CENTER);
+        label.setPrefWidth(450);
+        label.setPrefHeight(23);
+        label.setLayoutX(26);
+        label.setLayoutY(190);
+        return label;
+    }
+
+    private static Pane getNewShowAlertPane(Scene scene) {
+        Pane pane = new Pane();
+        ((AnchorPane) scene.getRoot()).getChildren().add(pane);
+        pane.getStyleClass().add("mypopup");
+        pane.setPrefWidth(500);
+        pane.setPrefHeight(350);
+        pane.setLayoutX(650);
+        pane.setLayoutY(300);
+        pane.toFront();
+        return pane;
+    }
+
     
 
 }

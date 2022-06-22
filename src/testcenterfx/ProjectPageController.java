@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,6 +50,7 @@ import util.FXWindowUtils;
 import util.JsonUtils;
 import util.OpenWordDocument;
 import util.Utils;
+import util.WordFileUtils;
 //</editor-fold>
 
 /**
@@ -84,9 +86,9 @@ public class ProjectPageController implements Initializable {
     @FXML
     private TableColumn<TestModuleStat, Integer> completedColumn;
     @FXML
-    private TableColumn<TestModuleStat, Integer> failedColumn;    
+    private TableColumn<TestModuleStat, Integer> failedColumn;
     @FXML
-    private PieChart pieChart;    
+    private PieChart pieChart;
     @FXML
     private Label projectNameLabel;
     @FXML
@@ -118,13 +120,13 @@ public class ProjectPageController implements Initializable {
     @FXML
     private Button createDefectLogsButton;
     @FXML
-    private Pane scanningDocsPane;    
+    private Pane scanningDocsPane;
     @FXML
     private ImageView refreshIcon;
-    
 
 //</editor-fold>   
     //<editor-fold defaultstate="collapsed" desc="PROPERTIES">
+    private static Stage staticStage;
     private ObservableList<TestModuleStat> testModuleList;
     private static TestProject currentProject;
     ObservableList<PieChart.Data> pieChartData;
@@ -135,7 +137,7 @@ public class ProjectPageController implements Initializable {
     int numOfNotCompletedTests;
     int numOfCompletedTests;
     int completedRate;
-    int successRate;   
+    int successRate;
 //</editor-fold>   
     //<editor-fold defaultstate="collapsed" desc="INITALIZE">
 
@@ -156,13 +158,13 @@ public class ProjectPageController implements Initializable {
     }
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="HANDLERS">
-    
+
     @FXML
-    private void exitSuccesPane (){
+    private void exitSuccesPane() {
         successPane.setVisible(false);
         opacityPane.setVisible(false);
     }
-    
+
     @FXML
     private void minimizeStage(MouseEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -213,7 +215,7 @@ public class ProjectPageController implements Initializable {
     private void handleRefreshIconExited() {
         refreshIcon.setOpacity(0.5);
     }
-    
+
     @FXML
     private void handleRefreshButton(MouseEvent mouseEvent) throws IOException {
 
@@ -221,7 +223,6 @@ public class ProjectPageController implements Initializable {
             @Override
             protected Void call() throws Exception {
                 FXWindowUtils.showPopup(scanningDocsPane, basePane, closeIcon, minimizeIcon, logoPane);
-
                 return null;
             }
         };
@@ -252,7 +253,6 @@ public class ProjectPageController implements Initializable {
                 new Thread(rescan).start();
             }
         });
-
         new Thread(showPopup).start();
 
     }
@@ -260,7 +260,7 @@ public class ProjectPageController implements Initializable {
     @FXML
     private void handleFolderIconClicked(MouseEvent event) {
         try {
-            Desktop.getDesktop().open(new File(currentProject.getProjectFolderPath()+AppConfig.TEST_DOCUMENTS_FOLDERNAME));
+            Desktop.getDesktop().open(new File(currentProject.getProjectFolderPath() + AppConfig.TEST_DOCUMENTS_FOLDERNAME));
         } catch (IOException ex) {
             Logger.getLogger(CreateTestDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -274,8 +274,6 @@ public class ProjectPageController implements Initializable {
         FXWindowUtils.delayAndFadeInNextRoot(stage, nextRoot, event, CONTENT_FADE_OUT_DURATION);
     }
 
-    
-
     @FXML
     private void handleGenerateTestDocument(ActionEvent event) throws IOException {
         Parent nextRoot = FXMLLoader.load(getClass().getResource("CreateTestDocumentFXMLPage.fxml"));
@@ -285,37 +283,23 @@ public class ProjectPageController implements Initializable {
     }
 
     public static void handleOpenTestDocumentRequest(String modulName, TableCell tc) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                tc.getScene().setCursor(Cursor.WAIT);
-            }
-        });
-        String path = getDocumnetPath(modulName);
-        OpenWordDocument.open(path);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ProjectBugsController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                tc.getScene().setCursor(Cursor.DEFAULT);
-            }
-        });
-    }
 
-    private static String getDocumnetPath(String modulName) {
-        
-        return currentProject
-                .getAllTestDocuments()
-                .stream()
-                .filter(p -> p.getModulName().equalsIgnoreCase(modulName))
-                .findFirst()
-                .get()
-                .getWordFile()
-                .getAbsolutePath();
+        setCursor(tc, Cursor.WAIT, 0);
+        String path = getDocumnetPath(modulName);
+        System.out.println(path);
+        if (WordFileUtils.isWordFileLocked(path)) {
+            staticStage = (Stage) tc.getScene().getWindow();
+            FXWindowUtils.showAlert(
+                    staticStage,
+                    "A FÁJL NYITVA VAN SZERKESZTÉSRE",
+                    "( " + WordFileUtils.getWordFileNameFromFullPath(path) + " )",
+                    "Használja: " + WordFileUtils.getOwnerOfOpenedWordFile(path));
+
+        } else {
+            System.out.println("Bot Locked!");
+            OpenWordDocument.open(path);
+            setCursor(tc, Cursor.DEFAULT, 2000);
+        }
     }
 
 //</editor-fold>
@@ -358,8 +342,6 @@ public class ProjectPageController implements Initializable {
         }
     }
 
-
-
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="SETUP TABLE">
     private void setupTableView() {
@@ -371,7 +353,7 @@ public class ProjectPageController implements Initializable {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("testModuleId"));
         docNameColumn.setCellValueFactory(new PropertyValueFactory<>("testmoduleName"));
         docNameColumn.setCellFactory(CustomTestDocumentNameTableCell.forTableColumn());
-        totalColumn.setCellValueFactory(new PropertyValueFactory<>("numOfTotalTestCases"));        
+        totalColumn.setCellValueFactory(new PropertyValueFactory<>("numOfTotalTestCases"));
         completedColumn.setCellValueFactory(new PropertyValueFactory<>("numOfCompletedTestCases"));
         failedColumn.setCellValueFactory(new PropertyValueFactory<>("numOfFailedTestCases"));
         docNameColumn.setStyle("-fx-alignment: CENTER-LEFT");
@@ -379,7 +361,7 @@ public class ProjectPageController implements Initializable {
         completedColumn.setStyle("-fx-alignment: CENTER");
         failedColumn.setStyle("-fx-alignment: CENTER");
         statTable.getColumns().setAll(idColumn, docNameColumn, totalColumn, failedColumn, completedColumn);
-        
+
     }
 
     private List<TestModuleStat> getTestModuleStatList(List<TestDocument> moduleList) {
@@ -412,13 +394,13 @@ public class ProjectPageController implements Initializable {
     }
 
     private void setProjectDeadLine() {
-        
-        if (null!=currentProject.getProjectDeadline()){
+
+        if (null != currentProject.getProjectDeadline()) {
             projectDeadlineLabel.setText(Utils.convertLocalDateToString(currentProject.getProjectDeadline()));
         } else {
             projectDeadlineLabel.setText("-");
-        }        
-        
+        }
+
     }
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="PIECHART">
@@ -452,6 +434,31 @@ public class ProjectPageController implements Initializable {
         data.add(percentageNotCompleted);
         return data;
     }
-//</editor-fold>
+//</editor-fold>    
+    //<editor-fold defaultstate="collapsed" desc="HELPER METHODS">
 
+    private static void setCursor(TableCell tc, Cursor cursor, long sleeptime) {
+        Platform.runLater(() -> {
+            try {
+                Thread.sleep(sleeptime);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ProjectBugsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tc.getScene().setCursor(cursor);
+        });
+    }
+
+    private static String getDocumnetPath(String modulName) {
+
+        return currentProject
+                .getAllTestDocuments()
+                .stream()
+                .filter(p -> p.getModulName().equalsIgnoreCase(modulName))
+                .findFirst()
+                .get()
+                .getWordFile()
+                .getAbsolutePath();
+    }
+
+//</editor-fold>
 }

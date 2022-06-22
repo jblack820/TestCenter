@@ -38,6 +38,7 @@ public enum TestDocumentConfig {
     public static final String FONT_TYPE = "Century Gothic";
     public static final int NUMBER_OF_TABLES_PER_PAGE = 4;
     public static final String CHECKBOX_CHECKED_CHARACTER = "\u2612";
+    public static final String WORD_DOCUMENT_LOCK_FILE_PREFIX = "~$";
     
 
 //<editor-fold defaultstate="collapsed" desc="CONSTRUCTOR">

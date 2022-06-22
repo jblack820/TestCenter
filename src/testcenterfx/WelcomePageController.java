@@ -334,12 +334,6 @@ public class WelcomePageController implements Initializable {
     }
 
     @FXML
-    private void handleCreateNewProjectButton(ActionEvent event) throws IOException {
-        Parent nextRoot = FXMLLoader.load(getClass().getResource("CreateProjectPage.fxml"));
-        FXWindowUtils.initTransitionToNextPage(event, stage, nextRoot);
-    }
-
-    @FXML
     private void handleFileChooserClicked() {
         redLabel.setVisible(false);
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -378,6 +372,7 @@ public class WelcomePageController implements Initializable {
     private void clearPathLabel() {
         installPath.setText("");
     }
+
 
     @FXML
     private void setFolderIconOpacityToMax() {
