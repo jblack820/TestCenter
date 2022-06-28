@@ -7,7 +7,7 @@ package model;
  */
 public enum UserRole {
     
-    TESTER ("Tesztelő"), MANAGER ("Vezető");
+    TESTER ("Tesztelő"), MANAGER ("Vezető"), ADMIN ("Admin");
     
     private String name;
 

@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.management.relation.Role;
 import model.DefectStatusRecord;
 import model.OsType;
 import model.ProjectType;
@@ -217,7 +218,7 @@ public class JsonUtils {
     static void mapUserToJSON(User user, JSONObject jobj) {
         jobj.put("userKey", user.getUserKey());
         jobj.put("fullname", user.getFullname());
-        jobj.put("role", user.getRole().getName());
+        jobj.put("role", user.getAllRolesInOneString());
     }
 
     public static Set<User> getUsersFromJson() {
@@ -244,10 +245,21 @@ public class JsonUtils {
             User u = new User(
                     (String) jobj.get("userKey"),
                     (String) jobj.get("fullname"),
-                    UserRole.getUserRoleByName((String) jobj.get("role")));
+                    getRolesOfUser(jobj));
             userList.add(u);
         }
         return userList;
+    }
+    
+    private static List<UserRole> getRolesOfUser(JSONObject jobj) {
+        List<UserRole> roleList = new ArrayList();
+        String roles = (String) jobj.get("role");
+        for (UserRole value : UserRole.values()) {
+            if (roles.contains(value.getName())){
+                roleList.add(value);
+            }
+        }
+        return roleList;
     }
 
     static void writeUsersJSONArrayToFile(JSONArray jArray) {
@@ -388,4 +400,6 @@ public class JsonUtils {
     }
 
 //</editor-fold>
+
+    
 }

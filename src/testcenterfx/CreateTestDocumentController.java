@@ -463,7 +463,7 @@ public class CreateTestDocumentController implements Initializable {
                 .getUsers()
                 .getUserList()
                 .stream()
-                .filter(p -> p.getRole() == UserRole.TESTER)
+                .filter(p -> p.getRoleList().contains(UserRole.TESTER))
                 .map(p -> p.getFullname())
                 .collect(Collectors
                         .toList());

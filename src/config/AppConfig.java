@@ -16,4 +16,5 @@ public class AppConfig {
     public static final double FADE_IN_OUT_DURATION = 150;
     public static final double CONTENT_FADE_OUT_DURATION = 300;
     public static final double CONTENT_FADE_IN_DURATION = 800;
+    public static final String ADMIN_PASSWORD = "TesztAdmin1234";
 }

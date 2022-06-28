@@ -1,8 +1,8 @@
-
 package model;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -10,32 +10,37 @@ import java.util.Objects;
  * @author takacs.gergely
  */
 public class User implements Serializable {
-    
+
     private String userKey;
     private String fullname;
-    private UserRole role;
+    private List<UserRole> roleList;
 
-    public User(String fullname) {
-        this.userKey = getUserHomePath();
-        this.fullname = fullname;
-        this.role = UserRole.TESTER;
-    }
-
-    public User(String userKey, String fullname, UserRole role) {
+    public User(String userKey, String fullname, List<UserRole> roleList) {
         this.userKey = userKey;
         this.fullname = fullname;
-        this.role = role;
+        this.roleList = roleList;
     }
-        
-    
-    private String getHomeDirName(){
+
+    public String getAllRolesInOneString() {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < this.roleList.size(); i++) {
+            sb.append(roleList.get(i).getName());
+            if (i != this.roleList.size() - 1) {
+                sb.append(", ");
+            }
+        }
+        return sb.toString();
+    }
+
+    private String getHomeDirName() {
         String path = System.getProperty("user.home");
-        String splitter = File.separator.replace("\\","\\\\");
-        String [] array = path.split(splitter);
-        return array[array.length-1];
+        String splitter = File.separator.replace("\\", "\\\\");
+        String[] array = path.split(splitter);
+        return array[array.length - 1];
     }
-    
-    private String getUserHomePath (){
+
+    private String getUserHomePath() {
         return System.getProperty("user.home");
     }
 
@@ -47,30 +52,28 @@ public class User implements Serializable {
         return fullname;
     }
 
-    public UserRole getRole() {
-        return role;
+    public List<UserRole> getRoleList() {
+        return roleList;
     }
 
     public void setFullname(String fullname) {
         this.fullname = fullname;
     }
 
-    public void setRole(UserRole role) {
-        this.role = role;
+    public void setRoleList(List<UserRole> roleList) {
+        this.roleList = roleList;
     }
 
     public void setUserKey(String userKey) {
         this.userKey = userKey;
     }
-    
-    
 
     @Override
     public int hashCode() {
-        int hash = 5;
+        int hash = 3;
         hash = 79 * hash + Objects.hashCode(this.userKey);
         hash = 79 * hash + Objects.hashCode(this.fullname);
-        hash = 79 * hash + Objects.hashCode(this.role);
+        hash = 79 * hash + Objects.hashCode(this.roleList);
         return hash;
     }
 
@@ -92,7 +95,7 @@ public class User implements Serializable {
         if (!Objects.equals(this.fullname, other.fullname)) {
             return false;
         }
-        if (this.role != other.role) {
+        if (!Objects.equals(this.roleList, other.roleList)) {
             return false;
         }
         return true;
@@ -103,11 +106,9 @@ public class User implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("User{userKey=").append(userKey);
         sb.append(", fullname=").append(fullname);
-        sb.append(", role=").append(role);
+        sb.append(", roleList=").append(roleList);
         sb.append('}');
         return sb.toString();
     }
-    
-    
-    
+
 }

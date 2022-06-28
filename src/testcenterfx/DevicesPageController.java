@@ -461,11 +461,7 @@ public class DevicesPageController implements Initializable {
     private void initDragPane() {
         FXWindowUtils.makeStageDraggable(dragPane);
     }
-
-    private UserPageTableData createUserPageTableDatObjct(User u) {
-
-        return new UserPageTableData(u.getUserKey(), u.getFullname(), u.getRole().getName());
-    }
+  
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Misc Utils">
 

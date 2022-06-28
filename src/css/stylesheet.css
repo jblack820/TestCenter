@@ -385,7 +385,9 @@
     -fx-background-insets: 0,3px;
 }
 
-
+.check-box .box {
+    -fx-background-color: #202933;    
+}
 
 .mytextfield:focused {
     -fx-background-color:  #222B35;

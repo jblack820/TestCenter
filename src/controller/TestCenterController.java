@@ -684,15 +684,15 @@ public class TestCenterController {
 
     }
 
-    public void createNewLoggedInUser(String userKey, String fullName, String role) {
-        addUserObject(userKey, fullName, role);
+    public void createNewLoggedInUser(String userKey, String fullName, List<UserRole> roles) {
+        addUserObject(userKey, fullName, roles);
         setCurrentUser();
         saveUsersJsonFile();
         isUserCreationNeeded = false;
     }
 
-    public void createNewUser(String userKey, String fullName, String role) {
-        addUserObject(userKey, fullName, role);
+    public void createNewUser(String userKey, String fullName, List<UserRole> roles) {
+        addUserObject(userKey, fullName, roles);
         saveUsersJsonFile();
     }
 
@@ -704,9 +704,9 @@ public class TestCenterController {
         devices.loadDevicesFromJSON();
     }
 
-    private void addUserObject(String userKey, String fullName, String role) {
+    private void addUserObject(String userKey, String fullName, List<UserRole> roles) {
         System.out.println("addig user object to user list");
-        User u = new User(userKey, fullName, UserRole.getUserRoleByName(role));
+        User u = new User(userKey, fullName, roles);
         getUsers().addUser(u);
     }
 

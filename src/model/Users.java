@@ -45,7 +45,23 @@ public class Users {
         return this
                 .getUserList()
                 .stream()
-                .filter(p -> p.getRole() == UserRole.TESTER)
+                .filter(p -> p.getRoleList().contains(UserRole.TESTER))
+                .collect(Collectors.toList());
+    }
+    
+    public List<User> getAdminList() {
+        return this
+                .getUserList()
+                .stream()
+                .filter(p -> p.getRoleList().contains(UserRole.ADMIN))
+                .collect(Collectors.toList());
+    }
+    
+    public List<User> getManagerList() {
+        return this
+                .getUserList()
+                .stream()
+                .filter(p -> p.getRoleList().contains(UserRole.MANAGER))
                 .collect(Collectors.toList());
     }
     

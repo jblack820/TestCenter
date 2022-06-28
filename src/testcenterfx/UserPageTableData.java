@@ -1,58 +1,75 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package testcenterfx;
 
 import java.util.Objects;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 
-/**
- *
- * @author takacs.gergely
- */
+
 public class UserPageTableData {
 
-    private String userKey;
-    private String fullname;
-    private String role;
+    private SimpleStringProperty userKey;
+    private SimpleStringProperty fullname;
+    private BooleanProperty isTester;
+    private BooleanProperty isManager;
+    private BooleanProperty isAdmin;
 
-    public UserPageTableData(String userKey, String fullname, String role) {
+    public UserPageTableData(SimpleStringProperty userKey, SimpleStringProperty fullname, BooleanProperty isTester, BooleanProperty isManager, BooleanProperty isAdmin) {
         this.userKey = userKey;
         this.fullname = fullname;
-        this.role = role;
+        this.isTester = isTester;
+        this.isManager = isManager;
+        this.isAdmin = isAdmin;
     }
 
-    public String getUserKey() {
+    public SimpleStringProperty getUserKey() {
         return userKey;
     }
 
-    public void setUserKey(String userKey) {
+    public void setUserKey(SimpleStringProperty userKey) {
         this.userKey = userKey;
     }
 
-    public String getFullname() {
+    public SimpleStringProperty getFullname() {
         return fullname;
     }
 
-    public void setFullname(String fullname) {
+    public void setFullname(SimpleStringProperty fullname) {
         this.fullname = fullname;
     }
 
-    public String getRole() {
-        return role;
+    public BooleanProperty getIsTester() {
+        return isTester;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setIsTester(BooleanProperty isTester) {
+        this.isTester = isTester;
+    }
+
+    public BooleanProperty getIsManager() {
+        return isManager;
+    }
+
+    public void setIsManager(BooleanProperty isManager) {
+        this.isManager = isManager;
+    }
+
+    public BooleanProperty getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(BooleanProperty isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 29 * hash + Objects.hashCode(this.userKey);
-        hash = 29 * hash + Objects.hashCode(this.fullname);
-        hash = 29 * hash + Objects.hashCode(this.role);
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.userKey);
+        hash = 59 * hash + Objects.hashCode(this.fullname);
+        hash = 59 * hash + Objects.hashCode(this.isTester);
+        hash = 59 * hash + Objects.hashCode(this.isManager);
+        hash = 59 * hash + Objects.hashCode(this.isAdmin);
         return hash;
     }
 
@@ -74,13 +91,26 @@ public class UserPageTableData {
         if (!Objects.equals(this.fullname, other.fullname)) {
             return false;
         }
-        if (!Objects.equals(this.role, other.role)) {
+        if (!Objects.equals(this.isTester, other.isTester)) {
+            return false;
+        }
+        if (!Objects.equals(this.isManager, other.isManager)) {
+            return false;
+        }
+        if (!Objects.equals(this.isAdmin, other.isAdmin)) {
             return false;
         }
         return true;
     }
-    
-    
-    
 
+    @Override
+    public String toString() {
+        return "UserPageTableData{" + "userKey=" + userKey + ", fullname=" + fullname + ", isTester=" + isTester + ", isManager=" + isManager + ", isAdmin=" + isAdmin + '}';
+    }
+ 
+    
+    
+    
 }
+
+    
