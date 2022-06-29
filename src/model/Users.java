@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +30,19 @@ public class Users {
         return userList;
     }
 
+    public boolean removeUser(User target) {
+        boolean answer = false;
+        Iterator it = this.userList.iterator();
+        while (it.hasNext()) {
+            User current = (User) it.next();
+            if (current == target) {
+                it.remove();
+                answer = true;
+            }
+        }
+        return answer;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -48,7 +62,7 @@ public class Users {
                 .filter(p -> p.getRoleList().contains(UserRole.TESTER))
                 .collect(Collectors.toList());
     }
-    
+
     public List<User> getAdminList() {
         return this
                 .getUserList()
@@ -56,7 +70,7 @@ public class Users {
                 .filter(p -> p.getRoleList().contains(UserRole.ADMIN))
                 .collect(Collectors.toList());
     }
-    
+
     public List<User> getManagerList() {
         return this
                 .getUserList()
@@ -64,9 +78,9 @@ public class Users {
                 .filter(p -> p.getRoleList().contains(UserRole.MANAGER))
                 .collect(Collectors.toList());
     }
-    
-    public List<String> getTesterNamesList (){
-        return getTesterList().stream().map(p->p.getFullname()).collect(Collectors.toList());
+
+    public List<String> getTesterNamesList() {
+        return getTesterList().stream().map(p -> p.getFullname()).collect(Collectors.toList());
     }
 
     public User getUserByUserKey(String userKey) {

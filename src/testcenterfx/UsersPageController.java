@@ -210,8 +210,12 @@ public class UsersPageController implements Initializable {
         if (userKey.equalsIgnoreCase(TestCenterController.getUserLoggedIn().getUserKey())
                 && TestCenterController.getUserLoggedIn().hasRole(UserRole.ADMIN)) {
             editAdminBox.setDisable(true);
+            editUserKey.setDisable(true);
+            deleteUserButton.setDisable(true);
         } else {
             editAdminBox.setDisable(false);
+            editUserKey.setDisable(false);
+            deleteUserButton.setDisable(false);
         }
 
         if (!TestCenterController.userLoggedIn.hasRole(UserRole.ADMIN)) {
@@ -267,6 +271,25 @@ public class UsersPageController implements Initializable {
     private void handleEditPaneBackButton(ActionEvent event) throws IOException {
         FXWindowUtils.hidePopup(editPane, basePane, closeIcon, minimizeIcon, logoPane);
     }
+    
+    @FXML
+    private void handleDeleteUserButtonClicked(ActionEvent event) {
+        TextField userKeyFiled = (TextField) editPane.getScene().lookup("#editUserKey");
+        Boolean isUserRemoveSuccesful = Main.controller.getUsers().removeUser(userEdited);
+        
+        if (isUserRemoveSuccesful){
+            Main.controller.updateUsersJsonFile();
+            try {
+                goToUsersPage(event);
+            } catch (IOException ex) {
+                Logger.getLogger(UsersPageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            System.out.println("Nincs ilyen felhasznalo");
+        }
+        
+    }
+    
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Setup Page Elements">

@@ -209,7 +209,7 @@
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button id="deleteUserButton" fx:id="deleteUserButton" layoutX="105.0" layoutY="601.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="95.0" styleClass="mydeletebutton" stylesheets="@../css/stylesheet.css" text="Töröl" textFill="#d7d6d6">
+            <Button id="deleteUserButton" fx:id="deleteUserButton" layoutX="105.0" layoutY="601.0" mnemonicParsing="false" onAction="#handleDeleteUserButtonClicked" prefHeight="31.0" prefWidth="95.0" styleClass="mydeletebutton" stylesheets="@../css/stylesheet.css" text="Töröl" textFill="#d7d6d6">
                <font>
                   <Font size="15.0" />
                </font>
