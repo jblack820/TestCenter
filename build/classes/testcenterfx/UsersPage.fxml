@@ -4,7 +4,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -198,26 +197,31 @@
             <Label id="infoLabel" fx:id="infoPopupLabel1" alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="63.0" prefHeight="54.0" prefWidth="307.0" styleClass="mypopup-text-label" text="info" textAlignment="CENTER" wrapText="true" />
          </children>
       </Pane>
-      <AnchorPane fx:id="editPane" layoutX="650.0" layoutY="180.0" prefHeight="668.0" prefWidth="500.0" styleClass="mypopup" visible="false">
+      <AnchorPane fx:id="editPane" layoutX="650.0" layoutY="180.0" prefHeight="668.0" prefWidth="500.0" styleClass="mypopup">
          <children>
-            <Button fx:id="createButton1" layoutX="232.0" layoutY="601.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="95.0" styleClass="myokaybutton" stylesheets="@../css/stylesheet.css" text="Módosít" textFill="#d7d6d6">
+            <Button id="modifyUserButton" fx:id="modifyUserButton" layoutX="232.0" layoutY="601.0" mnemonicParsing="false" onAction="#handleModifyButtonClicked" prefHeight="31.0" prefWidth="95.0" styleClass="myokaybutton" stylesheets="@../css/stylesheet.css" text="Módosít" textFill="#d7d6d6">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="backButton1" layoutX="354.0" layoutY="601.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="95.0" styleClass="mybackbutton" text="Mégsem" textFill="#d7d6d6">
+            <Button fx:id="backButton1" layoutX="354.0" layoutY="601.0" mnemonicParsing="false" onAction="#handleEditPaneBackButton" prefHeight="31.0" prefWidth="95.0" styleClass="mybackbutton" text="Mégsem" textFill="#d7d6d6">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <ImageView fitHeight="230.0" fitWidth="266.0" layoutX="121.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
+            <Button id="deleteUserButton" fx:id="deleteUserButton" layoutX="105.0" layoutY="601.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="95.0" styleClass="mydeletebutton" stylesheets="@../css/stylesheet.css" text="Töröl" textFill="#d7d6d6">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="171.0" fitWidth="179.0" layoutX="161.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/addProject2.png" />
                </image>
             </ImageView>
-            <Pane layoutX="200.0" layoutY="402.0">
+            <Pane layoutX="200.0" layoutY="300.0">
                <children>
-                  <TextField fx:id="userHomeField1" mouseTransparent="true" prefHeight="29.0" prefWidth="275.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
+                  <TextField fx:id="editUserName" layoutY="54.0" prefHeight="29.0" prefWidth="275.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
                      <padding>
                         <Insets bottom="1.0" top="1.0" />
                      </padding>
@@ -225,7 +229,7 @@
                         <Font size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="fullNameField1" layoutY="54.0" prefHeight="29.0" prefWidth="275.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
+                  <TextField id="editUserKey" fx:id="editUserKey" prefHeight="29.0" prefWidth="275.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
                      <padding>
                         <Insets bottom="1.0" top="1.0" />
                      </padding>
@@ -233,33 +237,40 @@
                         <Font size="16.0" />
                      </font>
                   </TextField>
-                  <ComboBox fx:id="roleSelector1" layoutY="104.0" prefHeight="29.0" prefWidth="275.0" style="-fx-background-color: #222B35;" />
                </children>
             </Pane>
-            <Pane layoutY="406.0" prefHeight="126.0" prefWidth="194.0">
+            <Pane layoutY="300.0" prefHeight="230.0" prefWidth="194.0">
                <children>
-                  <Label alignment="CENTER_RIGHT" layoutX="8.0" prefHeight="23.0" prefWidth="179.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="FELHASZNÁLÓI FIÓK" textFill="#abaaaa">
+                  <Label alignment="CENTER_RIGHT" layoutX="8.0" layoutY="3.0" prefHeight="23.0" prefWidth="179.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="FELHASZNÁLÓI FIÓK" textFill="#abaaaa">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" layoutX="16.0" layoutY="52.0" prefHeight="23.0" prefWidth="171.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="FELHASZNÁLÓ NEVE" textFill="#b5b5b5">
+                  <Label alignment="CENTER_RIGHT" layoutX="16.0" layoutY="57.0" prefHeight="23.0" prefWidth="171.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="FELHASZNÁLÓ NEVE" textFill="#b5b5b5">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" layoutX="8.0" layoutY="103.0" prefHeight="23.0" prefWidth="179.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="SZEREPKÖR" textFill="#b5b5b5">
+                  <Label alignment="CENTER_RIGHT" layoutX="8.0" layoutY="103.0" prefHeight="23.0" prefWidth="179.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="TESZTELŐ" textFill="#b5b5b5">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" layoutX="8.0" layoutY="153.0" prefHeight="23.0" prefWidth="179.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="VEZETŐ" textFill="#b5b5b5">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" layoutX="8.0" layoutY="203.0" prefHeight="23.0" prefWidth="179.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="ADMIN" textFill="#b5b5b5">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <Button fx:id="createButton11" layoutX="105.0" layoutY="601.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="95.0" styleClass="mydeletebutton" stylesheets="@../css/stylesheet.css" text="Töröl" textFill="#d7d6d6">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
+            <CheckBox fx:id="editTesterBox" layoutX="200.0" layoutY="405.0" mnemonicParsing="false" />
+            <CheckBox fx:id="editManagerBox" layoutX="200.0" layoutY="455.0" mnemonicParsing="false" />
+            <CheckBox fx:id="editAdminBox" layoutX="200.0" layoutY="506.0" mnemonicParsing="false" />
          </children>
       </AnchorPane>
     </children>

@@ -56,6 +56,7 @@ public class WelcomePageController implements Initializable {
     //<editor-fold defaultstate="collapsed" desc="ATTRIBUTES">
     public static boolean isDocumentsScanned;
     private Stage stage;
+    public static Stage staticStage;
     private List<CheckBox> checkBoxList;
     @FXML
     private Pane mypopup;
@@ -66,14 +67,13 @@ public class WelcomePageController implements Initializable {
     @FXML
     private Label adminLabel;
     @FXML
+    private Label invaliPasswordLabel;
+    @FXML
     private Button enterAdminButton;
     @FXML
     private Label redLabel;
     @FXML
     private Button okayButton;
-    @FXML
-    private Button addUserButton;
-
     @FXML
     private Button createButton;
     @FXML
@@ -88,6 +88,8 @@ public class WelcomePageController implements Initializable {
     private Pane logoPane;
     @FXML
     private AnchorPane dragPane;
+    @FXML
+    private AnchorPane welcomeStage;
     @FXML
     private ImageView closeIcon;
     @FXML
@@ -111,9 +113,7 @@ public class WelcomePageController implements Initializable {
     @FXML
     private TextField passwordField;
     @FXML
-    private TextField fullNameField;
-    @FXML
-    private ComboBox<String> roleSelector;
+    private TextField fullNameField;    
 
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="INIT">
@@ -127,19 +127,7 @@ public class WelcomePageController implements Initializable {
         }
 
         if (!isDocumentsScanned && !isTestCenterLocationNeeded()) {
-            Task<Void> scanDocsTask = new Task<Void>() {
-                @Override
-                protected Void call() throws Exception {
-                    scanDocuments();
-                    return null;
-                }
-
-            };
-            scanDocsTask.setOnSucceeded((event) -> {
-                isDocumentsScanned = true;
-            });
-            new Thread(scanDocsTask).start();
-
+             scanDocumentsAndReloadPage();
         }
 
         if (isDocumentsScanned && isUserCreationNeeded()) {
@@ -157,8 +145,9 @@ public class WelcomePageController implements Initializable {
         FXWindowUtils.setupPopupWindow(mypopup);
         FXWindowUtils.setupPopupWindow(installPathPane);
         FXWindowUtils.addVersionInfoToDragPane(dragPane);
+        userNotExistWarningPane.setVisible(false);
+        invaliPasswordLabel.setVisible(false);
         newUserPane.setVisible(false);
-//        addUserButton.setDisable(true);
         checkBoxList = new ArrayList<>(Arrays.asList(new CheckBox[]{testerBox, adminBox, managerBox}));
     }
 
@@ -168,44 +157,6 @@ public class WelcomePageController implements Initializable {
             redLabel.setVisible(false);
             okayButton.setDisable(true);
         });
-    }
-
-    private void initfiledListeners() {
-        addFieldContentListener(fullNameField);
-        startComboBoxListener(roleSelector);
-    }
-
-    public void addFieldContentListener(final TextField tf) {
-        tf.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
-                if (!isThereEmptyField()) {
-                    addUserButton.setDisable(false);
-                } else {
-                    addUserButton.setDisable(true);
-                }
-            }
-        });
-    }
-
-    public void startComboBoxListener(ComboBox<String> combo) {
-        combo.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
-                if (!isThereEmptyField()) {
-                    addUserButton.setDisable(false);
-                } else {
-                    addUserButton.setDisable(true);
-                }
-
-            }
-        });
-    }
-
-    public boolean isThereEmptyField() {
-        boolean isDropDownEmpty = null == roleSelector.getValue() || roleSelector.getValue().equalsIgnoreCase("");
-        boolean isNamefiledEmpty = fullNameField.getText().equalsIgnoreCase("");
-        return isDropDownEmpty || isNamefiledEmpty;
     }
 
 //</editor-fold>
@@ -250,35 +201,30 @@ public class WelcomePageController implements Initializable {
 
     }
 
-    private void creatTestCenter(Label installPath) {
-
-        Task<Void> sleeper = new Task<Void>() {
+    private void creatTestCenter(Label installPath, ActionEvent event) {
+        staticStage = (Stage) basePane.getScene().getWindow();
+        Task<Void> installTask = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 String fullInstallPath = installPath.getText() + AppConfig.TEST_CENTER_FOLDERNAME + File.separator;
-
                 Main.controller.getTestCenter().setFolderStructure(new FolderStructure(fullInstallPath));
-
                 Main.controller.setupTestCenterApp(installPath.getText());
-
-                //saving location to txt
                 Main.controller.getSaveSettings().saveSettingsToUserHome(fullInstallPath);
                 controller.TestCenterController.isTestCenterFolderLocationNeeded = false;
                 FXWindowUtils.hidePopup(installPathPane, basePane, closeIcon, minimizeIcon, logoPane, bigLogo);
                 return null;
             }
         };
-        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+        installTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent t) {
                 TestCenterController.isUserCreationNeeded = true;
-                controller.TestCenterController.isTestCenterFolderLocationNeeded = false;
-                System.out.println("Refreshing page...");
-                refreshPage();
+                TestCenterController.isTestCenterFolderLocationNeeded = false;                
+                scanDocumentsAndReloadPage();
             }
         });
-        new Thread(sleeper).start();
-
+        Thread installThread = new Thread(installTask);
+        installThread.start();
     }
 
 //</editor-fold>
@@ -287,19 +233,21 @@ public class WelcomePageController implements Initializable {
         return Main.controller.getUsers().isUserExist(System.getProperty("user.home"));
     }
 
-    private void initRoleSelector() {
-        List<String> roleList = Arrays.asList(UserRole.values()).stream().map(p -> p.getName()).collect(Collectors.toList());
-        roleSelector.getItems().addAll(roleList);
-    }
-
     private void initUserNotExistWarning() {
-        adminLabel.setText(getCommaSeparatedStringList(getAdminStringList()));
+        List<String> adminList = getAdminStringList();
+        if (adminList.isEmpty()){
+            adminLabel.setText("Még nincsenek adminisztrátorok a rendszerben. Lépjen be jelszőval!");
+        } else {
+            adminLabel.setText(getCommaSeparatedStringList(adminList));
+        }
         startPasswordFieldListener();
         FXWindowUtils.showPopup(userNotExistWarningPane, basePane, closeIcon, minimizeIcon, logoPane, bigLogo);
     }
 
     private void initAddUserProcess() {
         addNewUserFieldsListener();
+        adminBox.setSelected(true);
+        adminBox.setDisable(true);
         userHomeField.setText(System.getProperty("user.home"));
         FXWindowUtils.showPopup(newUserPane, basePane, closeIcon, minimizeIcon, logoPane, bigLogo);
 
@@ -363,7 +311,7 @@ public class WelcomePageController implements Initializable {
         if (passwordField.getText().equals(AppConfig.ADMIN_PASSWORD)) {
             initAddUserProcess();
         } else {
-            FXWindowUtils.showAlert(stage, "HELYTELEN JELSZÓ!", "", "");
+            invaliPasswordLabel.setVisible(true);
         }
     }
 
@@ -459,7 +407,7 @@ public class WelcomePageController implements Initializable {
             new Thread(showPopup).start();
 
         } else {
-            creatTestCenter(installPath);
+            creatTestCenter(installPath, event);
         }
 
     }
@@ -481,7 +429,7 @@ public class WelcomePageController implements Initializable {
     private void handleAddUser(ActionEvent event) throws IOException {
 
         TestCenterController.isUserCreationNeeded = false;
-        createUser(event);
+        createUser();
         Parent nextRoot = FXMLLoader.load(getClass().getResource("WelcomePage.fxml"));
         Stage currentStage = (Stage) basePane.getScene().getWindow();
         FXWindowUtils.initTransitionToNextPage(event, currentStage, nextRoot);
@@ -493,7 +441,7 @@ public class WelcomePageController implements Initializable {
         FXWindowUtils.initTransitionToNextPage(event, currentStage, nextRoot);
     }
 
-    private void createUser(ActionEvent event) {
+    private void createUser() {
         String userHome = userHomeField.getText();
         String fullName = fullNameField.getText();
 
@@ -513,14 +461,14 @@ public class WelcomePageController implements Initializable {
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="UTILS">
     private void refreshPage() {
-        stage = (Stage) basePane.getScene().getWindow();
+        Stage currentStage = (Stage) welcomeStage.getScene().getWindow();
         Parent nextRoot = null;
         try {
             nextRoot = FXMLLoader.load(getClass().getResource("WelcomePage.fxml"));
         } catch (IOException ex) {
             Logger.getLogger(WelcomePageController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        FXWindowUtils.initTransitionToNextPage(stage, nextRoot);
+        FXWindowUtils.initTransitionToNextPage(currentStage, nextRoot);
     }
 
     private void disableContinue() {
@@ -537,7 +485,7 @@ public class WelcomePageController implements Initializable {
         refreshPage(event);
     }
 
-    private void scanDocuments() {
+    private void scanDocumentsAndReloadPage() {
         Task<Void> startScanning = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -605,6 +553,7 @@ public class WelcomePageController implements Initializable {
         passwordField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                invaliPasswordLabel.setVisible(false);
                 if (passwordField.getText().equals("")) {
                     enterAdminButton.setDisable(true);
                 } else {

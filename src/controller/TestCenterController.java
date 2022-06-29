@@ -703,9 +703,12 @@ public class TestCenterController {
     public void reScanDevicesJSON() {
         devices.loadDevicesFromJSON();
     }
+    
+    public void updateUsersJsonFile (){
+        saveUsersJsonFile();
+    }
 
-    private void addUserObject(String userKey, String fullName, List<UserRole> roles) {
-        System.out.println("addig user object to user list");
+    private void addUserObject(String userKey, String fullName, List<UserRole> roles) {        
         User u = new User(userKey, fullName, roles);
         getUsers().addUser(u);
     }

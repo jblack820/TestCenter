@@ -258,6 +258,20 @@
     -fx-font-size: 15px;
 }
 
+.mypopup-text-label-white {
+    -fx-background-color: transparent;
+    -fx-text-fill: #E6E6E6;
+    resize:none;
+    -fx-font-size: 15px;
+}
+
+.mypopup-text-label-red {
+    -fx-background-color: transparent;
+    -fx-text-fill: red;
+    resize:none;
+    -fx-font-size: 14px;
+}
+
 .mypopup-text-label-highlighted {
     -fx-background-color: transparent;
     -fx-text-fill: #CDCCCC;

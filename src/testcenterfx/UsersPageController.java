@@ -3,12 +3,15 @@ package testcenterfx;
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import app.Main;
 import static config.AppConfig.CONTENT_FADE_OUT_DURATION;
+import controller.TestCenterController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -24,13 +27,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import model.User;
 import model.UserRole;
@@ -43,9 +49,22 @@ public class UsersPageController implements Initializable {
     private Stage stage;
     List<TextField> fieldsList;
     private List<CheckBox> checkBoxList;
+    static User userEdited;
 
 //</editor-fold>    
     //<editor-fold defaultstate="collapsed" desc="FXML Properties">
+    @FXML
+    private ImageView closeIcon;
+    @FXML
+    private Line minimizeIcon;
+    @FXML
+    private Pane basePane;
+    @FXML
+    private AnchorPane editPane;
+    @FXML
+    private Button deleteUserButton;
+    @FXML
+    private Button modifyUserButton;
     @FXML
     private Pane exitPopup;
     @FXML
@@ -73,7 +92,7 @@ public class UsersPageController implements Initializable {
     @FXML
     private TextField userHomeField;
     @FXML
-    private TextField fullNameField;    
+    private TextField fullNameField;
     @FXML
     private TableColumn<User, String> userKeyColumn;
     @FXML
@@ -153,7 +172,6 @@ public class UsersPageController implements Initializable {
     private void handlePopupOkayButton(ActionEvent event) {
         FXWindowUtils.hidePopup(infoPopup1, hideStagePane);
     }
-  
 
     private void goToUsersPage(ActionEvent event) throws IOException {
         Parent nextRoot = FXMLLoader.load(getClass().getResource("UsersPage.fxml"));
@@ -161,7 +179,7 @@ public class UsersPageController implements Initializable {
         FXWindowUtils.initNodeFadeOutFX(CONTENT_FADE_OUT_DURATION, contentPane, 1.0, 0.01);
         FXWindowUtils.delayAndFadeInNextRoot(stage, nextRoot, event, CONTENT_FADE_OUT_DURATION);
     }
-    
+
     private void goToWelcomePage(ActionEvent event) throws IOException {
         Parent nextRoot = FXMLLoader.load(getClass().getResource("WelcomePage.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -169,12 +187,93 @@ public class UsersPageController implements Initializable {
         FXWindowUtils.delayAndFadeInNextRoot(stage, nextRoot, event, CONTENT_FADE_OUT_DURATION);
     }
 
+    static void handleEditRequest(String userKey, TableCell tc) {
+        System.out.println("edit panel requested!");
+        Main.controller.reScanUsersJSON();
+        userEdited = Main.controller.getUsers().getUserByUserKey(userKey);
+        AnchorPane editPane = (AnchorPane) tc.getScene().lookup("#editPane");
+
+        TextField editUserKey = (TextField) editPane.getScene().lookup("#editUserKey");
+        TextField editUserName = (TextField) editPane.getScene().lookup("#editUserName");
+        CheckBox editTesterBox = (CheckBox) editPane.getScene().lookup("#editTesterBox");
+        CheckBox editManagerBox = (CheckBox) editPane.getScene().lookup("#editManagerBox");
+        CheckBox editAdminBox = (CheckBox) editPane.getScene().lookup("#editAdminBox");
+        Button modifyUserButton = (Button) editPane.getScene().lookup("#modifyUserButton");
+        Button deleteUserButton = (Button) editPane.getScene().lookup("#deleteUserButton");
+
+        editUserKey.setText(userEdited.getUserKey());
+        editUserName.setText(userEdited.getFullname());
+        editTesterBox.setSelected(userEdited.hasRole(UserRole.TESTER));
+        editManagerBox.setSelected(userEdited.hasRole(UserRole.MANAGER));
+        editAdminBox.setSelected(userEdited.hasRole(UserRole.ADMIN));
+
+        if (userKey.equalsIgnoreCase(TestCenterController.getUserLoggedIn().getUserKey())
+                && TestCenterController.getUserLoggedIn().hasRole(UserRole.ADMIN)) {
+            editAdminBox.setDisable(true);
+        } else {
+            editAdminBox.setDisable(false);
+        }
+
+        if (!TestCenterController.userLoggedIn.hasRole(UserRole.ADMIN)) {
+            editUserKey.setDisable(true);
+            editUserName.setDisable(true);
+            editTesterBox.setDisable(true);
+            editManagerBox.setDisable(true);
+            editAdminBox.setDisable(true);
+            deleteUserButton.setDisable(true);
+            modifyUserButton.setDisable(true);
+        }
+
+        Pane basePane = (Pane) tc.getScene().lookup("#basePane");
+        ImageView closeIcon = (ImageView) tc.getScene().lookup("#closeIcon");
+        Line minimizeIcon = (Line) tc.getScene().lookup("#minimizeIcon");
+        Pane logoPane = (Pane) tc.getScene().lookup("#logoPane");
+        FXWindowUtils.showPopup(editPane, basePane, closeIcon, minimizeIcon, logoPane);
+
+    }
+
+    @FXML
+    private void handleModifyButtonClicked(ActionEvent event) {
+        TextField editUserKey = (TextField) editPane.getScene().lookup("#editUserKey");
+        TextField editUserName = (TextField) editPane.getScene().lookup("#editUserName");
+        CheckBox editTesterBox = (CheckBox) editPane.getScene().lookup("#editTesterBox");
+        CheckBox editManagerBox = (CheckBox) editPane.getScene().lookup("#editManagerBox");
+        CheckBox editAdminBox = (CheckBox) editPane.getScene().lookup("#editAdminBox");
+
+        userEdited.setUserKey(editUserKey.getText());
+        userEdited.setFullname(editUserName.getText());
+        userEdited.getRoleList().clear();
+        if (editTesterBox.isSelected()) {
+            userEdited.getRoleList().add(UserRole.TESTER);
+        }
+        if (editManagerBox.isSelected()) {
+            userEdited.getRoleList().add(UserRole.MANAGER);
+        }
+        if (editAdminBox.isSelected()) {
+            userEdited.getRoleList().add(UserRole.ADMIN);
+        }
+
+        Main.controller.updateUsersJsonFile();
+        Main.controller.reScanUsersJSON();
+        TestCenterController.setUserLoggedIn(Main.controller.getUsers().getUserByUserKey(System.getProperty("user.home")));
+        try {
+            goToUsersPage(event);
+        } catch (IOException ex) {
+            Logger.getLogger(UsersPageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void handleEditPaneBackButton(ActionEvent event) throws IOException {
+        FXWindowUtils.hidePopup(editPane, basePane, closeIcon, minimizeIcon, logoPane);
+    }
+
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Setup Page Elements">
     public void setupElements() {
         userHomeField.setEditable(true);
         userHomeField.setDisable(false);
-        
+        editPane.setVisible(false);
         if (isUserAdmin()) {
             addUserPane.setDisable(false);
         } else {
@@ -196,6 +295,7 @@ public class UsersPageController implements Initializable {
                 .stream()
                 .collect(Collectors.toList());
         userKeyColumn.setCellValueFactory(new PropertyValueFactory<>("userKey"));
+        userKeyColumn.setCellFactory(CustomUserTableCell.forTableColumn());
         userKeyColumn.setStyle("-fx-alignment: center-left;");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullname"));
         nameColumn.setStyle("-fx-alignment: center-left;");

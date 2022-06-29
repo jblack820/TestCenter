@@ -116,43 +116,48 @@
             </Pane>
             </children>
         </Pane>
-      <Pane fx:id="installPathPane" layoutX="211.0" layoutY="120.0" prefHeight="371.0" prefWidth="679.0" styleClass="basePane" stylesheets="@../css/stylesheet.css" visible="false">
+      <Pane fx:id="installPathPane" layoutX="700.0" layoutY="200.0" prefHeight="371.0" prefWidth="679.0" styleClass="basePane" stylesheets="@../css/stylesheet.css">
          <children>
             <ImageView fx:id="foldericon" fitHeight="30.0" fitWidth="30.0" layoutX="332.0" layoutY="171.0" onMouseClicked="#handleFileChooserClicked" onMouseEntered="#setFolderIconOpacityToMax" onMouseExited="#reduceFolderIconOpacity" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.5;">
                <image>
                   <Image url="@../images/filechooser_brown.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" layoutX="7.0" layoutY="44.0" prefHeight="23.0" prefWidth="679.0" styleClass="mypopup-text-label" text="Ha létezik, válassza ki a TestCenter mappát" textAlignment="CENTER" />
+            <Label alignment="CENTER" layoutX="7.0" layoutY="74.0" prefHeight="23.0" prefWidth="679.0" styleClass="mypopup-text-label" text="Ha létezik, válassza ki a TestCenter mappát" textAlignment="CENTER" />
             <Label alignment="CENTER" layoutX="2.0" layoutY="209.0" prefHeight="23.0" prefWidth="679.0" styleClass="mypopup-text-label" text="Választott mappa:" />
-            <Label fx:id="installPath" alignment="CENTER" layoutX="4.0" layoutY="256.0" prefHeight="23.0" prefWidth="743.0" style="-fx-text-fill: A6A6A6;">
+            <Label fx:id="installPath" alignment="CENTER" layoutX="4.0" layoutY="237.0" prefHeight="23.0" prefWidth="672.0" styleClass="menulabelhiglight">
                <font>
                   <Font name="Century Gothic" size="16.0" />
                </font>
             </Label>
-            <Button fx:id="okayButton" disable="true" layoutX="304.0" layoutY="279.0" mnemonicParsing="false" onAction="#handleCommitButton" styleClass="mycommitbutton" text="Tovább" />
-            <Label alignment="CENTER" layoutX="67.0" layoutY="95.0" prefHeight="23.0" prefWidth="611.0" styleClass="mypopup-text-label" text="Ha nem létezik, válassza ki, hova szeretné telepíteni" textAlignment="CENTER" />
+            <Button fx:id="okayButton" disable="true" layoutX="304.0" layoutY="291.0" mnemonicParsing="false" onAction="#handleCommitButton" styleClass="mycommitbutton" text="Tovább" />
+            <Label alignment="CENTER" layoutX="67.0" layoutY="115.0" prefHeight="23.0" prefWidth="611.0" styleClass="mypopup-text-label" text="Ha nem létezik, válassza ki, hova szeretné telepíteni" textAlignment="CENTER" />
             <ImageView fx:id="closeIcon1" fitHeight="20.0" fitWidth="16.0" layoutX="650.0" layoutY="14.0" onMouseClicked="#handleExitPressed" opacity="0.45" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/close.png" />
                </image>
             </ImageView>
-            <RadioButton fx:id="radioButton2" layoutX="174.0" layoutY="98.0" lineSpacing="2.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="22.0">
+            <RadioButton fx:id="radioButton2" layoutX="174.0" layoutY="118.0" lineSpacing="2.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="22.0">
                <toggleGroup>
                   <ToggleGroup fx:id="toggleGroup" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="radioButton1" layoutX="174.0" layoutY="43.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" selected="true" toggleGroup="$toggleGroup" />
-            <Label fx:id="redLabel" alignment="CENTER" layoutX="95.0" layoutY="310.0" prefHeight="21.0" prefWidth="559.0" style="-fx-text-fill: red;" text="Érvénytelen TestCenter mappa" visible="false">
+            <RadioButton fx:id="radioButton1" layoutX="174.0" layoutY="73.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="22.0" selected="true" toggleGroup="$toggleGroup" />
+            <Label fx:id="redLabel" alignment="CENTER" layoutX="1.0" layoutY="330.0" prefHeight="21.0" prefWidth="679.0" style="-fx-text-fill: red;" text="Érvénytelen TestCenter mappa" visible="false">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
+            <Label fx:id="installPath1" alignment="CENTER" layoutX="74.0" layoutY="10.0" prefHeight="23.0" prefWidth="565.0" styleClass="menulabelhiglight" text="Nem található a Test Center Mappa">
+               <font>
+                  <Font name="Century Gothic" size="16.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
-      <Pane fx:id="userNotExistWarningPane" layoutX="700.0" layoutY="200.0" prefHeight="400.0" prefWidth="751.0" styleClass="basePane" stylesheets="@../css/stylesheet.css" visible="false">
+      <Pane fx:id="userNotExistWarningPane" layoutX="700.0" layoutY="200.0" prefHeight="400.0" prefWidth="751.0" styleClass="basePane" stylesheets="@../css/stylesheet.css">
          <children>
-            <Label fx:id="adminLabel" layoutX="122.0" layoutY="189.0" prefHeight="23.0" prefWidth="519.0" style="-fx-text-fill: A6A6A6;">
+            <Label fx:id="adminLabel" layoutX="122.0" layoutY="189.0" prefHeight="23.0" prefWidth="519.0" styleClass="mypopup-text-label-white">
                <font>
                   <Font name="Century Gothic" size="16.0" />
                </font>
@@ -163,12 +168,12 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="111.0" layoutY="86.0" prefHeight="23.0" prefWidth="552.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="A felhasználó nincs regisztrálva a rendszerben, kérje admin " textFill="#abaaaa">
+            <Label alignment="CENTER" layoutX="111.0" layoutY="86.0" prefHeight="23.0" prefWidth="552.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="mypopup-text-label" stylesheets="@../css/stylesheet.css" text="Ön jelenleg nincs regisztrálva a rendszerben, kérje adminisztrátor" textFill="#abaaaa">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="123.0" layoutY="113.0" prefHeight="23.0" prefWidth="519.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="szerepkörű kolléga segítségét! " textFill="#b5b5b5">
+            <Label alignment="CENTER" layoutX="123.0" layoutY="113.0" prefHeight="23.0" prefWidth="519.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="mypopup-text-label" stylesheets="@../css/stylesheet.css" text="jogosultságú kolléga segítségét! " textFill="#b5b5b5">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -178,13 +183,18 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="231.0" layoutY="23.0" prefHeight="0.0" prefWidth="290.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="A FELHASZNÁLÓ NEM LÉTEZIK !" textFill="#b5b5b5">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="231.0" layoutY="23.0" prefHeight="0.0" prefWidth="290.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabelhiglight" stylesheets="@../css/stylesheet.css" text="A FELHASZNÁLÓ NEM LÉTEZIK !" textFill="#b5b5b5">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
             <Button fx:id="enterAdminButton" disable="true" layoutX="123.0" layoutY="331.0" mnemonicParsing="false" onAction="#handleAdminButtonPressed" prefHeight="29.0" prefWidth="279.0" styleClass="mycommitbutton" text="Belépés admin jelszóval" />
             <PasswordField fx:id="passwordField" layoutX="427.0" layoutY="330.0" prefHeight="31.0" prefWidth="213.0" styleClass="mytextfield" />
+            <Label fx:id="invaliPasswordLabel" layoutX="427.0" layoutY="363.0" prefHeight="23.0" prefWidth="121.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="mypopup-text-label-red" stylesheets="@../css/stylesheet.css" text="Érvénytelen jelszó" textFill="#b5b5b5">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane id="mypopup" fx:id="scanningDocsPane" layoutX="700.0" layoutY="300.0" prefHeight="200.0" prefWidth="400.0" styleClass="mypopup" stylesheets="@../css/stylesheet.css" visible="false">

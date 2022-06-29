@@ -291,8 +291,7 @@ public class DevicesPageController implements Initializable {
 
     public static void handleEditRequest(String deviceName, TableCell tc) {
         Main.controller.getDevices().loadDevicesFromJSON();
-        td = Main.controller.getDevices().getDeviceByName(tc.getText());
-        System.out.println("\ntest device" + td.toString());
+        td = Main.controller.getDevices().getDeviceByName(tc.getText());        
         AnchorPane editPane = (AnchorPane) tc.getScene().lookup("#editPane");
         
         TextField editDeviceNameField = (TextField) editPane.getScene().lookup("#editDeviceNameField");

@@ -43,6 +43,10 @@ public class User implements Serializable {
     private String getUserHomePath() {
         return System.getProperty("user.home");
     }
+    
+    public boolean hasRole (UserRole role){
+        return this.roleList.contains(role);
+    }
 
     public String getUserKey() {
         return userKey;
