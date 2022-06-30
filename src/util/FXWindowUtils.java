@@ -30,6 +30,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import model.Command;
+import model.DeleteUserCommand;
 //</editor-fold>
 
 public class FXWindowUtils {
@@ -39,6 +41,7 @@ public class FXWindowUtils {
     private static Stage currentStage;
     private static Pane staticDisablePane;
     private static Pane staticalertPane;
+    private static Command staticCommand;
 
     //<editor-fold defaultstate="collapsed" desc="Handle stage">
     public static void initStage(Stage stage, Scene scene) {
@@ -159,6 +162,8 @@ public class FXWindowUtils {
         sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
+                System.out.println("currentstage null? "+ (null==currentStage));
+                System.out.println("nextRoot null? "+ (null==nextRoot));
                 currentStage.getScene().setRoot(nextRoot);
                 nextRoot.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.BLACK, 30, 0.01, 0.0, 0.0));
                 Node newContentPane = currentStage.getScene().getRoot().lookup("#basePane").lookup("#contentPane");
@@ -347,14 +352,44 @@ public class FXWindowUtils {
         String css = Main.class.getResourceAsStream("/css/stylesheet.css").toString();
         stage.getScene().getStylesheets().add(css);
         Pane disablePane = getDisablePane(stage.getScene());
-        Pane pane = getNewShowAlertPane(stage.getScene());
-        pane.getChildren().add(getTitleLabel(title));
-        pane.getChildren().add(getInfoLabel1(line1));
-        pane.getChildren().add(getInfoLabel2(line2));
+        Pane pane = getNewShowAlertPane(stage.getScene(), 500, 350);
+        pane.getChildren().add(getTitleLabel(title, pane));
+        pane.getChildren().add(getInfoLabel1(line1, pane));
+        pane.getChildren().add(getInfoLabel2(line2, pane));
         pane.getChildren().add(getOkayButton(disablePane, pane));
-        
     }
-    
+
+    public static void showSmallAlert(Stage stage, String title, String message) {
+        String css = Main.class.getResourceAsStream("/css/stylesheet.css").toString();
+        stage.getScene().getStylesheets().add(css);
+        Pane disablePane = getDisablePane(stage.getScene());
+        Pane pane = getNewShowAlertPane(stage.getScene(), 400, 250);
+        pane.getChildren().add(getTitleLabel(title, pane));
+        pane.getChildren().add(getInfoLabel1(message, pane));
+        pane.getChildren().add(getOkayButton(disablePane, pane));
+    }
+
+    public static void showConfirmationRequestWindow(Stage stage, String objectName, String question, Command command) {
+        String css = Main.class.getResourceAsStream("/css/stylesheet.css").toString();
+        stage.getScene().getStylesheets().add(css);
+        Pane disablePane = getDisablePane(stage.getScene());
+        Pane pane = getNewShowAlertPane(stage.getScene(), 400, 250);
+        pane.getChildren().add(getTitleLabel(objectName, pane));
+        pane.getChildren().add(getInfoLabel1(question, pane));
+        pane.getChildren().add(getBackButton(
+                disablePane,
+                pane,
+                (pane.getPrefWidth() / 2) + 15)
+        );
+        pane.getChildren().add(getCommandButton(
+                stage,
+                disablePane,
+                pane,
+                (pane.getPrefWidth() / 2) - 95 - 15,
+                command));
+        pane.toFront();
+    }
+
     private static Button getOkayButton(Pane disablepane, Pane alertPane) {
         Button button = new Button("OK");
         button.getStyleClass().add("myokaybutton");
@@ -364,7 +399,7 @@ public class FXWindowUtils {
         button.setLayoutY(280);
         staticDisablePane = disablepane;
         staticalertPane = alertPane;
-        
+
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -374,7 +409,49 @@ public class FXWindowUtils {
         });
         return button;
     }
-    
+
+    private static Button getBackButton(Pane disablepane, Pane alertPane, double posX) {
+        Button button = new Button("Mégsem");
+        button.getStyleClass().add("mybackbutton");
+        button.setPrefWidth(95);
+        button.setPrefHeight(31);
+        button.setLayoutX(posX);
+        button.setLayoutY(alertPane.getPrefHeight()-button.getPrefHeight()-30);
+        staticDisablePane = disablepane;
+        staticalertPane = alertPane;
+
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                staticDisablePane.setVisible(false);
+                staticalertPane.setVisible(false);
+            }
+        });
+        return button;
+    }
+
+    private static Button getCommandButton(Stage stage, Pane disablepane, Pane alertPane, double posX, Command command) {
+        staticCommand = command;
+        currentStage = stage;
+
+        Button button = new Button("Igen");
+        button.getStyleClass().add("mydeletebutton");
+        button.setPrefWidth(95);
+        button.setPrefHeight(31);
+        button.setLayoutX(posX);
+        button.setLayoutY(alertPane.getPrefHeight()-button.getPrefHeight()-30);
+        staticDisablePane = disablepane;
+        staticalertPane = alertPane;
+
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                staticCommand.execute();
+            }
+        });
+        return button;
+    }
+
     private static Pane getDisablePane(Scene scene) {
         Pane pane = new Pane();
         ((AnchorPane) scene.getRoot()).getChildren().add(pane);
@@ -388,52 +465,50 @@ public class FXWindowUtils {
         return pane;
     }
 
-    private static Label getTitleLabel(String title) {
+    private static Label getTitleLabel(String title, Pane parentPane) {
         Label label = new Label(title);
         label.getStyleClass().add("mypopup-text-label-highlighted");
         label.setAlignment(Pos.CENTER);
-        label.setPrefWidth(450);
+        label.setPrefWidth(parentPane.getPrefWidth() - 50);
         label.setPrefHeight(23);
-        label.setLayoutX(26);
-        label.setLayoutY(40);
-        return label;
-    }
-    
-    private static Label getInfoLabel1(String line1) {
-        Label label = new Label(line1);
-        label.getStyleClass().add("mypopup-text-label");
-        label.setAlignment(Pos.CENTER);
-        label.setPrefWidth(450);
-        label.setPrefHeight(23);
-        label.setLayoutX(26);
-        label.setLayoutY(90);
-        return label;
-    }
-    
-    private static Label getInfoLabel2(String line2) {
-        Label label = new Label(line2);
-        label.getStyleClass().add("mypopup-text-label");
-        label.setAlignment(Pos.CENTER);
-        label.setPrefWidth(450);
-        label.setPrefHeight(23);
-        label.setLayoutX(26);
-        label.setLayoutY(190);
+        label.setLayoutX(25);
+        label.setLayoutY(30);
         return label;
     }
 
-    private static Pane getNewShowAlertPane(Scene scene) {
+    private static Label getInfoLabel1(String line1, Pane parentPane) {
+        Label label = new Label(line1);
+        label.getStyleClass().add("mypopup-text-label");
+        label.setAlignment(Pos.CENTER);
+        label.setPrefWidth(parentPane.getPrefWidth() - 50);
+        label.setPrefHeight(23);
+        label.setLayoutX(25);
+        label.setLayoutY(parentPane.getPrefHeight() * 0.3);
+        return label;
+    }
+
+    private static Label getInfoLabel2(String line2, Pane parentPane) {
+        Label label = new Label(line2);
+        label.getStyleClass().add("mypopup-text-label");
+        label.setAlignment(Pos.CENTER);
+        label.setPrefWidth(parentPane.getPrefWidth() - 50);
+        label.setPrefHeight(23);
+        label.setLayoutX(25);
+        label.setLayoutY(parentPane.getPrefHeight() * 0.6);
+        return label;
+    }
+
+    private static Pane getNewShowAlertPane(Scene scene, long width, long height) {
         Pane pane = new Pane();
         ((AnchorPane) scene.getRoot()).getChildren().add(pane);
         pane.getStyleClass().add("mypopup");
-        pane.setPrefWidth(500);
-        pane.setPrefHeight(350);
-        pane.setLayoutX(650);
+        pane.setPrefWidth(width);
+        pane.setPrefHeight(height);
+        pane.setLayoutX(scene.getWidth()/2 - width/2 );
         pane.setLayoutY(300);
         pane.toFront();
         return pane;
     }
-
-    
 
 }
 //</editor-fold>

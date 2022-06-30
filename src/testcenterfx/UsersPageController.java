@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -38,6 +39,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import model.DeleteUserCommand;
 import model.User;
 import model.UserRole;
 import util.FXWindowUtils;
@@ -47,9 +49,10 @@ public class UsersPageController implements Initializable {
 
     //<editor-fold defaultstate="collapsed" desc="PROPERTIES">
     private Stage stage;
+    public static URL userPageUrl;
     List<TextField> fieldsList;
     private List<CheckBox> checkBoxList;
-    static User userEdited;
+    static User userEdited;    
 
 //</editor-fold>    
     //<editor-fold defaultstate="collapsed" desc="FXML Properties">
@@ -60,11 +63,7 @@ public class UsersPageController implements Initializable {
     @FXML
     private Pane basePane;
     @FXML
-    private AnchorPane editPane;
-    @FXML
-    private Button deleteUserButton;
-    @FXML
-    private Button modifyUserButton;
+    private AnchorPane editPane;  
     @FXML
     private Pane exitPopup;
     @FXML
@@ -180,6 +179,12 @@ public class UsersPageController implements Initializable {
         FXWindowUtils.delayAndFadeInNextRoot(stage, nextRoot, event, CONTENT_FADE_OUT_DURATION);
     }
 
+    public static void loadUserPage(ActionEvent event) throws IOException {
+        Node node = (Node) event.getSource();
+        Stage thisStage = (Stage) node.getScene().getWindow();
+        FXWindowUtils.initTransitionToNextPage(thisStage, FXMLLoader.load(userPageUrl));
+    }
+
     private void goToWelcomePage(ActionEvent event) throws IOException {
         Parent nextRoot = FXMLLoader.load(getClass().getResource("WelcomePage.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -271,29 +276,20 @@ public class UsersPageController implements Initializable {
     private void handleEditPaneBackButton(ActionEvent event) throws IOException {
         FXWindowUtils.hidePopup(editPane, basePane, closeIcon, minimizeIcon, logoPane);
     }
-    
+
     @FXML
     private void handleDeleteUserButtonClicked(ActionEvent event) {
-        TextField userKeyFiled = (TextField) editPane.getScene().lookup("#editUserKey");
-        Boolean isUserRemoveSuccesful = Main.controller.getUsers().removeUser(userEdited);
-        
-        if (isUserRemoveSuccesful){
-            Main.controller.updateUsersJsonFile();
-            try {
-                goToUsersPage(event);
-            } catch (IOException ex) {
-                Logger.getLogger(UsersPageController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            System.out.println("Nincs ilyen felhasznalo");
-        }
-        
+        FXWindowUtils.showConfirmationRequestWindow(
+                (Stage) basePane.getScene().getWindow(),
+                userEdited.getFullname(),
+                "Törli a felhasználót?",
+                new DeleteUserCommand(stage, event, userEdited));
     }
-    
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Setup Page Elements">
     public void setupElements() {
+        userPageUrl = getClass().getResource("UsersPage.fxml");
         userHomeField.setEditable(true);
         userHomeField.setDisable(false);
         editPane.setVisible(false);
