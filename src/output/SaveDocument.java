@@ -3,8 +3,6 @@ package output;
 //<editor-fold defaultstate="collapsed" desc="IMPORTS">
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,14 +70,6 @@ public class SaveDocument {
             }
         }
         return outputXPFDoc;
-    }
-
-    private String getTime() {
-        long yourmilliseconds = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-
-        Date resultdate = new Date(yourmilliseconds);
-        return sdf.format(resultdate);
     }
 
 }

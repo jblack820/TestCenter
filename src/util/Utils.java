@@ -262,6 +262,21 @@ public class Utils {
         return sb.toString();
 
     }
+    
+    public static String getTimeStampWithUnderScores (){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppConfig.TIME_STAMP_FORMAT_PATTERN);
+        StringBuilder sb = new StringBuilder();
+        sb.append(LocalDateTime.now().format(formatter));
+        sb.append("_");
+        return sb.toString();
+    }
+    
+    public static String addTimeStampToStringAtTheBeginning (String source){
+        return new StringBuilder().append(getTimeStampWithUnderScores()).append(source).toString();
+    }
+    
+    
+    
 //</editor-fold>   
     //<editor-fold defaultstate="collapsed" desc="DOCUMENT UTILS">
 

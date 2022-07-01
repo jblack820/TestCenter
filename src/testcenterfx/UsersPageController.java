@@ -172,28 +172,7 @@ public class UsersPageController implements Initializable {
         FXWindowUtils.hidePopup(infoPopup1, hideStagePane);
     }
 
-    private void goToUsersPage(ActionEvent event) throws IOException {
-        Parent nextRoot = FXMLLoader.load(getClass().getResource("UsersPage.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        FXWindowUtils.initNodeFadeOutFX(CONTENT_FADE_OUT_DURATION, contentPane, 1.0, 0.01);
-        FXWindowUtils.delayAndFadeInNextRoot(stage, nextRoot, event, CONTENT_FADE_OUT_DURATION);
-    }
-
-    public static void loadUserPage(ActionEvent event) throws IOException {
-        Node node = (Node) event.getSource();
-        Stage thisStage = (Stage) node.getScene().getWindow();
-        FXWindowUtils.initTransitionToNextPage(thisStage, FXMLLoader.load(userPageUrl));
-    }
-
-    private void goToWelcomePage(ActionEvent event) throws IOException {
-        Parent nextRoot = FXMLLoader.load(getClass().getResource("WelcomePage.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        FXWindowUtils.initNodeFadeOutFX(CONTENT_FADE_OUT_DURATION, contentPane, 1.0, 0.01);
-        FXWindowUtils.delayAndFadeInNextRoot(stage, nextRoot, event, CONTENT_FADE_OUT_DURATION);
-    }
-
     static void handleEditRequest(String userKey, TableCell tc) {
-        System.out.println("edit panel requested!");
         Main.controller.reScanUsersJSON();
         userEdited = Main.controller.getUsers().getUserByUserKey(userKey);
         AnchorPane editPane = (AnchorPane) tc.getScene().lookup("#editPane");
@@ -281,13 +260,34 @@ public class UsersPageController implements Initializable {
     private void handleDeleteUserButtonClicked(ActionEvent event) {
         FXWindowUtils.showConfirmationRequestWindow(
                 (Stage) basePane.getScene().getWindow(),
-                userEdited.getFullname(),
                 "Törli a felhasználót?",
+                userEdited.getFullname(),                
                 new DeleteUserCommand(stage, event, userEdited));
     }
 
-    //</editor-fold>
-    //<editor-fold defaultstate="collapsed" desc="Setup Page Elements">
+    //</editor-fold>    
+    //<editor-fold defaultstate="collapsed" desc="REFRESH AND REDIRECT">
+    private void goToUsersPage(ActionEvent event) throws IOException {
+        Parent nextRoot = FXMLLoader.load(getClass().getResource("UsersPage.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        FXWindowUtils.initNodeFadeOutFX(CONTENT_FADE_OUT_DURATION, contentPane, 1.0, 0.01);
+        FXWindowUtils.delayAndFadeInNextRoot(stage, nextRoot, event, CONTENT_FADE_OUT_DURATION);
+    }
+    
+    public static void loadUserPage(ActionEvent event) throws IOException {
+        Node node = (Node) event.getSource();
+        Stage thisStage = (Stage) node.getScene().getWindow();
+        FXWindowUtils.initTransitionToNextPage(thisStage, FXMLLoader.load(userPageUrl));
+    }
+    
+    private void goToWelcomePage(ActionEvent event) throws IOException {
+        Parent nextRoot = FXMLLoader.load(getClass().getResource("WelcomePage.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        FXWindowUtils.initNodeFadeOutFX(CONTENT_FADE_OUT_DURATION, contentPane, 1.0, 0.01);
+        FXWindowUtils.delayAndFadeInNextRoot(stage, nextRoot, event, CONTENT_FADE_OUT_DURATION);
+    }
+//</editor-fold>    
+    //<editor-fold defaultstate="collapsed" desc="SETUP PAGE ELEMNTS">
     public void setupElements() {
         userPageUrl = getClass().getResource("UsersPage.fxml");
         userHomeField.setEditable(true);
@@ -378,9 +378,9 @@ public class UsersPageController implements Initializable {
                 .size() > 0;
     }
 //</editor-fold>
-
+    //<editor-fold defaultstate="collapsed" desc="UTILS">
     private void addNewUserFieldsListener() {
-
+        
         userHomeField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
@@ -391,7 +391,7 @@ public class UsersPageController implements Initializable {
                 }
             }
         });
-
+        
         fullNameField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
@@ -402,7 +402,7 @@ public class UsersPageController implements Initializable {
                 }
             }
         });
-
+        
         for (CheckBox checkBox : checkBoxList) {
             checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
                 @Override
@@ -414,13 +414,13 @@ public class UsersPageController implements Initializable {
                     }
                 }
             });
-
+            
         }
     }
-
+    
     private boolean isNoBoxSelected() {
         boolean answer = true;
-
+        
         for (CheckBox checkBox : checkBoxList) {
             if (checkBox.isSelected() == true) {
                 answer = false;
@@ -429,9 +429,9 @@ public class UsersPageController implements Initializable {
         }
         return answer;
     }
-
+    
     private boolean isUserAdmin() {
         return controller.TestCenterController.userLoggedIn.getRoleList().contains(UserRole.ADMIN);
     }
-
+//</editor-fold>
 }

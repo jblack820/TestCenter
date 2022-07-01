@@ -19,7 +19,7 @@ public enum TestDocumentConfig {
     DATE_OF_TEST_CELL(TableNum.ONE, TableRowNum.ONE, TableCellNum.THREE, TableFontWeight.BOLD, 8),
     
     //SECOND ROW
-    TEST_CASE_ID_CELL(TableNum.ONE, TableRowNum.THREE, TableCellNum.ZERO, TableFontWeight.BOLD, 11),
+    TEST_CASE_ID_CELL(TableNum.ONE, TableRowNum.THREE, TableCellNum.ZERO, TableFontWeight.BOLD, 10),
     AREA_OF_TEST_CELL(TableNum.ONE, TableRowNum.THREE, TableCellNum.ONE, TableFontWeight.BOLD, 8),
     PROJECT_TYPE_CELL(TableNum.ONE, TableRowNum.THREE, TableCellNum.TWO, TableFontWeight.BOLD, 8),
     BROWSER_OPSYSTEM_CELL(TableNum.ONE, TableRowNum.THREE, TableCellNum.THREE, TableFontWeight.BOLD, 8),

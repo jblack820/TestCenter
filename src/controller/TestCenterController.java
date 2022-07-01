@@ -563,6 +563,9 @@ public class TestCenterController {
     }
 
     private void createProjectFolderInFileSystem(String projectName) {
+        
+        //String projectNameWithTimeStamp = Utils.addTimeStampToStringAtTheBeginning(projectName);
+        
         AppUtils.createFolder(
                 testCenter.getFolderStructure().getActiveProjectsLocation(),
                 Utils.getFileSystemFriendyName(projectName));

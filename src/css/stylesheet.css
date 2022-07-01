@@ -249,6 +249,8 @@
     -fx-background-color:  #181F26;
     -fx-border-color: #222B35;
     -fx-border-width: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.1, 0.0, 10);
+    
 }
 
 .mypopup-text-label {

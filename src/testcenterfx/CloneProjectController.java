@@ -2,6 +2,7 @@ package testcenterfx;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import app.Main;
+import config.AppConfig;
 import static config.AppConfig.CONTENT_FADE_OUT_DURATION;
 import java.io.IOException;
 import java.net.URL;
@@ -484,7 +485,7 @@ public class CloneProjectController implements Initializable {
     }
 
     private void limitModuleShortNameField() {
-        addTextLimiter(projectNameShortField, 5);
+        addTextLimiter(projectNameShortField, AppConfig.CODE_NAME_MAX_LENGTH);
     }
 
     private void initPopup(Pane pane) {

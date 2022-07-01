@@ -2,6 +2,7 @@ package util;
 
 //<editor-fold defaultstate="collapsed" desc="IMPORTS">
 import app.Main;
+import config.AppConfig;
 import static config.AppConfig.CONTENT_FADE_IN_DURATION;
 import static config.AppConfig.CONTENT_FADE_OUT_DURATION;
 import controller.TestCenterController;
@@ -162,8 +163,6 @@ public class FXWindowUtils {
         sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
-                System.out.println("currentstage null? "+ (null==currentStage));
-                System.out.println("nextRoot null? "+ (null==nextRoot));
                 currentStage.getScene().setRoot(nextRoot);
                 nextRoot.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.BLACK, 30, 0.01, 0.0, 0.0));
                 Node newContentPane = currentStage.getScene().getRoot().lookup("#basePane").lookup("#contentPane");
@@ -352,7 +351,7 @@ public class FXWindowUtils {
         String css = Main.class.getResourceAsStream("/css/stylesheet.css").toString();
         stage.getScene().getStylesheets().add(css);
         Pane disablePane = getDisablePane(stage.getScene());
-        Pane pane = getNewShowAlertPane(stage.getScene(), 500, 350);
+        Pane pane = getNewShowAlertPane(stage.getScene(), 450, 300);
         pane.getChildren().add(getTitleLabel(title, pane));
         pane.getChildren().add(getInfoLabel1(line1, pane));
         pane.getChildren().add(getInfoLabel2(line2, pane));
@@ -373,7 +372,7 @@ public class FXWindowUtils {
         String css = Main.class.getResourceAsStream("/css/stylesheet.css").toString();
         stage.getScene().getStylesheets().add(css);
         Pane disablePane = getDisablePane(stage.getScene());
-        Pane pane = getNewShowAlertPane(stage.getScene(), 400, 250);
+        Pane pane = getNewShowAlertPane(stage.getScene(), AppConfig.CONFIRMATION_WINDOW_WIDTH, AppConfig.CONFIRMATION_WINDOW_HEIGHT);
         pane.getChildren().add(getTitleLabel(objectName, pane));
         pane.getChildren().add(getInfoLabel1(question, pane));
         pane.getChildren().add(getBackButton(
@@ -395,8 +394,8 @@ public class FXWindowUtils {
         button.getStyleClass().add("myokaybutton");
         button.setPrefWidth(95);
         button.setPrefHeight(31);
-        button.setLayoutX(203);
-        button.setLayoutY(280);
+        button.setLayoutX(alertPane.getPrefWidth()/2-47);
+        button.setLayoutY(alertPane.getPrefHeight()-31-25);
         staticDisablePane = disablepane;
         staticalertPane = alertPane;
 
@@ -416,7 +415,7 @@ public class FXWindowUtils {
         button.setPrefWidth(95);
         button.setPrefHeight(31);
         button.setLayoutX(posX);
-        button.setLayoutY(alertPane.getPrefHeight()-button.getPrefHeight()-30);
+        button.setLayoutY(alertPane.getPrefHeight() - button.getPrefHeight() - 30);
         staticDisablePane = disablepane;
         staticalertPane = alertPane;
 
@@ -439,7 +438,7 @@ public class FXWindowUtils {
         button.setPrefWidth(95);
         button.setPrefHeight(31);
         button.setLayoutX(posX);
-        button.setLayoutY(alertPane.getPrefHeight()-button.getPrefHeight()-30);
+        button.setLayoutY(alertPane.getPrefHeight() - button.getPrefHeight() - 30);
         staticDisablePane = disablepane;
         staticalertPane = alertPane;
 
@@ -467,23 +466,23 @@ public class FXWindowUtils {
 
     private static Label getTitleLabel(String title, Pane parentPane) {
         Label label = new Label(title);
-        label.getStyleClass().add("mypopup-text-label-highlighted");
-        label.setAlignment(Pos.CENTER);
-        label.setPrefWidth(parentPane.getPrefWidth() - 50);
-        label.setPrefHeight(23);
-        label.setLayoutX(25);
-        label.setLayoutY(30);
-        return label;
-    }
-
-    private static Label getInfoLabel1(String line1, Pane parentPane) {
-        Label label = new Label(line1);
         label.getStyleClass().add("mypopup-text-label");
         label.setAlignment(Pos.CENTER);
         label.setPrefWidth(parentPane.getPrefWidth() - 50);
         label.setPrefHeight(23);
         label.setLayoutX(25);
-        label.setLayoutY(parentPane.getPrefHeight() * 0.3);
+        label.setLayoutY(25);
+        return label;
+    }
+
+    private static Label getInfoLabel1(String line1, Pane parentPane) {
+        Label label = new Label(line1);
+        label.getStyleClass().add("mypopup-text-label-highlighted");
+        label.setAlignment(Pos.CENTER);
+        label.setPrefWidth(parentPane.getPrefWidth() - 50);
+        label.setPrefHeight(23);
+        label.setLayoutX(25);
+        label.setLayoutY(parentPane.getPrefHeight() * 0.35);
         return label;
     }
 
@@ -504,7 +503,7 @@ public class FXWindowUtils {
         pane.getStyleClass().add("mypopup");
         pane.setPrefWidth(width);
         pane.setPrefHeight(height);
-        pane.setLayoutX(scene.getWidth()/2 - width/2 );
+        pane.setLayoutX(scene.getWidth() / 2 - width / 2);
         pane.setLayoutY(300);
         pane.toFront();
         return pane;

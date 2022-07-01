@@ -152,8 +152,8 @@ public class ProjectBugsController implements Initializable {
 
     @FXML
     private void minimizeStage(MouseEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setIconified(true);
+        Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        thisStage.setIconified(true);
     }
     
     @FXML
@@ -220,8 +220,6 @@ public class ProjectBugsController implements Initializable {
         showProgressWindow.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
-                
-                
                 Task<Void> createBugTickets = new Task<Void>() {
                 @Override
                 protected Void call() throws Exception {
@@ -230,7 +228,6 @@ public class ProjectBugsController implements Initializable {
                 }
                 
             };
-                
             createBugTickets.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
                     @Override
                     public void handle(WorkerStateEvent event) {
@@ -282,28 +279,21 @@ public class ProjectBugsController implements Initializable {
     
     public static void handleOpenTestCaseRequest(String documentId, TableCell tc) {
         
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                tc.getScene().setCursor(Cursor.WAIT);
-            }
+        Platform.runLater(() -> {
+            tc.getScene().setCursor(Cursor.WAIT);
         });
         
         String path = getDocumnetPath(documentId);
         int pageNumber = getPageNumber(documentId);
         OpenWordDocument.open(path, pageNumber);
         
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ProjectBugsController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                tc.getScene().setCursor(Cursor.DEFAULT);
+        Platform.runLater(() -> {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ProjectBugsController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            tc.getScene().setCursor(Cursor.DEFAULT);
         });
         
     }

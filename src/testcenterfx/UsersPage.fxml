@@ -145,14 +145,14 @@
                               </Pane>
                            </children>
                         </AnchorPane>
-                        <TableView fx:id="userTable" layoutX="344.0" layoutY="42.0" prefHeight="720.0" prefWidth="779.0" stylesheets="@../css/secondTableStyle.css">
+                        <TableView fx:id="userTable" layoutX="439.0" layoutY="42.0" prefHeight="720.0" prefWidth="779.0" stylesheets="@../css/secondTableStyle.css">
                           <columns>
                             <TableColumn fx:id="userKeyColumn" prefWidth="251.0" />
                             <TableColumn fx:id="nameColumn" prefWidth="214.0" />
                               <TableColumn fx:id="roleColumn" prefWidth="311.6666259765625" />
                           </columns>
                         </TableView>
-                        <Pane layoutX="344.0" layoutY="42.0" prefHeight="32.0" prefWidth="580.0" style="-fx-background-color: #181F26;">
+                        <Pane layoutX="439.0" layoutY="42.0" prefHeight="32.0" prefWidth="580.0" style="-fx-background-color: #181F26;">
                            <children>
                               <Label layoutX="12.0" layoutY="5.0" prefHeight="23.0" prefWidth="235.0" styleClass="bluetexlabel" stylesheets="@../css/secondTableStyle.css" text="USER HOME" textFill="#abaaaa">
                                  <font>
@@ -197,7 +197,7 @@
             <Label id="infoLabel" fx:id="infoPopupLabel1" alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="63.0" prefHeight="54.0" prefWidth="307.0" styleClass="mypopup-text-label" text="info" textAlignment="CENTER" wrapText="true" />
          </children>
       </Pane>
-      <AnchorPane fx:id="editPane" layoutX="650.0" layoutY="180.0" prefHeight="668.0" prefWidth="500.0" styleClass="mypopup">
+      <AnchorPane fx:id="editPane" layoutX="650.0" layoutY="180.0" prefHeight="668.0" prefWidth="500.0" styleClass="mypopup" visible="false">
          <children>
             <Button id="modifyUserButton" fx:id="modifyUserButton" layoutX="232.0" layoutY="601.0" mnemonicParsing="false" onAction="#handleModifyButtonClicked" prefHeight="31.0" prefWidth="95.0" styleClass="myokaybutton" stylesheets="@../css/stylesheet.css" text="Módosít" textFill="#d7d6d6">
                <font>

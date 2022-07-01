@@ -23,20 +23,15 @@ public class CloneUtils {
     static XWPFDocument currentTargetPage = null;
 
     public static void cloneAllTestDocumentToAnotherProject(TestProject sourceProject, TestProject targetProject, String testerName) {
-
-        System.out.println("Cloning of " + sourceProject.getProjectName() + " to " + targetProject.getProjectName() + " started...");
         List<XWPFDocument> testDoclist = sourceProject.getAllXWPFTestDocumnets();
         for (XWPFDocument sourceDocument : testDoclist) {
             cloneDocumentToTargetProject(targetProject, sourceDocument, testerName);
         }
-        System.out.println("Cloning competed!");
     }
 
     public static void cloneSingleDocumentToAnotherProject(TestProject sourceProject, File sourceFile, TestProject targetProject, String testerName) {
-        System.out.println("source project: " + sourceProject.getProjectName());
         XWPFDocument sourceDocument = sourceProject.getXWPFDocument(sourceFile);
         cloneDocumentToTargetProject(targetProject, sourceDocument, testerName);
-
     }
 
     private static void cloneDocumentToTargetProject(TestProject targetProject, XWPFDocument sourceDocument, String testerName) {
@@ -65,7 +60,6 @@ public class CloneUtils {
                     documentPages.add(currentTargetPage);
                     break;
             }
-
         }
 
         try {
@@ -73,7 +67,6 @@ public class CloneUtils {
         } catch (IOException ex) {
             Logger.getLogger(CloneUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     private static TestDocumentHeaderCopyDTO getCopyDto(TestProject targetProject, XWPFTable currentTable, String testerName) {
@@ -91,7 +84,6 @@ public class CloneUtils {
                 targetProject.getAppLocation(),
                 currentTable.getRow(7).getCell(0).getText(),
                 currentTable.getRow(7).getCell(1).getText());
-
     }
 
     private static String convertTestCaseIdToTargetProject(String originalTestCaseId, TestProject targetProject) {
@@ -114,7 +106,6 @@ public class CloneUtils {
                 }
             }
         }
-
         return target.toString();
 
     }
@@ -257,7 +248,6 @@ public class CloneUtils {
     }
 
     private static void copyTestSteps(XWPFTable oldTable) {
-
         for (int i = 1; i < oldTable.getRows().size(); i++) {
             String testStep = oldTable.getRow(i).getCell(1).getText();
             if (testStep.equalsIgnoreCase("")) {

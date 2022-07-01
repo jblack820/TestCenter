@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import app.Main;
@@ -57,6 +52,10 @@ public class DeleteUserCommand implements Command {
             }
         } else {
             FXWindowUtils.showSmallAlert(stage, "Hiba", "Nincs ilyen felhasználó");
+        }
+        
+        if (isUserRemoveSuccesful){
+            FXWindowUtils.showSmallAlert(stage, "Felhasználó törölve", "");
         }
     }
     
