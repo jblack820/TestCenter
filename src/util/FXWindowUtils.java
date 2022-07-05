@@ -213,22 +213,26 @@ public class FXWindowUtils {
     }
 
     public static void addUserInfoToDragPane(AnchorPane dragPane) {
+        Font font1 = Font.loadFont(Main.class.getResourceAsStream("/font/perpetua.ttf"), 16);
         Label userLabel = new Label("Belépve: " + TestCenterController.userLoggedIn.getFullname());
+        userLabel.setFont(font1);
         dragPane.getChildren().add(userLabel);
         userLabel.setLayoutX(200);
         userLabel.setLayoutY(6);
         userLabel.setPrefWidth(350);
-        userLabel.setStyle("-fx-font-family: \"Perpetua\"; -fx-text-fill: #A6A6A6; -fx-font-size: 16px; -fx-backgroud-color: transparent;");
+        userLabel.setStyle("-fx-text-fill: #A6A6A6; -fx-backgroud-color: transparent;");
     }
 
     public static void addVersionInfoToDragPane(AnchorPane dragPane) {
+        Font font1 = Font.loadFont(Main.class.getResourceAsStream("/font/perpetua.ttf"), 16);
         Label versionLabel = new Label("v." + Main.class.getPackage().getImplementationVersion());
+        versionLabel.setFont(font1);
         dragPane.getChildren().add(versionLabel);
         versionLabel.setLayoutX(110);
         versionLabel.setLayoutY(6);
         versionLabel.setPrefWidth(50);
         versionLabel.setOpacity(1.0);
-        versionLabel.setStyle("-fx-font-family: \"Perpetua\"; -fx-text-fill: #A6A6A6; -fx-font-size: 16px; -fx-backgroud-color: transparent;");
+        versionLabel.setStyle("-fx-text-fill: #A6A6A6; -fx-backgroud-color: transparent;");
     }
 
     //</editor-fold>
