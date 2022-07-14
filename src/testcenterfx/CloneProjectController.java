@@ -554,7 +554,7 @@ public class CloneProjectController implements Initializable {
                 projectNameField2.setText(tp.getProjectName());
                 projectTypeField.setText(tp.getProjectTypeName());
                 projectNameShortField2.setText(tp.getCodeNAme());
-                projectTypeShortField2.setText(tp.getProjectType().getProjectTypeShortName());
+                projectTypeShortField2.setText(tp.getProjectType().getProjectTypeCodename());
                 dateStartedField2.setText(Utils.convertLocalDateToString(tp.getDateStarted()));
                 dateDeadlineField2.setText(Utils.convertLocalDateToString(tp.getProjectDeadline()));
                 versionNumberField2.setText(tp.getLatestVersionNum().getStringNumber());

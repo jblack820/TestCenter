@@ -193,7 +193,6 @@ public class ReActivateProjectsController implements Initializable {
     @FXML
     private void handleReActivateButton(ActionEvent event) throws IOException {
         List<String> selectedProjectFolderNames = getSelectedProjectFolderNames();
-        System.out.println("\n Selected project to reactivate: " + selectedProjectFolderNames.toString());
         Main.controller.reActivateProjects(selectedProjectFolderNames);
         Main.controller.getTestCenter().removeFolderNamesFromArchivedProjectFolderNames(selectedProjectFolderNames);
         WelcomePageController.isDocumentsScanned = false;
@@ -284,7 +283,7 @@ public class ReActivateProjectsController implements Initializable {
     }
     
     private File getDefectLogsFolder() {
-        return new File(currentProject.getProjectFolderPath() + AppConfig.DEFECT_LOGS_FOLDERNAME);
+        return new File(currentProject.getActiveProjectFolderPath() + AppConfig.DEFECT_LOGS_FOLDERNAME);
     }
     
     private List<String> getSelectedProjectFolderNames() {

@@ -7,6 +7,8 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -27,6 +29,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -34,10 +37,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import model.DirectoryChecker;
 import model.TestCase;
 import model.TestCaseTableData;
 import model.TestProject;
 import model.TestProjectTableData;
+import util.ArchiveProjectUtils;
 import util.FXWindowUtils;
 import util.Utils;
 //</editor-fold>
@@ -52,6 +57,13 @@ public class ArchiveProjectsController implements Initializable {
     //<editor-fold defaultstate="collapsed" desc="FXML PROPERTIES">
     @FXML
     private Pane basePane;
+    
+    @FXML
+    private Pane disablePane;
+    @FXML
+    private Pane archiveErrorPane;
+    @FXML
+    private TextArea archiveErrorTextArea;
     @FXML
     private AnchorPane dragPane;
     @FXML
@@ -83,6 +95,7 @@ public class ArchiveProjectsController implements Initializable {
 
 //</editor-fold>   
     //<editor-fold defaultstate="collapsed" desc="PROPERTIES">
+    private static final DirectoryChecker directoryChecker = new DirectoryChecker();
     private ObservableList<TestProjectTableData> observableTestProjectList;
     private static TestProject currentProject;
     private static Stage stage;
@@ -105,6 +118,8 @@ public class ArchiveProjectsController implements Initializable {
         setupTopChecbox();
         FXWindowUtils.addUserInfoToDragPane(dragPane);
         FXWindowUtils.addVersionInfoToDragPane(dragPane);
+        archiveErrorPane.setVisible(false);
+        disablePane.setVisible(false);
     }
 
     private void setupTopChecbox() {
@@ -148,6 +163,12 @@ public class ArchiveProjectsController implements Initializable {
     public void handleDoExit() {
         System.exit(0);
     }
+    
+    @FXML
+    public void handleRemoveAlert() {
+        archiveErrorPane.setVisible(false);
+        disablePane.setVisible(false);
+    }
 
     @FXML
     private void handleBackButton(ActionEvent event) throws IOException {
@@ -173,13 +194,18 @@ public class ArchiveProjectsController implements Initializable {
 
     @FXML
     private void handleArchiveButton(ActionEvent event) throws IOException {
-
-        System.out.println("ToDo");
-
         List<TestProject> selectedTestProjects = getSelectedProjects();
-        Main.controller.archiveProjects(selectedTestProjects);
-        Main.controller.getTestCenter().removeSelectedProjectsFromActiveProjects(selectedTestProjects);
-        goToWelcomePage(event);
+
+        List<String> projectsWithOpenedFiles = checkProjectsForOpenedFiles(selectedTestProjects);
+
+        if (!projectsWithOpenedFiles.isEmpty()) {
+            showAlert(projectsWithOpenedFiles);
+        } else {
+            Main.controller.archiveProjects(selectedTestProjects);
+            Main.controller.reScanArchivedProjects();
+            goToWelcomePage(event);
+
+        }
 
     }
 
@@ -231,16 +257,34 @@ public class ArchiveProjectsController implements Initializable {
         });
         checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
 
-        projectNameColumn.setCellValueFactory(p -> p.getValue().getTestProjectName());        
+        projectNameColumn.setCellValueFactory(p -> p.getValue().getTestProjectName());
         projectNameColumn.setStyle("-fx-alignment: CENTER-LEFT");
-        
+
         dateColumn.setCellValueFactory(p -> p.getValue().getDateStarted());
         progressColumn.setCellValueFactory(p -> p.getValue().getProgressRate());
         progressColumn.setStyle("-fx-alignment: CENTER-right");
-        
+
         projectsTable.getColumns().setAll(checkBoxColumn, projectNameColumn, dateColumn, progressColumn);
     }
 
+    private List<TestProjectTableData> getTebleData(List<TestProject> activeProjects) {
+
+        if (activeProjects.isEmpty()) {
+            return null;
+        }
+
+        List<TestProjectTableData> list = new ArrayList<>();
+
+        for (TestProject activeProject : activeProjects) {
+            TestProjectTableData td = new TestProjectTableData(
+                    activeProject.getProjectNameProperty(),
+                    new SimpleStringProperty(Utils.convertDateToHungarianTextFormat(activeProject.getDateStarted())),
+                    new SimpleStringProperty(Utils.getPercent(activeProject.getProgresRatePercent()))
+            );
+            list.add(td);
+        }
+        return list;
+    }
 
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="UTILS">
@@ -249,7 +293,7 @@ public class ArchiveProjectsController implements Initializable {
     }
 
     private File getDefectLogsFolder() {
-        return new File(currentProject.getProjectFolderPath() + AppConfig.DEFECT_LOGS_FOLDERNAME);
+        return new File(currentProject.getActiveProjectFolderPath() + AppConfig.DEFECT_LOGS_FOLDERNAME);
     }
 
     private List<TestProject> getSelectedProjects() {
@@ -296,23 +340,30 @@ public class ArchiveProjectsController implements Initializable {
     }
 //</editor-fold>
 
-    private List<TestProjectTableData> getTebleData(List<TestProject> activeProjects) {
+    private List<String> checkProjectsForOpenedFiles(List<TestProject> selectedTestProjects) {
+        DirectoryChecker.OPENED_FILES.clear();
 
-        if (activeProjects.isEmpty()) {
-            return null;
+        for (TestProject tp : selectedTestProjects) {
+
+            Path path = new File(tp.getActiveProjectFolderPath()).toPath();
+
+            try {
+                Files.walkFileTree(path, directoryChecker);
+            } catch (IOException ex) {
+                Logger.getLogger(ArchiveProjectsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        return DirectoryChecker.OPENED_FILES;
+    }
 
-        List<TestProjectTableData> list = new ArrayList<>();
-
-        for (TestProject activeProject : activeProjects) {
-            TestProjectTableData td = new TestProjectTableData(
-                    activeProject.getProjectNameProperty(), 
-                    new SimpleStringProperty(Utils.convertDateToHungarianTextFormat(activeProject.getDateStarted())),
-                    new SimpleStringProperty(Utils.getPercent(activeProject.getProgresRatePercent()))
-            );
-            list.add(td);
+    private void showAlert(List<String> projectsWithOpenedFiles) {
+        StringBuilder sb = new StringBuilder();
+        for (String projectsWithOpenedFile : projectsWithOpenedFiles) {
+            sb.append(projectsWithOpenedFile).append(System.lineSeparator());
         }
-        return list;
+        archiveErrorTextArea.setText(sb.toString());
+        archiveErrorPane.setVisible(true);
+        disablePane.setVisible(true);
     }
 
 }

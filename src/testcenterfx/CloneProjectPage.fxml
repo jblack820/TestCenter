@@ -59,7 +59,7 @@
                         </ImageView>
                      </children>
                   </Pane>
-                  <AnchorPane layoutX="60.0" layoutY="115.0" prefHeight="766.0" prefWidth="1266.0" style="-fx-background-color: #181F26;" styleClass="almostblack" stylesheets="@../css/stylesheet.css">
+                  <AnchorPane layoutX="6.0" layoutY="115.0" prefHeight="766.0" prefWidth="1503.0" style="-fx-background-color: #181F26;" styleClass="almostblack" stylesheets="@../css/stylesheet.css">
                      <children>
                         <AnchorPane layoutY="80.0" prefHeight="600.0" prefWidth="425.0">
                            <children>
@@ -122,9 +122,63 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
+                              <Pane layoutX="1170.0" layoutY="82.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="480.0" prefWidth="375.0">
+                                 <children>
+                                    <Label alignment="CENTER_RIGHT" layoutX="78.0" prefHeight="0.0" prefWidth="290.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="PROJEKTNÉV" textFill="#abaaaa">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER_RIGHT" layoutX="78.0" layoutY="101.0" prefHeight="0.0" prefWidth="290.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="PROJEKTNÉV RÖVIDÍTÉS" textFill="#b5b5b5">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER_RIGHT" layoutX="78.0" layoutY="151.0" prefHeight="0.0" prefWidth="290.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="TESZTPROJEKT KEZDETE" textFill="#b5b5b5">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER_RIGHT" layoutX="78.0" layoutY="201.0" prefHeight="0.0" prefWidth="290.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="TESZTPROJEKT HATÁRIDEJE" textFill="#b5b5b5">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="BOTTOM_RIGHT" layoutX="227.0" layoutY="214.0" opacity="0.77" prefHeight="23.0" prefWidth="141.0" style="-fx-font-family: &quot;Century Gothic&quot;;" text="(opcionális)" textFill="#abaaaa">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="appLocationLabel2" alignment="CENTER_RIGHT" layoutY="308.0" prefHeight="23.0" prefWidth="368.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="ALKALMAZÁS ELÉRÉSI ÚTJA" textFill="#abaaaa">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="browserLabel1" alignment="CENTER_RIGHT" layoutX="78.0" layoutY="426.0" prefHeight="0.0" prefWidth="290.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="TESZTHEZ HASZNÁLT BÖNGÉSZŐ" textFill="#abaaaa">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER_RIGHT" layoutX="78.0" layoutY="256.0" prefHeight="0.0" prefWidth="290.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="ALKALMAZÁS VERZIÓSZÁMA" textFill="#abaaaa">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER_RIGHT" layoutX="189.0" layoutY="49.0" prefHeight="23.0" prefWidth="179.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="ALKALMAZÁS TÍPUSA" textFill="#abaaaa">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="browserLabel11" alignment="CENTER_RIGHT" layoutX="96.0" layoutY="451.0" prefHeight="23.0" prefWidth="273.0" style="-fx-font-family: &quot;Century Gothic&quot;;" text="VAGY OPERÁCIÓS RENDSZER" textFill="#b5b5b5">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="340.0" layoutY="80.0" prefHeight="668.0" prefWidth="260.0">
+                        <AnchorPane layoutX="334.0" layoutY="80.0" prefHeight="668.0" prefWidth="260.0">
                            <children>
                               <TextField fx:id="projectNameField2" editable="false" layoutY="78.0" prefHeight="29.0" prefWidth="300.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
                                  <padding>
@@ -202,7 +256,7 @@
                               </TextField>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="930.0" layoutY="80.0" prefHeight="593.0" prefWidth="300.0">
+                        <AnchorPane layoutX="855.0" layoutY="80.0" prefHeight="593.0" prefWidth="300.0">
                            <children>
                               <TextField fx:id="projectNameField" layoutY="78.0" prefHeight="29.0" prefWidth="300.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
                                  <padding>
@@ -265,12 +319,12 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <Label fx:id="appLocationLabel1" alignment="CENTER_RIGHT" layoutX="736.0" layoutY="635.0" prefHeight="23.0" prefWidth="188.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="TESZTELÉST ELVÉGZI: " textFill="#abaaaa">
+                        <Label fx:id="appLocationLabel1" alignment="CENTER_RIGHT" layoutX="669.0" layoutY="635.0" prefHeight="23.0" prefWidth="188.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="TESZTELÉST ELVÉGZI: " textFill="#abaaaa">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="690.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="100.0" fitWidth="169.0" layoutX="668.0" layoutY="314.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/transform.png" />
                            </image>

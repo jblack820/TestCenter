@@ -353,7 +353,7 @@ public class ProjectBugsController implements Initializable {
     }
     
     private File getDefectLogsFolder() {
-        return new File(currentProject.getProjectFolderPath() + AppConfig.DEFECT_LOGS_FOLDERNAME);
+        return new File(currentProject.getActiveProjectFolderPath() + AppConfig.DEFECT_LOGS_FOLDERNAME);
     }
     
     private List<TestCase> getSelectedTestCases() {

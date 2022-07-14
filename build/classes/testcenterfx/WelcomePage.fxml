@@ -8,6 +8,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
@@ -299,5 +300,22 @@
                 <Label alignment="CENTER" layoutX="26.0" layoutY="37.0" prefHeight="23.0" prefWidth="350.0" styleClass="mypopup-text-label" text="Biztosan ki akarr lépni?" textAlignment="CENTER" />
             </children>
         </Pane>
+      <Pane id="mypopup" fx:id="reactivateErrorPane" layoutX="700.0" layoutY="300.0" prefHeight="200.0" prefWidth="400.0" styleClass="mypopup" stylesheets="@../css/stylesheet.css">
+         <children>
+            <Button layoutX="158.0" layoutY="148.0" mnemonicParsing="false" onAction="#handleHideReactivateErrorPane" prefHeight="31.0" prefWidth="95.0" styleClass="myokaybutton" text="Ok" />
+            <Label alignment="CENTER" layoutX="26.0" layoutY="13.0" prefHeight="23.0" prefWidth="350.0" styleClass="mypopup-text-label" text="HIBA" textAlignment="CENTER" />
+            <Label alignment="CENTER" layoutX="9.0" layoutY="64.0" prefHeight="23.0" prefWidth="383.0" styleClass="mypopup-text-label" text="Az imént végrehajtott reaktiválás hibába ütközött." textAlignment="CENTER" />
+            <Label alignment="CENTER" layoutX="27.0" layoutY="89.0" prefHeight="23.0" prefWidth="350.0" styleClass="mypopup-text-label" text="Próbálja újra!" textAlignment="CENTER" />
+         </children>
+      </Pane>
+      <Pane id="mypopup" fx:id="archiveErrorPane" layoutX="700.0" layoutY="300.0" prefHeight="379.0" prefWidth="400.0" styleClass="mypopup" stylesheets="@../css/stylesheet.css">
+         <children>
+            <Button layoutX="158.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleHideArchiveErrorPane" prefHeight="31.0" prefWidth="95.0" styleClass="myokaybutton" text="Ok" />
+            <Label alignment="CENTER" layoutX="26.0" layoutY="13.0" prefHeight="23.0" prefWidth="350.0" styleClass="mypopup-text-label" text="HIBA" textAlignment="CENTER" />
+            <Label alignment="CENTER" layoutX="9.0" layoutY="64.0" prefHeight="23.0" prefWidth="383.0" styleClass="mypopup-text-label" text="A következő projekteket nem sikerült archiválni," textAlignment="CENTER" />
+            <Label alignment="CENTER" layoutX="27.0" layoutY="89.0" prefHeight="23.0" prefWidth="350.0" styleClass="mypopup-text-label" text="(a mappa nyitva van egy felhasználónál)" textAlignment="CENTER" />
+            <TextArea fx:id="archiveErrorTextArea" editable="false" layoutX="38.0" layoutY="149.0" prefHeight="116.0" prefWidth="332.0" styleClass="myerrortextarea" />
+         </children>
+      </Pane>
     </children>
 </AnchorPane>

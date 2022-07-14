@@ -338,7 +338,7 @@ public class CreateTestDocumentController implements Initializable {
     @FXML
     private void handleOpenFolderButton(ActionEvent event) {
         try {
-            Desktop.getDesktop().open(new File(currentProject.getProjectFolderPath() + AppConfig.TEST_DOCUMENTS_FOLDERNAME));
+            Desktop.getDesktop().open(new File(currentProject.getActiveProjectFolderPath() + AppConfig.TEST_DOCUMENTS_FOLDERNAME));
         } catch (IOException ex) {
             Logger.getLogger(CreateTestDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -639,13 +639,13 @@ public class CreateTestDocumentController implements Initializable {
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="MISC UTILS">
     public String createTestDocumentsSavePath() {
-        return currentProject.getProjectFolderPath() + AppConfig.TEST_DOCUMENTS_FOLDERNAME;
+        return currentProject.getActiveProjectFolderPath() + AppConfig.TEST_DOCUMENTS_FOLDERNAME;
     }
 
     private void fillInfoPopupLables(TestDocumentCreationDTO settings) {
         labelPageNumber.setText(settings.getNumberOfPagesRequired() + " db");
         labelFileName.setText(Utils.getFileSystemFriendyName(settings.getAreaUnderTest().toUpperCase()) + ".docm");
-        labelSaveLocation.setText(currentProject.getProjectFolderPath() + AppConfig.TEST_DOCUMENTS_FOLDERNAME);
+        labelSaveLocation.setText(currentProject.getActiveProjectFolderPath() + AppConfig.TEST_DOCUMENTS_FOLDERNAME);
     }
 
     private void updateProgressLabel() {

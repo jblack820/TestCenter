@@ -8,6 +8,7 @@ import controller.TestCenterController;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +33,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
@@ -41,6 +43,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import model.ArchivedProjectName;
+import model.TestProject;
 import model.User;
 import model.UserRole;
 import model.Users;
@@ -58,8 +62,16 @@ public class WelcomePageController implements Initializable {
     private Stage stage;
     public static Stage staticStage;
     private List<CheckBox> checkBoxList;
+    public static boolean isReactivateProcessFailed;
+    public static final List<TestProject> FAILED_TO_ARCHIVE_PROJECTS_LIST = new ArrayList<>();
     @FXML
     private Pane mypopup;
+    @FXML
+    private Pane reactivateErrorPane;
+    @FXML
+    private TextArea archiveErrorTextArea;
+    @FXML
+    private Pane archiveErrorPane;
     @FXML
     private Pane scanningDocsPane;
     @FXML
@@ -113,7 +125,7 @@ public class WelcomePageController implements Initializable {
     @FXML
     private TextField passwordField;
     @FXML
-    private TextField fullNameField;    
+    private TextField fullNameField;
 
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="INIT">
@@ -127,7 +139,7 @@ public class WelcomePageController implements Initializable {
         }
 
         if (!isDocumentsScanned && !isTestCenterLocationNeeded()) {
-             scanDocumentsAndReloadPage();
+            scanDocumentsAndReloadPage();
         }
 
         if (isDocumentsScanned && isUserCreationNeeded()) {
@@ -138,6 +150,21 @@ public class WelcomePageController implements Initializable {
             TestCenterController.userLoggedIn = Main.controller.getUsers().getUserByUserKey(System.getProperty("user.home"));
             FXWindowUtils.addUserInfoToDragPane(dragPane);
         }
+
+        if (isReactivateProcessFailed && isDocumentsScanned) {
+            System.out.println("\n\nFailed reactivation");
+            isReactivateProcessFailed = false;
+            reactivateErrorPane.setVisible(true);
+        }
+
+        if (!FAILED_TO_ARCHIVE_PROJECTS_LIST.isEmpty()) {
+            String text = getProjectNamesForArea();
+            archiveErrorTextArea.setText(text);
+            archiveErrorPane.setVisible(true);
+            removeFailedToArchiveProjectsFromArchive(FAILED_TO_ARCHIVE_PROJECTS_LIST);
+            FAILED_TO_ARCHIVE_PROJECTS_LIST.clear();
+        }
+
     }
 
     private void initStageElements() {
@@ -145,6 +172,8 @@ public class WelcomePageController implements Initializable {
         FXWindowUtils.setupPopupWindow(mypopup);
         FXWindowUtils.setupPopupWindow(installPathPane);
         FXWindowUtils.addVersionInfoToDragPane(dragPane);
+        reactivateErrorPane.setVisible(false);
+        archiveErrorPane.setVisible(false);
         userNotExistWarningPane.setVisible(false);
         invaliPasswordLabel.setVisible(false);
         newUserPane.setVisible(false);
@@ -219,7 +248,7 @@ public class WelcomePageController implements Initializable {
             @Override
             public void handle(WorkerStateEvent t) {
                 TestCenterController.isUserCreationNeeded = true;
-                TestCenterController.isTestCenterFolderLocationNeeded = false;                
+                TestCenterController.isTestCenterFolderLocationNeeded = false;
                 scanDocumentsAndReloadPage();
             }
         });
@@ -235,7 +264,7 @@ public class WelcomePageController implements Initializable {
 
     private void initUserNotExistWarning() {
         List<String> adminList = getAdminStringList();
-        if (adminList.isEmpty()){
+        if (adminList.isEmpty()) {
             adminLabel.setText("Még nincsenek adminisztrátorok a rendszerben. Lépjen be jelszőval!");
         } else {
             adminLabel.setText(getCommaSeparatedStringList(adminList));
@@ -337,6 +366,16 @@ public class WelcomePageController implements Initializable {
                 okayButton.setDisable(false);
             }
         }
+    }
+
+    @FXML
+    public void handleHideReactivateErrorPane() {
+        reactivateErrorPane.setVisible(false);
+    }
+
+    @FXML
+    public void handleHideArchiveErrorPane() {
+        archiveErrorPane.setVisible(false);
     }
 
     private boolean isLabelFilled(Label label) {
@@ -527,8 +566,7 @@ public class WelcomePageController implements Initializable {
     private boolean isUserCreationNeeded() {
         return controller.TestCenterController.isUserCreationNeeded;
     }
-
-//</editor-fold>
+    
     private List<String> getAdminStringList() {
         return Main.controller
                 .getUsers()
@@ -621,4 +659,40 @@ public class WelcomePageController implements Initializable {
         return answer;
     }
 
+    private String getProjectNamesForArea() {
+        StringBuilder sb = new StringBuilder();
+
+        for (TestProject testProject : FAILED_TO_ARCHIVE_PROJECTS_LIST) {
+            sb.append(testProject.getProjectName()).append(System.lineSeparator());
+        }
+        return sb.toString();
+    }
+
+    private void removeFailedToArchiveProjectsFromArchive(List<TestProject> FAILED_TO_ARCHIVE_PROJECTS_LIST) {
+
+        for (TestProject tp : FAILED_TO_ARCHIVE_PROJECTS_LIST) {            
+            String projectPath = tp.getArchivedProjectFolderPath();
+            File file = new File(projectPath);
+            
+            if (file.exists()) {
+                
+                String projectName = tp.getProjectName();
+                
+                ArchivedProjectName archivedProjectName = Main.controller.getTestCenter().getArchivedProjectNameByProjectName(projectName);
+                if (null!=archivedProjectName){
+                    Main.controller.getTestCenter().getARCHIVED_PROJECT_NAMES().remove(archivedProjectName);
+                }
+                
+                try {
+                    Files.delete(file.toPath());
+                } catch (IOException ex) {
+                    Logger.getLogger(WelcomePageController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
+
+    }
+
+//</editor-fold>
 }

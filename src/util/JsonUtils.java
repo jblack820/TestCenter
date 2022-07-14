@@ -7,10 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
@@ -20,7 +18,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.management.relation.Role;
 import model.DefectStatusRecord;
 import model.OsType;
 import model.ProjectType;
@@ -44,7 +41,7 @@ public class JsonUtils {
     public static void saveTestProjectJSON(TestProject tp) {
         JSONObject jobj = new JSONObject();
         mapProjectToJSON(tp, jobj);
-        writeJSONToFile(jobj, tp.getProjectFolderPath());
+        writeJSONToFile(jobj, tp.getActiveProjectFolderPath());
     }
 
     static void writeJSONToFile(JSONObject jobj, String projectFolderPath) {
@@ -68,30 +65,23 @@ public class JsonUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
     }
 
     static JSONObject getTestProjectJSON(TestProject tp) {
-        JSONObject jsonObject = null;
-        try {
-            JSONParser parser = new JSONParser();
-
-            jsonObject = (JSONObject) parser.parse(new FileReader(tp.getProjectFolderPath() + AppConfig.PROJECT_PROPERTIES_JSON_FILENAME));
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(JsonUtils.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException | ParseException ex) {
-            Logger.getLogger(JsonUtils.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return jsonObject;
+        String folderPath = util.ProjectPathFactory.getActiveProjectFolderPath(tp.getFolderName());
+        return getTestProjectJSON(folderPath);
     }
 
     static JSONObject getTestProjectJSON(String folderPath) {
         JSONObject jsonObject = null;
+        InputStreamReader isr = null;
         File file = new File(folderPath + AppConfig.PROJECT_PROPERTIES_JSON_FILENAME);
 
         JSONParser parser = new JSONParser();
         try {
-            jsonObject = (JSONObject) parser.parse(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+            isr = new InputStreamReader(new FileInputStream(file), "UTF-8");
+            jsonObject = (JSONObject) parser.parse(isr);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(JsonUtils.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException | ParseException ex) {
@@ -99,17 +89,28 @@ public class JsonUtils {
         } catch (IOException ex) {
             Logger.getLogger(JsonUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+//        try {
+//            isr.close();
+//        } catch (IOException ex) {
+//            Logger.getLogger(JsonUtils.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         return jsonObject;
     }
 
     public static TestProject getTestProjectFromJSON(String folderPath) {
         JSONObject obj = getTestProjectJSON(folderPath);
+        if (!isPropertyExist(obj, "folderName")) {
+            String folderName = getProjectfolderNameFromPath(folderPath);
+            obj.put("folderName", folderName);
+            obj.remove("ProjectFolderPath");
+            writeJSONToFile(obj, folderPath);
+            obj = getTestProjectJSON(folderPath);
+        } 
         TestProject tp = new TestProject(
                 (String) obj.get("projectName"),
                 getLocalDateFromJSONDate((String) obj.get("DATE_STARTED")),
                 null);
-        tp.setProjectFolderPath((String) obj.get("ProjectFolderPath"));
+        tp.setFolderName((String) obj.get("folderName"));    
         setDeadline(tp, obj);
         tp.setAppLocation((String) obj.get("appLocation"));
         tp.setCodeNAme((String) obj.get("codeNAme"));
@@ -122,7 +123,7 @@ public class JsonUtils {
     static void mapProjectToJSON(TestProject tp, JSONObject jobj) {
         jobj.put("projectName", tp.getProjectName());
         jobj.put("codeNAme", tp.getCodeNAme());
-        jobj.put("ProjectFolderPath", tp.getProjectFolderPath());
+        jobj.put("folderName", tp.getFolderName());
         jobj.put("DATE_STARTED", localDateToJSON(tp.getDateStarted()));
         jobj.put("deadline", localDateToJSON(tp.getProjectDeadline()));
         jobj.put("projectType", tp.getProjectType().getProjectTypeName());
@@ -138,7 +139,7 @@ public class JsonUtils {
 
     public static void modifyJsonProjectPathProperty(String validProjectPath) {
         JSONObject jobj = getTestProjectJSON(validProjectPath);
-        jobj.put("ProjectFolderPath", validProjectPath);        
+        jobj.put("ProjectFolderPath", validProjectPath);
         writeJSONToFile(jobj, validProjectPath);
     }
 
@@ -157,6 +158,12 @@ public class JsonUtils {
         } else {
             return null;
         }
+    }
+    
+    private static String getProjectfolderNameFromPath(String folderPath) {
+        String splitter = File.separator.replace("\\", "\\\\");
+        String[] array = folderPath.split(splitter);
+        return array[array.length - 1];
     }
 
 //</editor-fold>
@@ -250,12 +257,12 @@ public class JsonUtils {
         }
         return userList;
     }
-    
+
     private static List<UserRole> getRolesOfUser(JSONObject jobj) {
         List<UserRole> roleList = new ArrayList();
         String roles = (String) jobj.get("role");
         for (UserRole value : UserRole.values()) {
-            if (roles.contains(value.getName())){
+            if (roles.contains(value.getName())) {
                 roleList.add(value);
             }
         }
@@ -399,7 +406,11 @@ public class JsonUtils {
         return array.toJSONString().replaceAll("\",\"", sb.toString());
     }
 
-//</editor-fold>
+    private static boolean isPropertyExist(JSONObject obj, String folderName) {
+        return obj.containsKey(folderName);
+    }
 
+//</editor-fold>
     
+
 }

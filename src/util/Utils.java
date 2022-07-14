@@ -38,7 +38,7 @@ public class Utils {
 
         try {
             outputStream = new FileOutputStream(
-                    project.getProjectFolderPath()
+                    project.getActiveProjectFolderPath()
                     + getFileSystemFriendyName(templateData.getProjectName())
                     + "//"
                     + constructWordDocumentFileName(templateData));
@@ -54,7 +54,7 @@ public class Utils {
 
         try {
             outputStream = new FileOutputStream(
-                    targetproject.getProjectFolderPath()
+                    targetproject.getActiveProjectFolderPath()
                     + config.AppConfig.TEST_DOCUMENTS_FOLDERNAME
                     + "//"
                     + constructWordDocumentFileName(formData, targetproject));
@@ -70,7 +70,7 @@ public class Utils {
 
         try {
             outputStream = new FileOutputStream(
-                    targetproject.getProjectFolderPath()
+                    targetproject.getActiveProjectFolderPath()
                     + config.AppConfig.TEST_DOCUMENTS_FOLDERNAME
                     + "//"
                     + wordFileName);
@@ -396,7 +396,7 @@ public class Utils {
 //</editor-fold>
 
     public static boolean isBugTicketPresentToCurrentBug(TestCase failedTestCase) {
-        String defectLogFolder = Main.controller.getCurrentTestProject().getProjectFolderPath() + AppConfig.DEFECT_LOGS_FOLDERNAME;
+        String defectLogFolder = Main.controller.getCurrentTestProject().getActiveProjectFolderPath() + AppConfig.DEFECT_LOGS_FOLDERNAME;
         File[] files = new File(defectLogFolder).listFiles();
         if (null == files) {
             return false;

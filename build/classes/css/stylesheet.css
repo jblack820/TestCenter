@@ -39,7 +39,7 @@
 
 .combo-box-popup .scroll-bar {
     -fx-background-color: #1F262C;
-    
+
 }
 /*</editor-fold>*/
 /*<editor-fold defaultstate="collapsed" desc="Date picker">*/
@@ -250,7 +250,7 @@
     -fx-border-color: #222B35;
     -fx-border-width: 5px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.1, 0.0, 10);
-    
+
 }
 
 .mypopup-text-label {
@@ -334,7 +334,7 @@
     -fx-text-fill: #A6A6A6;
     -fx-font-size: 16px;
     -fx-backgroud-color: transparent;
-    
+
 }
 
 .mytextarea{
@@ -345,7 +345,7 @@
     -fx-border-color: transparent;   
     -fx-font-size: 16px;    
     -fx-effect: innershadow( gaussian, #222B35, 7, 2, 0.2, 0.2 );
-    
+
 }
 
 .mytextarea .content{
@@ -364,7 +364,7 @@
     -fx-border-color: transparent;   
     -fx-font-size: 16px;    
     -fx-effect: innershadow( gaussian, #222B35, 7, 2, 0.2, 0.2 );
-    
+
 }
 
 .mynotestextarea .content{
@@ -400,6 +400,54 @@
     font-size: 16px;
     -fx-background-insets: 0,3px;
 }
+
+.myerrortextarea{
+    -fx-background-color:  #181F26;
+    -fx-border-color: #181F26;
+    -fx-text-alignment:center;
+    -fx-border-width: 3;
+    -fx-effect: dropshadow(gaussian, rgba(90, 90, 90, 0.4), 10, 0.5, 0.0, 0.0);
+    -fx-text-fill:  #ABAAAA;
+    resize:none;
+    font-size: 16px;
+    -fx-background-insets: 0,3px;
+}
+
+.myerrortextarea .content{
+    -fx-background-color:  #181F26;
+    -fx-border-color: #181F26;
+    -fx-border-width: 3;
+    -fx-text-alignment:center;
+    -fx-effect: dropshadow(gaussian, rgba(90, 90, 90, 0.4), 10, 0.5, 0.0, 0.0);
+    -fx-text-fill:  #ABAAAA;
+    resize:none;
+    font-size: 16px;
+    -fx-background-insets: 0,3px;
+}
+/*.myerrortextarea:focused{
+    -fx-background-color:  #181F26;
+    -fx-border-color: #181F26;
+    -fx-border-width: 3;
+    -fx-alignment:CENTER;
+    -fx-effect: dropshadow(gaussian, rgba(90, 90, 90, 0.4), 10, 0.5, 0.0, 0.0);
+    -fx-text-fill:  #ABAAAA;
+    resize:none;
+    font-size: 16px;
+    -fx-background-insets: 0,3px;
+}
+
+.myerrortextarea .content:focused{
+    -fx-background-color:  #181F26;
+    -fx-border-color: #181F26;
+    -fx-border-width: 3;
+    -fx-alignment:CENTER;
+    -fx-effect: dropshadow(gaussian, rgba(90, 90, 90, 0.4), 10, 0.5, 0.0, 0.0);
+    -fx-text-fill:  #ABAAAA;
+    resize:none;
+    font-size: 16px;
+    -fx-background-insets: 0,3px;
+}*/
+
 
 .check-box .box {
     -fx-background-color: #202933;    

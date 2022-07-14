@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package testcenterfx;
 
 import javafx.event.EventHandler;
@@ -40,7 +35,6 @@ public class CustomTestDocumentNameTableCell<S, T> extends TextFieldTableCell<S,
                             result.setStyle("-fx-background-color: #305294; -fx-alignment: CENTER-LEFT; -fx-text-fill: white");
                             ((Node) event.getTarget()).getScene().setCursor(Cursor.HAND);
                         }
-
                     }
                 };
 
@@ -59,9 +53,6 @@ public class CustomTestDocumentNameTableCell<S, T> extends TextFieldTableCell<S,
                         TableCell tc = null;
                         if (isTableCell(node)) {
                             tc = (TableCell) node;
-//                            if (event.getClickCount() == 2) {
-//                                ProjectBugsController.handleOpenTestCaseRequest(tc.getText(), tc);
-//                            }
                             ProjectPageController.handleOpenTestDocumentRequest(tc.getText(), tc);
                         }
                     }

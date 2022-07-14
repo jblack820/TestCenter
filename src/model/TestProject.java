@@ -1,5 +1,6 @@
 package model;
 
+import app.Main;
 import config.AppConfig;
 import java.io.File;
 import java.io.Serializable;
@@ -19,9 +20,8 @@ public class TestProject implements Serializable {
 
     private SimpleStringProperty projectName;
     private SimpleStringProperty codeNAme;
-    private final String folderName;
+    private String folderName;
     private ProjectType projectType;
-    private String ProjectFolderPath;
     private ObjectProperty<LocalDate> dateStarted;
     private LocalDate projectDeadline;
     private String appLocation;
@@ -37,7 +37,6 @@ public class TestProject implements Serializable {
         this.testDocuments = new ArrayList<>();
         this.dateStarted = new SimpleObjectProperty<>(DATE_STARTED);
         this.folderName = createFolderName(this.projectName);
-        this.ProjectFolderPath = AppConfig.ACTIVE_PROJECTS_FOLDERNAME + this.folderName;
         this.PRODUCT_VERSION_NUMBERS = new ArrayList<>();
         this.TEST_PROJECT_SNAPSHOTS = new ArrayList<>();
         this.codeNAme = new SimpleStringProperty();
@@ -49,7 +48,6 @@ public class TestProject implements Serializable {
         this.testDocuments = new ArrayList<>();
         this.dateStarted = new SimpleObjectProperty<>(DATE_STARTED);
         this.folderName = createFolderName(this.projectName);
-        this.ProjectFolderPath = AppConfig.ACTIVE_PROJECTS_FOLDERNAME + this.folderName;
         this.PRODUCT_VERSION_NUMBERS = new ArrayList<>();
         this.TEST_PROJECT_SNAPSHOTS = new ArrayList<>();
         this.codeNAme = new SimpleStringProperty(shortName);
@@ -61,7 +59,6 @@ public class TestProject implements Serializable {
         this.testDocuments = new ArrayList<>();
         this.dateStarted = new SimpleObjectProperty<>(DATE_STARTED);
         this.folderName = createFolderName(this.projectName);
-        this.ProjectFolderPath = AppConfig.ACTIVE_PROJECTS_FOLDERNAME + this.folderName;
         this.PRODUCT_VERSION_NUMBERS = new ArrayList<>();
         this.TEST_PROJECT_SNAPSHOTS = new ArrayList<>();
         this.codeNAme = new SimpleStringProperty(shortName);
@@ -73,6 +70,10 @@ public class TestProject implements Serializable {
         return folderName;
     }
 
+    public void setFolderName(String folderName) {
+        this.folderName = folderName;
+    }
+        
     public void setProjectNameProperty(SimpleStringProperty projectName) {
         this.projectName = projectName;
     }
@@ -125,10 +126,6 @@ public class TestProject implements Serializable {
         this.projectName.set(projectName);
     }
 
-    public void setProjectFolderPath(String ProjectFolderPath) {
-        this.ProjectFolderPath = ProjectFolderPath;
-    }
-
     public void setProjectDeadline(LocalDate projectDeadline) {
         this.projectDeadline = projectDeadline;
     }
@@ -147,10 +144,6 @@ public class TestProject implements Serializable {
 
     public SimpleStringProperty getCodeNAmeProperty() {
         return codeNAme;
-    }
-
-    public String getProjectFolderPath() {
-        return ProjectFolderPath;
     }
 
     public LocalDate getProjectDeadline() {
@@ -180,7 +173,6 @@ public class TestProject implements Serializable {
         int hash = 7;
         hash = 31 * hash + Objects.hashCode(this.projectName);
         hash = 31 * hash + Objects.hashCode(this.codeNAme);
-        hash = 31 * hash + Objects.hashCode(this.ProjectFolderPath);
         hash = 31 * hash + Objects.hashCode(this.dateStarted);
         hash = 31 * hash + Objects.hashCode(this.projectDeadline);
         hash = 31 * hash + Objects.hashCode(this.testDocuments);
@@ -205,9 +197,6 @@ public class TestProject implements Serializable {
         if (!Objects.equals(this.codeNAme, other.codeNAme)) {
             return false;
         }
-        if (!Objects.equals(this.ProjectFolderPath, other.ProjectFolderPath)) {
-            return false;
-        }
         if (!Objects.equals(this.dateStarted, other.dateStarted)) {
             return false;
         }
@@ -227,7 +216,6 @@ public class TestProject implements Serializable {
         sb.append(", codeNAme=").append(codeNAme);
         sb.append(", folderName=").append(folderName);
         sb.append(", projectType=").append(projectType);
-        sb.append(", ProjectFolderPath=").append(ProjectFolderPath);
         sb.append(", DATE_STARTED=").append(dateStarted);
         sb.append(", projectDeadline=").append(projectDeadline);
         sb.append(", appLocation=").append(appLocation);
@@ -331,9 +319,25 @@ public class TestProject implements Serializable {
             }
         }
     }
+    
+    public String getActiveProjectFolderPath(){
+        return new StringBuilder()
+                .append(Main.controller.getTestCenter().getFolderStructure().getActiveProjectsLocation())
+                .append(this.folderName)
+                .append(File.separator)
+                .toString();
+    }
+    
+     public String getArchivedProjectFolderPath(){
+        return new StringBuilder()
+                .append(Main.controller.getTestCenter().getFolderStructure().getArchivedProjectsLocation())
+                .append(this.folderName)
+                .append(File.separator)
+                .toString();
+    }
 
     public String getDefectLogFolderLocation() {
-        return this.ProjectFolderPath + AppConfig.DEFECT_LOGS_FOLDERNAME;
+        return this.getActiveProjectFolderPath() + AppConfig.DEFECT_LOGS_FOLDERNAME;
     }
 
     public <T> T getLastElement(List<T> t) {

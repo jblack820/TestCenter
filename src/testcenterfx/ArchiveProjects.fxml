@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -130,5 +131,18 @@
             <Label alignment="CENTER" layoutX="36.0" layoutY="47.0" prefHeight="23.0" prefWidth="350.0" styleClass="mypopup-text-label" text="Biztosan ki akarr lépni?" textAlignment="CENTER" />
             </children>
         </Pane>
+      <Pane fx:id="disablePane" layoutX="25.0" layoutY="25.0" opacity="0.23" prefHeight="950.0" prefWidth="1760.0" style="-fx-background-color: black;" />
+      <Pane id="mypopup" fx:id="archiveErrorPane" layoutX="710.0" layoutY="310.0" prefHeight="425.0" prefWidth="400.0" styleClass="mypopup" stylesheets="@../css/stylesheet.css">
+         <children>
+            <Button layoutX="158.0" layoutY="372.0" mnemonicParsing="false" onAction="#handleRemoveAlert" prefHeight="31.0" prefWidth="95.0" styleClass="myokaybutton" text="Ok" />
+            <Label alignment="CENTER" layoutX="26.0" layoutY="13.0" prefHeight="23.0" prefWidth="350.0" styleClass="mypopup-text-label" text="FIGYELEM" textAlignment="CENTER" />
+            <Label alignment="CENTER" layoutX="9.0" layoutY="64.0" prefHeight="23.0" prefWidth="383.0" styleClass="mypopup-text-label" text="A következő projekteket nem lehet archiválni," textAlignment="CENTER" />
+            <Label alignment="CENTER" layoutX="27.0" layoutY="89.0" prefHeight="23.0" prefWidth="350.0" styleClass="mypopup-text-label" text="*.word dokumentum(ok) nyitva van(nak)" textAlignment="CENTER" />
+            <TextArea fx:id="archiveErrorTextArea" editable="false" layoutX="38.0" layoutY="125.0" prefHeight="116.0" prefWidth="332.0" styleClass="myerrortextarea" />
+            <Label alignment="CENTER" layoutX="10.0" layoutY="280.0" prefHeight="23.0" prefWidth="383.0" styleClass="mypopup-text-label" text="Archiválás előtt a projektekben be kell zárni az" textAlignment="CENTER" />
+            <Label alignment="CENTER" layoutX="10.0" layoutY="305.0" prefHeight="23.0" prefWidth="383.0" styleClass="mypopup-text-label" text="összes dokumentumot, és a felhasználóknak" textAlignment="CENTER" />
+            <Label alignment="CENTER" layoutX="10.0" layoutY="330.0" prefHeight="23.0" prefWidth="383.0" styleClass="mypopup-text-label" text=" ki kell lépni az összes mappából, almappából" textAlignment="CENTER" />
+         </children>
+      </Pane>
     </children>
 </AnchorPane>

@@ -36,6 +36,19 @@ public class TestCenter implements Serializable {
         return ARCHIVED_PROJECT_NAMES;
     }
 
+    public ArchivedProjectName getArchivedProjectNameByProjectName(String projectName) {
+
+        ArchivedProjectName answer = null;
+
+        for (ArchivedProjectName testProject : ARCHIVED_PROJECT_NAMES) {
+            if (testProject.getProjectName().equalsIgnoreCase(projectName)) {
+                answer = testProject;
+                break;
+            }
+        }
+        return answer;
+    }
+
     public String getArchivedProjectFolderNameByProjectname(String name) {
 
         Optional<String> nameOptional = ARCHIVED_PROJECT_NAMES
@@ -58,7 +71,7 @@ public class TestCenter implements Serializable {
         Iterator it = ARCHIVED_PROJECT_NAMES.iterator();
         while (it.hasNext()) {
             ArchivedProjectName name = (ArchivedProjectName) it.next();
-            if (name.getFolderName().equalsIgnoreCase(folderName)){
+            if (name.getFolderName().equalsIgnoreCase(folderName)) {
                 it.remove();
                 break;
             }

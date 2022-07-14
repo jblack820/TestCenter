@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -260,7 +259,7 @@ public class ProjectPageController implements Initializable {
     @FXML
     private void handleFolderIconClicked(MouseEvent event) {
         try {
-            Desktop.getDesktop().open(new File(currentProject.getProjectFolderPath() + AppConfig.TEST_DOCUMENTS_FOLDERNAME));
+            Desktop.getDesktop().open(new File(currentProject.getActiveProjectFolderPath() + AppConfig.TEST_DOCUMENTS_FOLDERNAME));
         } catch (IOException ex) {
             Logger.getLogger(CreateTestDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -285,8 +284,7 @@ public class ProjectPageController implements Initializable {
     public static void handleOpenTestDocumentRequest(String modulName, TableCell tc) {
 
         setCursor(tc, Cursor.WAIT, 0);
-        String path = getDocumnetPath(modulName);
-        System.out.println(path);
+        String path = getDocumnetPath(modulName);        
         if (WordFileUtils.isWordFileLocked(path)) {
             staticStage = (Stage) tc.getScene().getWindow();
             FXWindowUtils.showAlert(
@@ -295,8 +293,7 @@ public class ProjectPageController implements Initializable {
                     "( " + WordFileUtils.getWordFileNameFromFullPath(path) + " )",
                     "Használja: " + WordFileUtils.getOwnerOfOpenedWordFile(path));
 
-        } else {
-            System.out.println("Bot Locked!");
+        } else {            
             OpenWordDocument.open(path);
             setCursor(tc, Cursor.DEFAULT, 2000);
         }

@@ -206,7 +206,9 @@ public class TestCenterController {
 
     public void scanDocumentsAndCreateProjectObjects() {
         createArchivedProjectNamesList();
+        System.out.println("Starting creating project objects...");
         createProjectObjects(getActiveProjectFolderNames());
+        System.out.println("Creating project objects ENDED");
         createTestDocumentObjects();
         createTestCaseObjects();
         updateProjectVersionNumbers();
@@ -215,29 +217,16 @@ public class TestCenterController {
 //</editor-fold>
 //<editor-fold defaultstate="collapsed" desc="CREATE PROJECT OBJECTS">
     public void createProjectObjects(File[] projectFolders) {
-        
         testCenter.getActiveTestProjects().clear();
         
         for (File projectFolder : projectFolders) {
-
             if (isJsonPresentInFolder(getProjectFolderPath(projectFolder))) {
-                if (isTestCenterLocationChanged(projectFolder)) {
-                    String validProjectPath = getProjectFolderPath(projectFolder);
-                    JsonUtils.modifyJsonProjectPathProperty(validProjectPath);
-                }
+                System.out.println("Scanning Current project: " + projectFolder.getName());
                 addProjectToTestCenter(JsonUtils.getTestProjectFromJSON(getProjectFolderPath(projectFolder)));
             } else {
                 addProjectToTestCenter(createTestProjectObjectScanningFolder(projectFolder));
             }
         }
-    }
-
-    private boolean isTestCenterLocationChanged(File projectFolder) {
-        String[] currentTestCenterPath = getProjectFolderPath(projectFolder).split("\\\\");
-        int TCFolderIndexInValidPath = Arrays.binarySearch(currentTestCenterPath, "TestCenter");
-        String pathInJason[] = JsonUtils.getProjectPathPropertyFromJson(getProjectFolderPath(projectFolder)).split("\\\\");
-        int TCFolderIndexInJson = Arrays.binarySearch(pathInJason, "TestCenter");
-        return !currentTestCenterPath[TCFolderIndexInValidPath - 1].equalsIgnoreCase(pathInJason[TCFolderIndexInJson - 1]);
     }
 
     private TestProject createTestProjectObjectScanningFolder(File projectFolder) {
@@ -247,13 +236,13 @@ public class TestCenterController {
                 projectFolder.getName(),
                 fileTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
                 null);
-        testProject.setProjectFolderPath(getProjectFolderPath(projectFolder));
+        testProject.setFolderName(projectFolder.getName());
 
         return testProject;
     }
 
     private String getProjectFolderPath(File projectFolder) {
-        return testCenter.getFolderStructure().getActiveProjectsLocation() + projectFolder.getName() + "//";
+        return testCenter.getFolderStructure().getActiveProjectsLocation() + projectFolder.getName() + File.separator;
     }
 
     private FileTime getFolderCreationTime(File projectFolder) {
@@ -511,7 +500,7 @@ public class TestCenterController {
 
     private File makeFolderForDefectlog(TestProject project, TestCase failedTestCase) {
         File targetDir = new File(
-                project.getProjectFolderPath() + "//"
+                project.getActiveProjectFolderPath() + "//"
                 + AppConfig.DEFECT_LOGS_FOLDERNAME + "//"
                 + "HJ-" + failedTestCase.getTestCaseId());
 
@@ -543,6 +532,7 @@ public class TestCenterController {
 
         TestProject newTestProjectObject = createTestProjectObject(projectName, projectShortName, dateStarted, dateDeadline);
         newTestProjectObject.setProjectType(ProjectType.getProjectTypeBasedOnName(projectType));
+        newTestProjectObject.setFolderName(Utils.getFileSystemFriendyName(projectName));
 
         if (null != versionNumber && !versionNumber.equalsIgnoreCase("")) {
 
@@ -577,17 +567,13 @@ public class TestCenterController {
 
     private TestProject createTestProjectObject(String projectName, String projectShortName, LocalDate dateStarted, LocalDate dateDeadline) {
         TestProject tp = new TestProject(projectName, projectShortName, dateStarted, dateDeadline);
-        tp.setProjectFolderPath(new StringBuilder()
-                .append(testCenter.getFolderStructure().getActiveProjectsLocation())
-                .append(Utils.getFileSystemFriendyName(projectName))
-                .append("//")
-                .toString());
+        tp.setFolderName(Utils.getFileSystemFriendyName(projectName));
         return tp;
     }
 
     private void createSubFolders(TestProject tp) {
-        AppUtils.createFolder(tp.getProjectFolderPath(), config.AppConfig.TEST_DOCUMENTS_FOLDERNAME);
-        AppUtils.createFolder(tp.getProjectFolderPath(), config.AppConfig.DEFECT_LOGS_FOLDERNAME);
+        AppUtils.createFolder(tp.getActiveProjectFolderPath(), config.AppConfig.TEST_DOCUMENTS_FOLDERNAME);
+        AppUtils.createFolder(tp.getActiveProjectFolderPath(), config.AppConfig.DEFECT_LOGS_FOLDERNAME);
     }
 
     private void addProjectObjectToTestCenter(TestProject newTestProjectObject) {
@@ -595,7 +581,7 @@ public class TestCenterController {
     }
 
     private String getTestDocumentsFolder(TestProject testProject) {
-        return testProject.getProjectFolderPath() + config.AppConfig.TEST_DOCUMENTS_FOLDERNAME + File.separator;
+        return testProject.getActiveProjectFolderPath() + config.AppConfig.TEST_DOCUMENTS_FOLDERNAME + File.separator;
     }
 
     private void scanAndAddTestModules(TestProject currentProject) {
@@ -814,13 +800,13 @@ public class TestCenterController {
 
     public void archiveProjects(List<TestProject> projects) {
         if (null != projects && !projects.isEmpty()) {
-            projects.stream().forEach(ArchiveProjectUtils::archiveProject);
+            projects.stream().forEach(ArchiveProjectUtils::moveActiveProjectToArchivedFolder);
         }
     }
     
     public void reActivateProjects(List<String> folderNames) {
         if (null != folderNames && !folderNames.isEmpty()) {
-            folderNames.stream().forEach(ArchiveProjectUtils::reactivateArchivedProject);
+            folderNames.stream().forEach(ArchiveProjectUtils::moveArchivedProjectToActiveFolder);
         }
     }
 
@@ -836,15 +822,19 @@ public class TestCenterController {
                 + AppConfig.TEST_DEVICES_JSON_FILENAME)
                 .exists();
     }
+    
+    public void reScanArchivedProjects(){
+        createArchivedProjectNamesList();
+    }
 
     private void createArchivedProjectNamesList() {
         Main.controller.getTestCenter().getARCHIVED_PROJECT_NAMES().clear();
         File directoryPath = new File(testCenter.getFolderStructure().getArchivedProjectsLocation());
-        File contents[] = directoryPath.listFiles();
+        File archivedProjectFolders[] = directoryPath.listFiles();
 
         List<ArchivedProjectName> list = new ArrayList<>();
 
-        List<String> folderNames = Arrays.asList(contents)
+        List<String> folderNames = Arrays.asList(archivedProjectFolders)
                 .stream()
                 .filter(p -> p.isDirectory())
                 .map(p -> p.getName())
@@ -867,7 +857,7 @@ public class TestCenterController {
                         .getTestCenter()
                         .getFolderStructure()
                         .getArchivedProjectsLocation()
-                + folderName;
+                + folderName;        
         return JsonUtils.getProjectNameFromProjectJson(path);
     }
 
