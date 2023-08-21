@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="anchorPaneBase" fx:id="anchorPaneBase" prefHeight="1000.0" prefWidth="1810.0" styleClass="anchorPaneBase" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testcenterfx.CloneProjectController">
+    <children>
+      <Pane id="basePane" fx:id="basePane" layoutX="25.0" layoutY="25.0" prefHeight="950.0" prefWidth="1760.0" styleClass="almostblack" stylesheets="@../css/stylesheet.css">
+         <children>
+            <AnchorPane id="dragPane" fx:id="dragPane" prefHeight="30.0" prefWidth="1760.0" styleClass="almostblack">
+               <children>
+                  <Pane id="closePane" fx:id="closePane" onMouseClicked="#handleExitPressed" prefHeight="30.0" prefWidth="30.0" styleClass="closepane" stylesheets="@../css/stylesheet.css" AnchorPane.rightAnchor="1.0">
+                     <children>
+                        <ImageView fx:id="closeIcon" fitHeight="12.0" fitWidth="12.0" layoutX="9.0" layoutY="9.0" opacity="0.45" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/close.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane id="minimizePane" fx:id="minimizePane" layoutX="1039.0" onMouseClicked="#minimizeStage" prefHeight="30.0" prefWidth="30.0" styleClass="minimizepane" AnchorPane.rightAnchor="31.0">
+                     <children>
+                        <Line fx:id="minimizeIcon" endX="23.0" fill="WHITE" layoutX="-2.0" layoutY="20.0" opacity="0.85" startX="11.0" stroke="#e4e4e4" />
+                     </children>
+                  </Pane>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="5.0" layoutY="5.0" opacity="0.81" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/TEST_LAB_ICON.jpg" />
+                     </image>
+                  </ImageView>
+                  <Text fill="#b9b5b5" fontSmoothingType="LCD" layoutX="-1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teszt Labor" x="30.0" y="20.0">
+                     <font>
+                        <Font name="Perpetua" size="16.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <Pane id="contentPane" fx:id="contentPane" layoutY="30.0" prefHeight="920.0" prefWidth="1760.0">
+               <children>
+                  <Pane id="logoPane" fx:id="logoPane" prefHeight="100.0" prefWidth="1760.0">
+                     <children>
+                        <ImageView fitHeight="215.0" fitWidth="1760.0" opacity="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/header3.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <AnchorPane layoutX="60.0" layoutY="115.0" prefHeight="766.0" prefWidth="1266.0" style="-fx-background-color: #181F26;" styleClass="almostblack" stylesheets="@../css/stylesheet.css">
+                     <children>
+                        <AnchorPane layoutY="80.0" prefHeight="600.0" prefWidth="425.0">
+                           <children>
+                              <Pane layoutX="50.0" layoutY="82.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="480.0" prefWidth="375.0">
+                                 <children>
+                                    <Label alignment="CENTER_RIGHT" layoutX="78.0" prefHeight="0.0" prefWidth="290.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="PROJEKTNÉV" textFill="#abaaaa">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER_RIGHT" layoutX="78.0" layoutY="101.0" prefHeight="0.0" prefWidth="290.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="PROJEKTNÉV RÖVIDÍTÉS" textFill="#b5b5b5">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER_RIGHT" layoutX="78.0" layoutY="151.0" prefHeight="0.0" prefWidth="290.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="TESZTPROJEKT KEZDETE" textFill="#b5b5b5">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER_RIGHT" layoutX="78.0" layoutY="201.0" prefHeight="0.0" prefWidth="290.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="TESZTPROJEKT HATÁRIDEJE" textFill="#b5b5b5">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="BOTTOM_RIGHT" layoutX="227.0" layoutY="214.0" opacity="0.77" prefHeight="23.0" prefWidth="141.0" style="-fx-font-family: &quot;Century Gothic&quot;;" text="(opcionális)" textFill="#abaaaa">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="appLocationLabel" alignment="CENTER_RIGHT" layoutY="308.0" prefHeight="23.0" prefWidth="368.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="ALKALMAZÁS ELÉRÉSI ÚTJA" textFill="#abaaaa">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="browserLabel" alignment="CENTER_RIGHT" layoutX="78.0" layoutY="426.0" prefHeight="0.0" prefWidth="290.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="TESZTHEZ HASZNÁLT BÖNGÉSZŐ" textFill="#abaaaa">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER_RIGHT" layoutX="78.0" layoutY="256.0" prefHeight="0.0" prefWidth="290.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="ALKALMAZÁS VERZIÓSZÁMA" textFill="#abaaaa">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER_RIGHT" layoutX="189.0" layoutY="49.0" prefHeight="23.0" prefWidth="179.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="ALKALMAZÁS TÍPUSA" textFill="#abaaaa">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="browserLabel1" alignment="CENTER_RIGHT" layoutX="96.0" layoutY="451.0" prefHeight="23.0" prefWidth="273.0" style="-fx-font-family: &quot;Century Gothic&quot;;" text="VAGY OPERÁCIÓS RENDSZER" textFill="#b5b5b5">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Label alignment="CENTER_RIGHT" layoutX="57.0" layoutY="31.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="0.0" prefWidth="290.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabelhiglight" stylesheets="@../css/stylesheet.css" text="FORRÁS PROJEKT" textFill="#abaaaa">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="340.0" layoutY="80.0" prefHeight="668.0" prefWidth="260.0">
+                           <children>
+                              <TextField fx:id="projectNameField2" editable="false" layoutY="78.0" prefHeight="29.0" prefWidth="300.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
+                                 <padding>
+                                    <Insets bottom="1.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="projectNameShortField2" editable="false" layoutY="178.0" prefHeight="29.0" prefWidth="77.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
+                                 <padding>
+                                    <Insets bottom="1.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="browserField2" editable="false" layoutY="504.0" prefHeight="29.0" prefWidth="300.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
+                                 <padding>
+                                    <Insets bottom="1.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="versionNumberField2" editable="false" layoutY="334.0" prefHeight="29.0" prefWidth="300.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
+                                 <padding>
+                                    <Insets bottom="1.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </TextField>
+                              <Pane layoutY="384.0" style="-fx-background-color: #1F222D;">
+                                 <children>
+                                    <TextArea fx:id="appLocationArea2" editable="false" prefHeight="102.0" prefWidth="300.0" style="-fx-background-color: black;" styleClass="mytextarea" stylesheets="@../css/stylesheet.css" wrapText="true" />
+                                 </children>
+                              </Pane>
+                              <Line fx:id="codeNameLine" endX="-85.0" layoutX="181.0" layoutY="192.0" opacity="0.41" startX="-100.0" stroke="#b5b5b5" strokeWidth="3.0" />
+                              <Pane layoutX="100.0" layoutY="168.0" prefHeight="45.0" prefWidth="87.0">
+                                 <children>
+                                    <TextField fx:id="projectTypeShortField2" editable="false" layoutX="11.0" layoutY="9.0" mouseTransparent="true" opacity="0.36" prefHeight="29.0" prefWidth="68.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
+                                       <padding>
+                                          <Insets bottom="1.0" top="1.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </TextField>
+                                 </children></Pane>
+                              <ComboBox fx:id="projectSelector" layoutY="25.0" prefHeight="29.0" prefWidth="300.0" style="-fx-background-color: #222B35;" />
+                              <TextField fx:id="projectTypeField" editable="false" layoutY="128.0" prefHeight="29.0" prefWidth="300.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
+                                 <padding>
+                                    <Insets bottom="1.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="dateDeadlineField2" editable="false" layoutY="278.0" prefHeight="29.0" prefWidth="300.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
+                                 <padding>
+                                    <Insets bottom="1.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="dateStartedField2" editable="false" layoutY="228.0" prefHeight="29.0" prefWidth="300.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
+                                 <padding>
+                                    <Insets bottom="1.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="930.0" layoutY="80.0" prefHeight="593.0" prefWidth="300.0">
+                           <children>
+                              <TextField fx:id="projectNameField" layoutY="78.0" prefHeight="29.0" prefWidth="300.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
+                                 <padding>
+                                    <Insets bottom="1.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="projectNameShortField" layoutY="178.0" prefHeight="29.0" prefWidth="77.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
+                                 <padding>
+                                    <Insets bottom="1.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </TextField>
+                              <DatePicker fx:id="dateStartedField" editable="false" layoutY="228.0" prefHeight="27.0" prefWidth="300.0" style="-fx-control-inner-background: #222B35; -fx-background-color: #222B35; -fx-text-fill: #BABABA;" styleClass="date-picker" stylesheets="@../css/stylesheet.css" />
+                              <DatePicker fx:id="dateDeadlineField" editable="false" layoutY="278.0" prefHeight="27.0" prefWidth="300.0" style="-fx-control-inner-background: #222B35; -fx-background-color: #222B35; -fx-text-fill: #BABABA;" styleClass="date-picker" stylesheets="@../css/stylesheet.css" />
+                              <TextField fx:id="browserField" layoutY="504.0" prefHeight="29.0" prefWidth="300.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
+                                 <padding>
+                                    <Insets bottom="1.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="versionNumberField" layoutY="334.0" prefHeight="29.0" prefWidth="300.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
+                                 <padding>
+                                    <Insets bottom="1.0" top="1.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </TextField>
+                              <Pane layoutY="384.0" style="-fx-background-color: #1F222D;">
+                                 <children>
+                                    <TextArea fx:id="appLocationArea" prefHeight="102.0" prefWidth="300.0" style="-fx-background-color: black;" styleClass="mytextarea" stylesheets="@../css/stylesheet.css" wrapText="true" />
+                                 </children>
+                              </Pane>
+                              <Line fx:id="codeNameLine1" endX="-85.0" layoutX="181.0" layoutY="192.0" opacity="0.41" startX="-100.0" stroke="#b5b5b5" strokeWidth="3.0" />
+                              <Pane layoutX="100.0" layoutY="168.0" prefHeight="45.0" prefWidth="87.0">
+                                 <children>
+                                    <TextField fx:id="projectTypeShortField" editable="false" layoutX="11.0" layoutY="9.0" mouseTransparent="true" opacity="0.36" prefHeight="29.0" prefWidth="68.0" styleClass="mytextfield" stylesheets="@../css/stylesheet.css">
+                                       <padding>
+                                          <Insets bottom="1.0" top="1.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </Pane>
+                              <ComboBox fx:id="projectTypeSelector" layoutY="128.0" prefHeight="29.0" prefWidth="300.0" style="-fx-background-color: #222B35;" />
+                              <ComboBox fx:id="testerSelector" layoutY="550.0" prefHeight="29.0" prefWidth="300.0" style="-fx-background-color: #222B35;" />
+                              <Label alignment="CENTER_RIGHT" layoutX="81.0" layoutY="31.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="23.0" prefWidth="179.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabelhiglight" stylesheets="@../css/stylesheet.css" text="CÉL PROJEKT" textFill="#abaaaa">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <Label fx:id="appLocationLabel1" alignment="CENTER_RIGHT" layoutX="736.0" layoutY="635.0" prefHeight="23.0" prefWidth="188.0" style="-fx-font-family: &quot;Century Gothic&quot;;" styleClass="menulabel" stylesheets="@../css/stylesheet.css" text="TESZTELÉST ELVÉGZI: " textFill="#abaaaa">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="690.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/transform.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="cb2" layoutX="1300.0" layoutY="114.0" prefHeight="804.0" prefWidth="437.0">
+                     <children>
+                        <Button fx:id="createButton" layoutX="211.0" layoutY="740.0" mnemonicParsing="false" onAction="#handleCreateButtonClicked" prefHeight="31.0" prefWidth="95.0" styleClass="mycommitbutton" stylesheets="@../css/stylesheet.css" text="Klónozás" textFill="#d7d6d6">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="230.0" fitWidth="266.0" layoutX="213.0" layoutY="243.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/sheep.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="backButton" layoutX="333.0" layoutY="740.0" mnemonicParsing="false" onAction="#handleGoToMainPageButton" prefHeight="31.0" prefWidth="95.0" styleClass="mybackbutton" text="Vissza" textFill="#d7d6d6">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane id="exitPopup" fx:id="exitPopup" layoutX="750.0" layoutY="300.0" prefHeight="200.0" prefWidth="400.0" styleClass="mypopup" stylesheets="@../css/stylesheet.css" visible="false">
+         <children>
+            <Button layoutX="90.0" layoutY="114.0" mnemonicParsing="false" onMouseClicked="#handleDoExit" prefHeight="31.0" prefWidth="95.0" styleClass="mycommitbutton" text="Igen" />
+            <Button layoutX="216.0" layoutY="114.0" mnemonicParsing="false" onMouseClicked="#handleCancelExit" prefHeight="31.0" prefWidth="95.0" styleClass="mybackbutton" text="Mégsem" />
+            <Label alignment="CENTER" layoutX="26.0" layoutY="37.0" prefHeight="23.0" prefWidth="350.0" styleClass="mypopup-text-label" text="Biztosan ki akarsz lépni?" textAlignment="CENTER" />
+         </children>
+      </Pane>
+      <Pane fx:id="coverPane" layoutX="25.0" layoutY="25.0" opacity="0.25" prefHeight="950.0" prefWidth="1760.0" style="-fx-background-color: black;" visible="false" />
+      <Pane id="mypopup" fx:id="progressPane" layoutX="750.0" layoutY="350.0" prefHeight="200.0" prefWidth="400.0" styleClass="mypopup" stylesheets="@../css/stylesheet.css" visible="false">
+         <children>
+            <Label alignment="CENTER" layoutX="26.0" layoutY="37.0" prefHeight="23.0" prefWidth="350.0" styleClass="mypopup-text-label" text="Projekt klónozása . . ." textAlignment="CENTER" />
+            <ProgressIndicator layoutX="174.0" layoutY="100.0" />
+         </children>
+      </Pane>
+    </children>
+</AnchorPane>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="anchorPaneBase" fx:id="anchorPaneBase" prefHeight="1000.0" prefWidth="1810.0" styleClass="anchorPaneBase" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testcenterfx.ArchiveProjectsController">
+    <children>
+        <Pane id="basePane" fx:id="basePane" layoutX="25.0" layoutY="25.0" style="-fx-background-color: #181F26;" stylesheets="@../css/stylesheet.css">
+            <children>
+                <AnchorPane id="dragPane" fx:id="dragPane" prefHeight="30.0" prefWidth="1760.0" styleClass="almostblack">
+                    <children>
+                        <Pane id="closePane" fx:id="closePane" onMouseClicked="#handleExitPressed" prefHeight="30.0" prefWidth="30.0" styleClass="closepane" stylesheets="@../css/stylesheet.css" AnchorPane.rightAnchor="1.0">
+                            <children>
+                                <ImageView fx:id="closeIcon" fitHeight="12.0" fitWidth="12.0" layoutX="9.0" layoutY="9.0" opacity="0.45" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/close.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </Pane>
+                        <Pane id="minimizePane" fx:id="minimizePane" layoutX="1039.0" onMouseClicked="#minimizeStage" prefHeight="30.0" prefWidth="30.0" styleClass="minimizepane" AnchorPane.rightAnchor="31.0">
+                            <children>
+                                <Line fx:id="minimizeIcon" endX="23.0" fill="WHITE" layoutX="-2.0" layoutY="20.0" opacity="0.85" startX="11.0" stroke="#e4e4e4" />
+                            </children>
+                        </Pane>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="5.0" layoutY="5.0" opacity="0.81" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/TEST_LAB_ICON.jpg" />
+                     </image>
+                  </ImageView>
+                  <Text fill="#b9b5b5" fontSmoothingType="LCD" layoutX="-1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teszt Labor" x="30.0" y="20.0">
+                     <font>
+                        <Font name="Perpetua" size="16.0" />
+                     </font>
+                  </Text>
+                    </children>
+                </AnchorPane>
+            <Pane fx:id="contentPane" layoutY="30.0" prefHeight="920.0" prefWidth="1760.0">
+               <children>
+                      <Pane fx:id="logoPane" prefHeight="100.0" prefWidth="1760.0" styleClass="logoPane">
+                          <children>
+                              <ImageView fitHeight="250.0" fitWidth="1760.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                      <Image url="@../images/header3.png" />
+                                  </image>
+                              </ImageView>
+                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="485.0" layoutY="31.0" opacity="0.0" styleClass="titleText" text="Test Center" textFill="#abaaaa">
+                                  <font>
+                                      <Font size="26.0" />
+                                  </font>
+                              </Label>
+                          </children>
+                      </Pane>
+                  <Pane fx:id="projectStats" layoutY="111.0" prefHeight="804.0" prefWidth="1753.0" styleClass="myTransparentPane" stylesheets="@../css/stylesheet.css">
+                     <children>
+                        <TableView fx:id="projectsTable" editable="true" fixedCellSize="0.0" layoutX="429.0" layoutY="39.0" prefHeight="722.0" prefWidth="661.0" stylesheets="@../css/secondTableStyle.css">
+                          <columns>
+                            <TableColumn id="projectColumn" fx:id="projectNameColumn" editable="false" maxWidth="706.0" minWidth="135.0" prefWidth="324.0" resizable="false" sortable="false" />
+                            <TableColumn id="checkBoxColumn" fx:id="checkBoxColumn" maxWidth="546.0" minWidth="29.0" prefWidth="66.0" resizable="false" sortable="false" />
+                              <TableColumn id="checkBoxColumn" fx:id="dateColumn" maxWidth="546.0" minWidth="35.0" prefWidth="112.0" resizable="false" sortable="false" />
+                              <TableColumn id="checkBoxColumn" fx:id="progressColumn" maxWidth="546.0" minWidth="35.0" prefWidth="154.0" resizable="false" sortable="false" />
+                          </columns>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </TableView>
+                        <Button fx:id="backButton" layoutX="1619.0" layoutY="740.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="31.0" prefWidth="95.0" styleClass="mybackbutton" text="Vissza" textFill="#d7d6d6">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <Pane layoutX="409.0" layoutY="26.0" prefHeight="38.0" prefWidth="1100.0" style="-fx-background-color: #181F26;">
+                           <children>
+                              <Pane prefHeight="32.0" prefWidth="1100.0" style="-fx-background-color: #181F26;" />
+                              <Label alignment="CENTER" layoutX="89.0" layoutY="7.0" prefHeight="23.0" prefWidth="68.0" styleClass="bluetexlabel" stylesheets="@../css/secondTableStyle.css" text="Projekt" textFill="#abaaaa">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <CheckBox fx:id="mainCheckBox" layoutX="50.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleMainCheckBox" stylesheets="@../css/secondTableStyle.css" />
+                              <Label layoutX="427.0" layoutY="7.0" prefHeight="23.0" prefWidth="110.0" styleClass="bluetexlabel" stylesheets="@../css/secondTableStyle.css" text="Létrehozva" textFill="#abaaaa">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" layoutX="561.0" layoutY="7.0" prefHeight="23.0" prefWidth="110.0" styleClass="bluetexlabel" stylesheets="@../css/secondTableStyle.css" text="Letesztelve" textFill="#abaaaa">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Button fx:id="ArchiveButton" contentDisplay="RIGHT" disable="true" layoutX="1328.0" layoutY="740.0" onAction="#handleArchiveButton" prefHeight="20.0" prefWidth="255.0" styleClass="defectLogButton" stylesheets="@../css/stylesheet.css" text="KIVÁLASZTOTTAK ARCHIVÁLÁSA">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                        <Pane fx:id="opacityPane" mouseTransparent="true" opacity="0.75" prefHeight="590.0" prefWidth="1100.0" style="-fx-background-color: #171E24;" visible="false" />
+                        <Pane fx:id="noProjecDataLabel" prefHeight="590.0" prefWidth="1100.0" style="-fx-background-color: #171E24;" visible="false">
+                           <children>
+                                  <Label alignment="CENTER" layoutX="375.0" layoutY="218.0" prefHeight="23.0" prefWidth="350.0" styleClass="mypopup-text-label" text="Még nincsenek teszt dokumentumok" textAlignment="CENTER" />
+                           </children>
+                        </Pane>
+                        <ImageView fitHeight="314.0" fitWidth="200.0" layoutX="1459.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/archive.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+            </children>
+        </Pane>
+        <Pane id="mypopup" fx:id="mypopup" layoutX="700.0" layoutY="300.0" prefHeight="200.0" prefWidth="400.0" styleClass="mypopup" stylesheets="@../css/stylesheet.css" visible="false">
+            <children>
+                <Button layoutX="90.0" layoutY="114.0" mnemonicParsing="false" onMouseClicked="#handleDoExit" prefHeight="31.0" prefWidth="95.0" styleClass="mycommitbutton" text="Igen" />
+                <Button layoutX="216.0" layoutY="114.0" mnemonicParsing="false" onMouseClicked="#handleCancelExit" prefHeight="31.0" prefWidth="95.0" styleClass="mybackbutton" text="Mégsem" />
+            <Label alignment="CENTER" layoutX="36.0" layoutY="47.0" prefHeight="23.0" prefWidth="350.0" styleClass="mypopup-text-label" text="Biztosan ki akarr lépni?" textAlignment="CENTER" />
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

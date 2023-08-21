@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1100.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="testcenterfx.ActiveProjectsController">
+    <stylesheets>
+        <URL value="@/css/stylesheet.css" />
+    </stylesheets>
+    <children>
+        <HBox prefHeight="800.0" prefWidth="1103.0" style="-fx-background-color: #222B35;" styleClass="mediumblue" stylesheets="@../css/stylesheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <ImageView fitHeight="250.0" fitWidth="1100.0" opacity="0.73" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/header.jpg" />
+                    </image>
+                    <rotationAxis>
+                        <Point3D />
+                    </rotationAxis>
+                </ImageView>
+            </children>
+            <rotationAxis>
+                <Point3D />
+            </rotationAxis>
+        </HBox>
+        <AnchorPane prefHeight="800.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <AnchorPane layoutX="8.0" layoutY="110.0" prefHeight="681.0" prefWidth="1082.0" style="-fx-background-color: #181F26;" styleClass="almostblack" stylesheets="@../css/stylesheet.css">
+                    <children>
+                        <AnchorPane prefHeight="681.0" prefWidth="330.0">
+                            <children>
+                                <Label alignment="CENTER_RIGHT" layoutX="94.0" layoutY="530.0" prefHeight="0.0" prefWidth="290.0" style="-fx-font-family: &quot;Century Gothic&quot;;" text="TESZT ELVÉGZÉSÉNEK IDŐPONTJA" textFill="#b5b5b5">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="cb2" layoutX="419.0" layoutY="81.0" prefHeight="471.0" prefWidth="606.0" style="-fx-background-color: #222B35;" />
+                  <TableView layoutX="418.0" layoutY="81.0" prefHeight="471.0" prefWidth="606.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                  </TableView>
+                    </children>
+                </AnchorPane>
+            <AnchorPane prefHeight="102.0" prefWidth="1100.0">
+               <children>
+                      <Label layoutX="441.0" layoutY="39.0" styleClass="mytitle" stylesheets="@../css/stylesheet.css" text="AKTÍV TESZT PROJEKTEK" textFill="#abaaaa">
+                          <font>
+                              <Font name="System Bold" size="18.0" />
+                          </font>
+                      </Label>
+               </children>
+            </AnchorPane>
+            </children>
+            <rotationAxis>
+                <Point3D />
+            </rotationAxis>
+        </AnchorPane>
+    </children>
+</AnchorPane>

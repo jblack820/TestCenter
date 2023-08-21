@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="TestCenterFX_1.4.jnlp">
+  <information>
+    <title>TestCenterFX_1.4</title>
+    <vendor>TGP</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" java-vm-args="-Xmx4096m "  href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="TestCenterFX_1.4.jar" size="2527183" download="eager" />
+    <jar href="lib\commons-collections-3.2.2.jar" size="588337" download="eager" />
+    <jar href="lib\commons-lang-2.6.jar" size="284220" download="eager" />
+    <jar href="lib\commons-logging-1.2.jar" size="61829" download="eager" />
+    <jar href="lib\json-simple-1.1.1.jar" size="23931" download="eager" />
+    <jar href="lib\poi-5.2.2.jar" size="2920513" download="eager" />
+    <jar href="lib\poi-ooxml-5.2.2.jar" size="1977285" download="eager" />
+    <jar href="lib\poi-ooxml-full-5.2.2.jar" size="13060187" download="eager" />
+    <jar href="lib\xmlbeans-4.0.0.jar" size="2493024" download="eager" />
+    <jar href="lib\xmlbeans-5.0.2.jar" size="2191233" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="800" height="600" main-class="app.Main"  name="TestCenterFX_1.4" />
+  <update check="always"/>
+</jnlp>

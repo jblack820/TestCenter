@@ -1,0 +1,791 @@
+/*  Created on : 2021. jún. 7., 8:52:00
+    Author     : takacs.gergely          */
+
+/*<editor-fold defaultstate="collapsed" desc="Combo Box">*/
+.combo-box {
+    -fx-background-color:  #222B35;   
+    -fx-alignment: center;
+}
+
+.combo-box .list-cell {
+    background-color:  #222B35;
+    -fx-text-fill:  #ABAAAA;
+    -fx-font-size: 14px;
+}
+
+.combo-box .list-view .list-cell {
+    background-color:  #222B35;
+    -fx-text-fill:  #ABAAAA;
+    -fx-font-size: 14px;
+}
+
+.combo-box-popup {
+    background-color:  #222B35;
+    -fx-text-fill:  #ABAAAA;
+    -fx-font-size: 14px;
+}
+
+.combo-box-popup .list-cell {    
+    -fx-background-color: #222B35;    
+    -fx-text-fill:  #ABAAAA;
+    -fx-font-size: 14px;
+}
+
+.combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell {
+    -fx-background-color: #222B35;    
+    -fx-text-fill:  #ABAAAA;
+    -fx-font-size: 14px;
+}
+
+.combo-box-popup .scroll-bar {
+    -fx-background-color: #1F262C;
+
+}
+/*</editor-fold>*/
+/*<editor-fold defaultstate="collapsed" desc="Date picker">*/
+.date-picker{
+    -fx-color: #636363;
+    -fx-text-fill: #B5B5B5;
+}
+
+.date-picker .text-field {
+    -fx-text-fill: #B5B5B5;
+    -fx-font-size: 14px;
+}
+
+.date-picker .text-field {
+    -fx-text-fill: #B5B5B5;
+    -fx-font-size: 14px;
+}
+
+.date-picker .text-field:focused {
+    -fx-text-fill: #B5B5B5;
+    -fx-pref-height: 27;
+    -fx-effect: dropshadow(gaussian, rgba(90, 90, 90, 0.4), 10, 0.5, 0.0, 0.0);
+    -fx-border-color: #404060;
+}
+/*</editor-fold>*/
+/*<editor-fold defaultstate="collapsed" desc="Buttons">*/
+.mymenubutton {
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-background-color:  #181F26;
+    -fx-pref-height: 40;
+    -fx-pref-width: 300;
+    -fx-text-fill: #ABAAAA;
+    -fx-font-family: "System";    
+    -fx-font-size: 18px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 4, 0.001, 0.0, 3);
+}
+
+.defectLogButton{
+    -fx-background-color:  #2A333C;
+    -fx-pref-height: 34;    
+    -fx-text-fill: #ABAAAA;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 4, 0.001, 0.0, 3);
+}
+
+.defectLogButton:hover{
+    -fx-background-color:  #601E39;
+}
+
+
+.testDocumentButton{
+    -fx-background-color:  #2A333C;
+    -fx-pref-height: 34;    
+    -fx-text-fill: #ABAAAA;
+    -fx-font-family: "Century Gothic";  
+    -fx-font-size: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 4, 0.001, 0.0, 3);
+}
+
+.testDocumentButton:hover{
+    -fx-background-color:  #194381;
+}
+
+
+.mymenubutton:hover {
+    -fx-background-color: #1C232A;
+    -fx-pref-height: 42;
+    -fx-translate-y: -1;
+    -fx-text-fill: #CBCACA;
+    -fx-font-family: "System";
+    -fx-font-size: 18.2px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 4, 0.001, 0.0, 3);
+}
+
+
+.mycommitbutton{
+    -fx-background-color: #096A38;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+    -fx-text-fill: lightgrey;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 8, 0.5, 3, 5);
+}
+
+.mycommitbutton:hover{
+    -fx-cursor: hand;
+    -fx-font-family: "Century Gothic";
+    -fx-background-color: #078845;
+    -fx-text-fill: lightgray;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 8, 0.5, 3, 5);
+}
+
+.addButton{
+    -fx-background-color: #096A38;
+    -fx-background-radius: 3;
+    -fx-padding: 0 0 0 0;
+    -fx-font-family: "Arial";
+    -fx-pref-height: 31;
+    -fx-pref-width: 38;
+    -fx-font-size: 30px;
+    -fx-font-width: bold;
+    -fx-text-fill: lightgrey;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 8, 0.5, 3, 5);    
+}
+
+.refreshButton{
+    -fx-background-color: transparent;
+    -fx-background-radius: 3;
+    -fx-padding: 0 0 5 0;
+    -fx-font-family: "Century Gothic";
+    -fx-pref-height: 31;
+    -fx-pref-width: 42;
+    -fx-font-size: 36px;
+    -fx-font-width: bold;
+    -fx-text-fill: lightgrey;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 8, 0.5, 3, 5);    
+    -fx-text-alignment: center;
+}
+
+.refreshButton:hover{
+    -fx-background-color: #5F6F8A;
+}
+
+.addButton:hover{
+    -fx-background-color: #078845;
+}
+
+.myokaybutton{
+    -fx-pref-height: 31;
+    -fx-background-color: #355CC5;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+    -fx-text-fill: #ACACAC;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 8, 0.5, 3, 5);
+}
+
+.myokaybutton:hover{    
+    -fx-background-color: #456CD5;
+    -fx-text-fill: #CCCCCC;    
+}
+
+.mynotesbutton{
+    -fx-background-color: #205353;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+    -fx-text-fill: #ACACAC;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 8, 0.5, 3, 5);
+}
+
+.mynotesbutton:hover{    
+    -fx-background-color: #306363;
+    -fx-text-fill: #CCCCCC;    
+}
+
+.mydeletebutton{
+    -fx-background-color: #990033;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+    -fx-text-fill: #ACACAC;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 8, 0.5, 3, 5);
+}
+
+.mydeletebutton:hover{    
+    -fx-background-color: #cc0033;
+    -fx-text-fill: #CCCCCC;    
+}
+
+.mybackbutton{
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+    -fx-background-color:  #2A333C;
+    -fx-text-fill:  #ACACAC;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 8, 0.5, 3, 5);
+}
+
+.mybackbutton:hover{
+    -fx-font-family: "Century Gothic";
+    -fx-background-color:  #333B45;
+    -fx-text-fill:  #BCBCBC;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 8, 0.5, 3, 5);
+}
+
+
+
+.myfuntionbutton{
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+    -fx-background-color:  #83642A;
+    -fx-text-fill:  #ACACAC;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 8, 0.5, 3, 5);
+}
+
+.myfuntionbutton:hover{
+    -fx-font-family: "Century Gothic";
+    -fx-background-color:  #93743A;
+    -fx-text-fill:  #BCBCBC;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 8, 0.5, 3, 5);
+}
+
+
+/*</editor-fold>*/
+/*<editor-fold defaultstate="collapsed" desc="Popup">*/
+.mypopup{
+    -fx-text-fill: #ABAAAA;
+    -fx-font-family: "Century Gothic";
+    -fx-background-color:  #181F26;
+    -fx-border-color: #222B35;
+    -fx-border-width: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.1, 0.0, 10);
+
+}
+
+.mypopup-text-label {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ABAAAA;
+    resize:none;
+    -fx-font-size: 15px;
+}
+
+.mypopup-text-label-white {
+    -fx-background-color: transparent;
+    -fx-text-fill: #E6E6E6;
+    resize:none;
+    -fx-font-size: 15px;
+}
+
+.mypopup-text-label-red {
+    -fx-background-color: transparent;
+    -fx-text-fill: red;
+    resize:none;
+    -fx-font-size: 14px;
+}
+
+.mypopup-text-label-highlighted {
+    -fx-background-color: transparent;
+    -fx-text-fill: #CDCCCC;
+    -fx-font-weight: bold;
+    resize:none;
+    -fx-font-size: 15px;
+}
+
+.mypopup-text-label-2 {
+    -fx-background-color: #222B35;
+    -fx-text-fill: #ABAAAA;
+    resize:none;
+    -fx-font-size: 15px;
+}
+
+.closepane:hover {
+    -fx-background-color: darkred;
+}
+
+.minimizepane:hover {
+    -fx-background-color: #3C3F41;
+}
+/*</editor-fold>*/
+/*<editor-fold defaultstate="collapsed" desc="JavaFX elements">*/
+
+.icon{
+    -fx-color: #999999;
+    -fx-fill: #bababa;
+}
+
+.mainwindow {
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+}
+
+.mytextfield {
+    -fx-background-color:  #222B35;
+    -fx-prompt-text-fill: #EEEEEE;
+    -fx-text-fill:  #ABAAAA;
+    resize:none;
+    font-size: 16px;
+    -fx-padding: 0 0 0 5;
+}
+
+.mysearchtextfield {
+    -fx-background-color:  #222B35;
+    -fx-prompt-text-fill: #ABAAAA;
+    -fx-text-fill:  #EEEEEE;
+    -fx-padding: 0 0 0 5;
+}
+
+.mytextfield:empty .text {
+    -fx-prompt-text-fill: yellow;
+}
+
+.userlabel {
+    -fx-font-family: "Perpetua";
+    -fx-text-fill: #A6A6A6;
+    -fx-font-size: 16px;
+    -fx-backgroud-color: transparent;
+
+}
+
+.mytextarea{
+    -fx-padding: 0 0 0 0;
+    -fx-border-insets: 2px;
+    -fx-background-color:  #222B35;
+    -fx-text-fill:  #ABAAAA;
+    -fx-border-color: transparent;   
+    -fx-font-size: 16px;    
+    -fx-effect: innershadow( gaussian, #222B35, 7, 2, 0.2, 0.2 );
+
+}
+
+.mytextarea .content{
+    -fx-background-color:  #222B35;
+    -fx-text-fill:  #ABAAAA;    
+    -fx-font-size: 16px;
+    -fx-border-color: transparent;
+    -fx-padding: 0 0 0 0 ;
+}
+
+.mynotestextarea{
+    -fx-padding: 0 0 0 0;
+    -fx-border-insets: 2px;
+    -fx-background-color:  #222B35;
+    -fx-text-fill:  #ABAAAA;
+    -fx-border-color: transparent;   
+    -fx-font-size: 16px;    
+    -fx-effect: innershadow( gaussian, #222B35, 7, 2, 0.2, 0.2 );
+
+}
+
+.mynotestextarea .content{
+    -fx-background-color:  #222B35;
+    -fx-text-fill:  #ABAAAA;    
+    -fx-font-size: 16px;
+    -fx-border-color: transparent;
+    -fx-padding: 0 0 0 0 ;
+}
+
+
+
+.mynotestextarea .scroll-bar:horizontal .track , 
+.mynotestextarea .scroll-bar:vertical .track{    
+    -fx-background-color: #181F26;
+}
+
+.mynotestextarea .scroll-bar:horizontal .thumb, 
+.mynotestextarea .scroll-bar:vertical .thumb{    
+    -fx-background-color: #A6A6A6;
+}
+
+.mynotestextarea .scroll-bar:horizontal .increment-button,
+.mynotestextarea .scroll-bar:vertical .increment-button,
+.mynotestextarea .scroll-bar:horizontal .decrement-button,
+.mynotestextarea .scroll-bar:vertical .decrement-button
+{
+    -fx-background-color: #A6A6A6;
+}
+
+.mynotestextarea .scroll-bar:horizontal .thumb,
+.mynotestextarea .scroll-bar:vertical .thumb {
+    -fx-background-color :derive(black,90.0%);
+    -fx-background-insets : 2.0, 0.0, 0.0;
+    -fx-background-radius : 2.0em;
+}
+
+.mynotestextarea .scroll-bar:horizontal .thumb:hover,
+.mynotestextarea .scroll-bar:vertical .thumb:hover {
+    -fx-background-color :derive(#4D4C4F,10.0%);
+    -fx-background-insets : 2.0, 0.0, 0.0;
+    -fx-background-radius : 2.0em;
+}
+
+
+
+.mytextarea:focused{
+    -fx-background-color:  #222B35;
+    -fx-border-color: #404060;
+    -fx-border-width: 3;
+    -fx-effect: dropshadow(gaussian, rgba(90, 90, 90, 0.4), 10, 0.5, 0.0, 0.0);
+    -fx-text-fill:  #ABAAAA;
+    resize:none;
+    font-size: 16px;
+    -fx-background-insets: 0,3px;
+}
+
+.mytextarea .content:focused{
+    -fx-background-color:  #222B35;
+    -fx-border-color: #404060;
+    -fx-border-width: 3;
+    -fx-effect: dropshadow(gaussian, rgba(90, 90, 90, 0.4), 10, 0.5, 0.0, 0.0);
+    -fx-text-fill:  #ABAAAA;
+    resize:none;
+    font-size: 16px;
+    -fx-background-insets: 0,3px;
+}
+
+.myerrortextarea{
+    -fx-background-color:  #181F26;
+    -fx-border-color: #181F26;
+    -fx-text-alignment:center;
+    -fx-border-width: 3;
+    -fx-effect: dropshadow(gaussian, rgba(90, 90, 90, 0.4), 10, 0.5, 0.0, 0.0);
+    -fx-text-fill:  #ABAAAA;
+    resize:none;
+    font-size: 16px;
+    -fx-background-insets: 0,3px;
+}
+
+.myerrortextarea .content{
+    -fx-background-color:  #181F26;
+    -fx-border-color: #181F26;
+    -fx-border-width: 3;
+    -fx-text-alignment:center;
+    -fx-effect: dropshadow(gaussian, rgba(90, 90, 90, 0.4), 10, 0.5, 0.0, 0.0);
+    -fx-text-fill:  #ABAAAA;
+    resize:none;
+    font-size: 16px;
+    -fx-background-insets: 0,3px;
+}
+/*.myerrortextarea:focused{
+    -fx-background-color:  #181F26;
+    -fx-border-color: #181F26;
+    -fx-border-width: 3;
+    -fx-alignment:CENTER;
+    -fx-effect: dropshadow(gaussian, rgba(90, 90, 90, 0.4), 10, 0.5, 0.0, 0.0);
+    -fx-text-fill:  #ABAAAA;
+    resize:none;
+    font-size: 16px;
+    -fx-background-insets: 0,3px;
+}
+
+.myerrortextarea .content:focused{
+    -fx-background-color:  #181F26;
+    -fx-border-color: #181F26;
+    -fx-border-width: 3;
+    -fx-alignment:CENTER;
+    -fx-effect: dropshadow(gaussian, rgba(90, 90, 90, 0.4), 10, 0.5, 0.0, 0.0);
+    -fx-text-fill:  #ABAAAA;
+    resize:none;
+    font-size: 16px;
+    -fx-background-insets: 0,3px;
+}*/
+
+
+.check-box .box {
+    -fx-background-color: #202933;    
+}
+
+.mytextfield:focused {
+    -fx-background-color:  #222B35;
+    -fx-border-color: #404060;
+    -fx-border-width: 3;
+    -fx-effect: dropshadow(gaussian, rgba(90, 90, 90, 0.4), 10, 0.5, 0.0, 0.0);
+    -fx-text-fill:  #ABAAAA;
+    resize:none;
+    font-size: 16px;
+    -fx-background-insets: 0,3px;
+}
+
+.titleText {
+    -fx-text-fill:  #bababa;
+    -fx-font-size: 22px;
+    -fx-font-family: "EncodeSansSemiCondensed-ExtraLight";
+    -fx-font-weight: 100;
+
+}
+
+.menulabel{
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #A6A6A6;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+
+}
+
+.menulabelhiglight{
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #E6E6E6;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+
+}
+
+.titleText-fat {
+    -fx-text-fill:  #bababa;
+    -fx-font-size: 46px;
+    -fx-font-family: "Calibri";
+    -fx-font-weight: bold;
+    -fx-font-spacing: 1px;
+}
+
+.mytitle {
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #cccccc;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.headertext {
+    -fx-text-fill: #ABAAAA;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 30px;
+}
+
+.table-view{
+    -fx-background-color: transparent;
+}
+
+.anchorPaneBase {
+    -fx-background-color: transparent;
+
+}
+
+.lighter-pane{
+    -fx-background-color: #222B35;   
+}
+
+.darker-pane{
+    -fx-background-color: #181F26;
+}
+
+.basePane{
+    -fx-background-color: #181F26;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);
+}
+
+.logoPane{
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.001, 0.0, 10);
+}
+
+.preloader-label{
+    -fx-text-fill:  #ABAAAA;
+}
+
+.progress-bar > .track {
+    -fx-text-box-border: #181F26;
+    -fx-border-color: #181F26;
+    -fx-control-inner-background: #181F26;
+}
+
+.myListView {
+    -fx-background-color: transparent;
+}
+
+.myTransparentPane {
+    -fx-background-color: transparent;
+}
+
+.departmentText{
+    -fx-background-color: transparent;
+    -fx-text-fill: #ABAAAA;
+    -fx-font-size: 18px;
+}
+
+.tooltip{
+    -fx-font-family: "Century Gothic";
+    -fx-background-color: black;
+    -fx-text-fill: #ABAAAA;
+    resize:none;
+    -fx-font-size: 15px;
+}
+
+.scroll-pane {
+    -fx-background: #222B35;
+    -fx-border-color: #46556A;
+}
+
+/*</editor-fold>*/
+/*<editor-fold defaultstate="collapsed" desc="Table">*/
+
+/*<editor-fold defaultstate="collapsed" desc="Table General Settings">*/
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #181F26;
+    -fx-border-width: 1;
+}
+
+
+/*</editor-fold>*/
+
+/*<editor-fold defaultstate="collapsed" desc="Table Header">*/
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-color: #181F26;
+    -fx-padding: 35 30 10 25;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: transparent;
+}
+
+
+.table-view .column-header-background .label{
+
+    -fx-border-color: #181F26;
+    -fx-text-fill: #395D74;
+    -fx-font-family: "Century Gothic";    
+    -fx-font-size: 18px;
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 -5;
+}
+
+
+/*</editor-fold>*/
+
+/*<editor-fold defaultstate="collapsed" desc="Table Cell">*/
+
+.table-view .table-cell{
+    -fx-text-fill: #ABAAAA;
+    -fx-font-family: "Century Gothic";    
+    -fx-font-size: 18px;
+    -fx-border-width: 0;
+    -fx-alignment: CENTER-LEFT;
+    -fx-padding: 0 15 0 30;
+}
+
+.table-view .table-column{
+    -fx-alignment: CENTER-LEFT;
+    -fx-padding: 0 15 0 30;
+}
+
+.table-row-cell{
+    /*-fx-padding: 33 33 10 20;*/
+    -fx-border-radius: 8;
+    -fx-background-radius: 15;
+    -fx-cell-size: 60px;
+    -fx-border-color: #181F26;
+    -fx-border-width: 5;
+    -fx-background-color: rgba(64, 71, 92, 0.4);
+}
+
+.table-row-cell:odd{
+    -fx-background-color: rgba(64, 71, 92, 0.4);
+}
+
+.table-row-cell:selected {
+    -fx-border-radius: 8;
+    -fx-background-color: #096A38;
+    -fx-text-fill: #ABAAAA;
+    -fx-background-insets: 0;
+    -fx-background-radius: 15;
+}
+
+
+.table-row-cell:selected:hover {
+    -fx-border-radius: 8;
+    -fx-background-color: #078845;
+    -fx-text-fill: #ABAAAA;
+    -fx-background-insets: 0;
+    -fx-background-radius: 15;
+}
+
+
+.table-row-cell:odd:selected:hover {
+    -fx-border-radius: 8;
+    -fx-background-color: #078845;
+    -fx-text-fill: #ABAAAA;
+    -fx-background-insets: 0;
+    -fx-background-radius: 15;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: rgba(84, 91, 112, 0.5);
+    -fx-text-fill: #ABAAAA;
+    -fx-background-insets: 0;
+    -fx-background-radius: 15;
+    -fx-transition: -fx-background-color 2s;
+}
+
+.table-row-cell:odd:hover{
+    -fx-background-color: rgba(84, 91, 112, 0.5);
+    -fx-transition: -fx-background-color 2s;
+}
+
+.table-row-cell:empty {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:empty:hover {
+    -fx-background-color: transparent;
+}
+
+.table-view .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-padding:-7;
+    -fx-background-color: #181F26;
+}
+
+.table-view .scroll-bar:vertical {
+    -fx-opacity: 0;
+    -fx-padding:-7;
+    -fx-background-color: #181F26;
+}
+
+.my-special-column-style .label {
+    -fx-alignment: CENTER-RIGHT;
+}
+
+/*.my-table-view2 .table-cell{
+    -fx-text-fill: #ABAAAA;
+    -fx-font-family: "Century Gothic";    
+    -fx-font-size: 18px;
+    -fx-border-width: 0;
+    -fx-alignment: CENTER-RIGHT;
+    -fx-padding: 0 0 0 0;
+}
+
+.my-table-view2 .table-column{
+    -fx-alignment: CENTER-RIGHT;
+    -fx-padding: 0 0 0 0;
+}*/
+
+
+
+
+/*</editor-fold>*/
+
+/*</editor-fold>*/
+/*<editor-fold defaultstate="collapsed" desc="PIE">*/
+.default-color0.chart-pie { -fx-pie-color: #078845; }
+.default-color1.chart-pie { -fx-pie-color: #602E39; }
+.default-color2.chart-pie { -fx-pie-color: #222B35; }
+
+.chart-pie {
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+}
+
+/*</editor-fold>*/
+/*<editor-fold defaultstate="collapsed" desc="Colors">*/
+.mediumblue {
+    -fx-background-color: #586985;    
+}
+
+.darkblue {
+    -fx-background-color: #222B35;
+}
+
+.almostblack {
+    -fx-background-color: #181F26;
+}
+
+.lightblue {
+    background-color: #EAEEF3;    
+    /*  r:234
+        g:238
+        b:243*/
+}
+/*</editor-fold>*/

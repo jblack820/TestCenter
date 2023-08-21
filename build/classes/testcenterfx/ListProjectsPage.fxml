@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="anchorPaneBase" fx:id="anchorPaneBase" prefHeight="1000.0" prefWidth="1810.0" styleClass="anchorPaneBase" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testcenterfx.ListProjectController">
+    <children>
+        <Pane id="basePane" fx:id="basePane" layoutX="25.0" layoutY="25.0" prefHeight="950.0" prefWidth="1760.0" style="-fx-background-color: #181F26;" stylesheets="@../css/stylesheet.css">
+            <children>
+                <AnchorPane id="dragPane" fx:id="dragPane" prefHeight="30.0" prefWidth="1760.0" styleClass="almostblack">
+                    <children>
+                        <Pane id="closePane" fx:id="closePane" onMouseClicked="#handleExitPressed" prefHeight="30.0" prefWidth="30.0" styleClass="closepane" stylesheets="@../css/stylesheet.css" AnchorPane.rightAnchor="1.0">
+                            <children>
+                                <ImageView fx:id="closeIcon" fitHeight="12.0" fitWidth="12.0" layoutX="9.0" layoutY="9.0" opacity="0.45" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/close.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </Pane>
+                        <Pane id="minimizePane" fx:id="minimizePane" layoutX="1039.0" onMouseClicked="#minimizeStage" prefHeight="30.0" prefWidth="30.0" styleClass="minimizepane" AnchorPane.rightAnchor="31.0">
+                            <children>
+                                <Line fx:id="minimizeIcon" endX="23.0" fill="WHITE" layoutX="-2.0" layoutY="20.0" opacity="0.85" startX="11.0" stroke="#e4e4e4" />
+                            </children>
+                        </Pane>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="5.0" layoutY="5.0" opacity="0.81" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/TEST_LAB_ICON.jpg" />
+                     </image>
+                  </ImageView>
+                  <Text fill="#b9b5b5" fontSmoothingType="LCD" layoutX="-1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teszt Labor" x="30.0" y="20.0">
+                     <font>
+                        <Font name="Perpetua" size="16.0" />
+                     </font>
+                  </Text>
+                    </children>
+                </AnchorPane>
+            <Pane fx:id="contentPane" layoutY="30.0" prefHeight="920.0" prefWidth="1760.0">
+               <children>
+                      <Pane fx:id="logoPane" prefHeight="100.0" prefWidth="1760.0" styleClass="logoPane">
+                          <children>
+                              <ImageView fitHeight="169.0" fitWidth="1760.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                      <Image url="@../images/header3.png" />
+                                  </image>
+                              </ImageView>
+                          </children>
+                      </Pane>
+                  <Pane layoutY="100.0" prefHeight="820.0" prefWidth="1744.0" styleClass="myTransparentPane" stylesheets="@../css/stylesheet.css">
+                     <children>
+                        <TableView fx:id="projectTable" editable="true" fixedCellSize="0.0" layoutX="350.0" layoutY="50.0" prefHeight="742.0" prefWidth="942.0" styleClass="firsttable-view" stylesheets="@../css/stylesheet.css">
+                          <columns>
+                            <TableColumn id="projectDateColumn" fx:id="projectDateColumn" editable="false" prefWidth="207.0" sortable="false" text="LÉTREHOZVA" />
+                            <TableColumn id="projectNameColumn" fx:id="projectNameColumn" editable="false" prefWidth="524.0" sortable="false" text="PROJEKT NÉV" />
+                              <TableColumn id="progressColumn" fx:id="progressColumn" editable="false" prefWidth="140.0" sortable="false" style="-fx-alignment: CENTER-right; -fx-padding: 0 0 0 0;" text="Feldolgozottság" />
+                              <TableColumn id="progressColumn" fx:id="percColumn" editable="false" prefWidth="65.0" sortable="false" style="-fx-alignment: CENTER-RIGHT; -fx-padding: 0 0 0 0;" />
+                          </columns>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </TableView>
+                        <Button id="openButton" fx:id="openButton" disable="true" layoutX="1435.0" layoutY="760.0" mnemonicParsing="false" onAction="#handleOpenButton" prefHeight="31.0" prefWidth="126.0" styleClass="mycommitbutton" stylesheets="@../css/stylesheet.css" text="Megnyit" textFill="#d7d6d6">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="toWelcomPageButton" layoutX="1575.0" layoutY="760.0" mnemonicParsing="false" onAction="#switchToWelcomeScene" prefHeight="31.0" prefWidth="126.0" styleClass="mybackbutton" text="Vissza" textFill="#d7d6d6">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="addNewProjectButton" layoutX="1650.0" layoutY="35.0" minWidth="20.0" mnemonicParsing="false" onAction="#handleAddProjectButton" prefHeight="18.0" prefWidth="18.0" styleClass="addButton" stylesheets="@../css/stylesheet.css" text="+">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                           <tooltip>
+                              <Tooltip text="Új projekt hozzáadása" />
+                           </tooltip>
+                        </Button>
+                        <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="1500.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/tools.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="refreshIcon" fitHeight="31.0" fitWidth="20.0" layoutX="1602.0" layoutY="42.0" onMouseClicked="#handleRefreshButton" onMouseEntered="#handleRefreshIconEntered" onMouseExited="#handleRefreshIconExited" opacity="0.51" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/220-2203363_exchange-flip-refresh-reload-rotate-sync-update-update.png" />
+                           </image>
+                        </ImageView>
+                        <Button layoutX="1435.0" layoutY="705.0" mnemonicParsing="false" onAction="#handleGoToArchiveProjectPage" prefHeight="31.0" prefWidth="266.0" styleClass="mybackbutton" text="Projektek archiválása . . . " textFill="#d7d6d6">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+            </children>
+        </Pane>
+        <Pane id="mypopup" fx:id="mypopup" layoutX="700.0" layoutY="300.0" prefHeight="200.0" prefWidth="400.0" styleClass="mypopup" stylesheets="@../css/stylesheet.css" visible="false">
+            <children>
+                <Button layoutX="90.0" layoutY="114.0" mnemonicParsing="false" onMouseClicked="#handleDoExit" prefHeight="31.0" prefWidth="95.0" styleClass="mycommitbutton" text="Igen" />
+                <Button layoutX="216.0" layoutY="114.0" mnemonicParsing="false" onMouseClicked="#handleCancelExit" prefHeight="31.0" prefWidth="95.0" styleClass="mybackbutton" text="Mégsem" />
+                <Label alignment="CENTER" layoutX="26.0" layoutY="37.0" prefHeight="23.0" prefWidth="350.0" styleClass="mypopup-text-label" text="Biztosan ki akarr lépni?" textAlignment="CENTER" />
+            </children>
+        </Pane>
+      <Pane id="mypopup" fx:id="scanningDocsPane" layoutX="700.0" layoutY="300.0" prefHeight="200.0" prefWidth="400.0" styleClass="mypopup" stylesheets="@../css/stylesheet.css" visible="false">
+         <children>
+            <Label alignment="CENTER" layoutX="26.0" layoutY="37.0" prefHeight="23.0" prefWidth="350.0" styleClass="mypopup-text-label" text="Projektek újraolvasása..." textAlignment="CENTER" />
+            <ProgressIndicator layoutX="174.0" layoutY="100.0" />
+         </children>
+      </Pane>
+    </children>
+</AnchorPane>
