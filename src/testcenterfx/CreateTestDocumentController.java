@@ -166,14 +166,22 @@ public class CreateTestDocumentController implements Initializable {
     //<editor-fold defaultstate="collapsed" desc="CREATE TEST DOCUMENT">
     @FXML
     private void createButtonClicked(ActionEvent event) {
+        //show progress lane
         FXWindowUtils.showPopup(progressPopup, basePane, closeIcon, minimizeIcon, logoPane);
+        //get data
         TestDocumentCreationDTO formData = getFormData();
+        //create filename
         String wordFileName = Utils.constructWordDocumentFileName(formData);
+        //create path
         String savePath = createTestDocumentsSavePath();
+        System.out.println("Idáig eljut");
+        System.out.println("Thread main: " + Thread.currentThread().getName());
         Task<Void> createDocumentTask = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
+                //progress window: set num of total pages
                 setupCreationProgressWindowLabel(formData);
+                //save all documents
                 Main.controller.saveTestDocument(formData, savePath, wordFileName);                
                 initGC();
                 return null;

@@ -481,6 +481,7 @@ public static boolean isDocumentsScanned;
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="UTILS">
     private void refreshPage() {
+        System.out.println("basepane null?: " + basePane==null);
         stage = (Stage) basePane.getScene().getWindow();
         Parent nextRoot = null;
         try {

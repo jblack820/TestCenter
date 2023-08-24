@@ -471,14 +471,6 @@ public class TestCenterController {
         System.out.println("Start creating documents...");
         for (int currentPageIndex = 1; currentPageIndex <= formData.getNumberOfPagesRequired(); currentPageIndex++) {
             System.out.println("Start creating document page " + currentPageIndex);
-            ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-            URL url = classLoader.getResource(AppConfig.TEST_DOC_TEMPLATE_NAME);
-
-            if (url != null) {
-                System.out.println("The file exists");
-            } else {
-                System.out.println("The file does not exist");
-            }
             XWPFDocument document = templateService.getTemplate(AppConfig.TEST_DOC_TEMPLATE_NAME);
             System.out.println("Start filling page " + currentPageIndex);
             TestDocumentCreation.fillTestDocument(document, currentTestProject, formData, currentPageIndex);
